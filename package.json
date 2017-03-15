@@ -1,0 +1,19 @@
+{
+  "name": "splitster",
+  "version": "1.0.0",
+  "description": "Javascript AB testing tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladimirJarabica/splitster.git"
+  },
+  "author": "Vladimír Jarabica",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VladimirJarabica/splitster/issues"
+  },
+  "homepage": "https://github.com/VladimirJarabica/splitster#readme"
+}

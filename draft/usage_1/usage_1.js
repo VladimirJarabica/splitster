@@ -1,8 +1,10 @@
+// @flow
+
 /**
  * Desired usage of app
  */
 
-import splitster, { Test } from "../../lib/main"
+import splitster, { Test } from "../../src/main"
 
 splitster.init()
 
@@ -10,22 +12,26 @@ splitster.init()
  * Creates new abTest with ratio 3:3:5 - if not used, equal ratio will be used
  * TODO: segments => filter functions
  */
-const newTest = new Test({
+const newTestOpts = {
 	id: "button-color",
-	variants: {
-		"red": {
+	variants: [
+		{
+			id: "red",
 			ratio: 3,
 		},
-		"green": {
+		{
+			id: "green",
 			ratio: 3,
 		},
-		"blue": {
+		{
+			id: "blue",
 			ratio: 5,
-		}
-	},
-})
+		},
+	],
+}
+const newTest = new Test(newTestOpts)
 
-// splitster.registerTest(newTest)
+splitster.registerTest(newTest)
 //
 // splitster.registerLogger("console", (tests) => {
 // 	tests.forEach(() => {

@@ -1,1 +1,1 @@
-export { Variant, TestOpts } from "./Test"
+export { Variant, TestOpts } from "./containers/Test"

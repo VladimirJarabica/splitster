@@ -1,4 +1,9 @@
-// @flow
+
+// Just for immutable types run in console
+import * as Immutable from "immutable"
+import installDevTools from "immutable-devtools"
+installDevTools(Immutable)
+
 
 /**
  * Desired usage of app
@@ -32,14 +37,17 @@ const newTestOpts = {
 const newTest = new Test(newTestOpts)
 
 splitster.registerTest(newTest)
-//
-// splitster.registerLogger("console", (tests) => {
-// 	tests.forEach(() => {
-// 		console.log(test.toLog())
-// 	})
-// })
-//
-// document.getElementById("button").onclick = () => {
-// 	// If not set, all test will be registered here
-// 	splitster.registerMetric(["button-color"], ["console"])
-// }
+
+splitster.registerLogger("console", (tests) => {
+	tests.forEach((test) => {
+		console.log(test.toLog())
+	})
+})
+
+splitster.registerMetric("button-clicked", "button-color", "concole")
+
+document.getElementById("button").onclick = () => {
+	console.log("button click, state:", splitster.getState())
+	// If not set, all test will be registered here
+	// splitster.registerMetric(["button-color"], ["console"])
+}

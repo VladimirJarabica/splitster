@@ -1,4 +1,4 @@
 import * as splitster from "./splitster"
 export default splitster
 
-export { default as Test } from "./Test"
+export { default as Test } from "./containers/Test"

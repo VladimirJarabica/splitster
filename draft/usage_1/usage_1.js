@@ -44,7 +44,7 @@ splitster.registerLogger("console", (tests) => {
 	})
 })
 
-splitster.registerMetric("button-clicked", "button-color", "concole")
+splitster.registerMetric("button-clicked", "button-color", "console")
 
 document.getElementById("button").onclick = () => {
 	console.log("button click, state:", splitster.getState())

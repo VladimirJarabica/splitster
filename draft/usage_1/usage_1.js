@@ -40,14 +40,12 @@ splitster.registerTest(newTest)
 
 splitster.registerLogger("console", (tests) => {
 	tests.forEach((test) => {
-		console.log(test.toLog())
+		console.log(test)
 	})
 })
 
 splitster.registerMetric("button-clicked", "button-color", "console")
 
 document.getElementById("button").onclick = () => {
-	console.log("button click, state:", splitster.getState())
-	// If not set, all test will be registered here
-	// splitster.registerMetric(["button-color"], ["console"])
+	splitster.fire("button-clicked")
 }

@@ -27,6 +27,5 @@ export default class Test extends TestRecord {
 	
 	constructor(opts: TestOpts) {
 		super(opts)
-		console.log("new Test", opts)
 	}
 }

@@ -1,3 +1,5 @@
+import Cookies from "js-cookie"
+
 import Test from "./containers/Test"
 import Variant from "./containers/Variant"
 import Metric from "./containers/Metric"
@@ -11,6 +13,9 @@ export const init = () => {
 
 export const registerTest = (test: Test) => {
 	state = state.addTest(test)
+	
+	// TODO: nicer
+	Cookies.set(test.id, test.winner.id)
 }
 
 export const registerLogger = (id: string, logger: Function) => {

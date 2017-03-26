@@ -7,7 +7,7 @@ module.exports = {
 		usage_1: './draft/usage_1/usage_1.js'
 	},
 	output: {
-		filename: 'draft/dist/[name].bundle.js'
+		filename: 'draft/[name]/dist/[name].bundle.js'
 	},
 	devtool: "source-map",
 	module: {

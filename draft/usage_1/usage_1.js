@@ -4,6 +4,7 @@ import * as Immutable from "immutable"
 import installDevTools from "immutable-devtools"
 installDevTools(Immutable)
 
+import Cookies from "js-cookie"
 
 /**
  * Desired usage of app
@@ -49,4 +50,11 @@ splitster.registerMetric("button-clicked", "button-color", "console")
 document.getElementById("button").onclick = () => {
 	splitster.fire("button-clicked")
 	console.log("winner of button-color", splitster.getWinner("button-color"))
+}
+
+document.getElementById("erase-cookies").onclick = () => {
+	const cookies = document.cookie.split(";")
+	cookies.forEach(cookie => {
+		Cookies.remove(cookie.split("=")[0].trim())
+	})
 }

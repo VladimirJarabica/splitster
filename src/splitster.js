@@ -1,4 +1,5 @@
 import Test from "./containers/Test"
+import Variant from "./containers/Variant"
 import Metric from "./containers/Metric"
 import SplitsterState from "./state/SplitsterState"
 
@@ -33,4 +34,9 @@ export const fire = (metricId: string) => {
 
 export const getState = (): SplitsterState => {
 	return state
+}
+
+// TODO: Test
+export const getWinner = (id: string): Variant | null => {
+	return state.tests.has(id) ? state.tests.get(id).winner : null
 }

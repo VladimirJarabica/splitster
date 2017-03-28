@@ -49,7 +49,7 @@ splitster.registerMetric("button-clicked", "button-color", "console")
 
 document.getElementById("button").onclick = () => {
 	splitster.fire("button-clicked")
-	console.log("winner of button-color", splitster.getWinner("button-color"))
+	console.log("winner of button-color", splitster.getWinner("button-color"), splitster)
 }
 
 document.getElementById("erase-cookies").onclick = () => {

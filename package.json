@@ -6,8 +6,9 @@
   "scripts": {
     "build": "babel src -d lib",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-draft": "webpack --config webpack.draft.js",
-    "build-draft-w": "webpack --config webpack.draft.js --watch",
+    "webpack-draft": "webpack --config webpack.draft.js",
+    "webpack-draft-w": "webpack --config webpack.draft.js --watch",
+    "build-draft": "babel draft/usage_server/server.js > draft/usage_server/server.b.js && node draft/usage_server/server.b.js",
     "flow": "flow; test $? -eq 0 -o $? -eq 2"
   },
   "repository": {

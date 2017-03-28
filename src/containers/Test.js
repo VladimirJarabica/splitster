@@ -40,6 +40,5 @@ export default class Test extends TestRecord {
 			variants,
 			segments: opts.segments,
 		})
-		console.log("constructor", this)
 	}
 }

@@ -8,7 +8,7 @@ export const getWinningVariant = (variants: List<Variant>): Variant => {
 		return acc + variant.ratio
 	}, 0)
 	
-	let rand = Random.integer(0, ratioSum)(Random.engines.browserCrypto)
+	let rand = Random.integer(0, ratioSum)(Random.engines.nativeMath)
 	
 	const winningVariant = variants.find(variant => {
 		rand -= variant.ratio

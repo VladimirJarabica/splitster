@@ -37,7 +37,7 @@ const newTestOpts = {
 }
 const newTest = new Test(newTestOpts)
 
-splitster.registerTest(newTest)
+splitster.registerTest(newTest.run())
 
 splitster.registerLogger("console", (tests) => {
 	tests.forEach((test) => {

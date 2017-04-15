@@ -33,12 +33,20 @@ export default class Test extends TestRecord {
 		// TODO: Check winner variant
 		
 		const variants = List(opts.variants.map(v => new Variant(v)))
-		const winner = getWinningVariant(variants)
+		// const winner = getWinningVariant(variants)
 		super({
 			id: opts.id,
-			winner,
+			// winner,
 			variants,
 			segments: opts.segments,
 		})
+	}
+	
+	run() {
+		if (!this.winner) {
+			return this.set("winner", getWinningVariant(this.variants))
+		}
+		// Test has already run
+		return this
 	}
 }

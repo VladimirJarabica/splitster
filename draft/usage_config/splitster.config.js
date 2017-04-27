@@ -31,6 +31,7 @@ const config = {
         },
       ],
       // Defined tracks for this test (array, or id, or single track function)
+      // TODO: only keys, not test specific functions
       track: [
         TRACK_CONSOLE_ID,
         (res) => {console.error(res)},
@@ -38,6 +39,7 @@ const config = {
     },
   ],
   // Define user groups
+  // TODO: use objects like id: {}, not array
   user_groups: [
     {
       id: GROUP_EN_USERS_ID,
@@ -47,6 +49,7 @@ const config = {
     },
   ],
   // Define common tracks
+  // TODO: use objects like id: {}, not array
   tracks: [
     {
       id: TRACK_CONSOLE_ID,

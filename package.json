@@ -9,6 +9,7 @@
     "webpack-draft": "webpack --config webpack.draft.js",
     "webpack-draft-w": "webpack --config webpack.draft.js --watch",
     "build-draft": "babel draft/usage_server/server.js > draft/usage_server/server.b.js && node draft/usage_server/server.b.js",
+    "build-config-draft": "babel draft/usage_config/server.js > draft/usage_config/server.b.js && node draft/usage_config/server.b.js",
     "flow": "flow; test $? -eq 0 -o $? -eq 2"
   },
   "repository": {

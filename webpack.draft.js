@@ -5,6 +5,7 @@ const babelOptions = {
 module.exports = {
 	entry: {
 		usage_1: './draft/usage_1/usage_1.js',
+		usage_config: './draft/usage_config/usage_config.js',
 		usage_server: './draft/usage_server/usage_server.js',
 	},
 	output: {

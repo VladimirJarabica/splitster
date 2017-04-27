@@ -19,42 +19,42 @@ splitster.init()
  * TODO: segments => filter functions
  */
 const newTestOpts = {
-	id: "button-color",
-	variants: [
-		{
-			id: "red",
-			ratio: 3,
-		},
-		{
-			id: "green",
-			ratio: 3,
-		},
-		{
-			id: "blue",
-			ratio: 5,
-		},
-	],
+  id: "button-color",
+    variants: [
+      {
+        id: "red",
+        ratio: 3,
+      },
+      {
+        id: "green",
+        ratio: 3,
+      },
+      {
+        id: "blue",
+        ratio: 5,
+      },
+    ],
 }
 const newTest = new Test(newTestOpts)
 
 splitster.registerTest(newTest.run())
 
 splitster.registerLogger("console", (tests) => {
-	tests.forEach((test) => {
-		console.log(test)
-	})
+  tests.forEach((test) => {
+    console.log(test)
+  })
 })
 
 splitster.registerMetric("button-clicked", "button-color", "console")
 
 document.getElementById("button").onclick = () => {
-	splitster.fire("button-clicked")
-	console.log("winner of button-color", splitster.getWinner("button-color"), splitster)
+  splitster.fire("button-clicked")
+  console.log("winner of button-color", splitster.getWinner("button-color"), splitster)
 }
 
 document.getElementById("erase-cookies").onclick = () => {
-	const cookies = document.cookie.split(";")
-	cookies.forEach(cookie => {
-		Cookies.remove(cookie.split("=")[0].trim())
-	})
+  const cookies = document.cookie.split(";")
+  cookies.forEach(cookie => {
+    Cookies.remove(cookie.split("=")[0].trim())
+  })
 }

@@ -3,59 +3,66 @@ const TRACK_CONSOLE_ID = "CONSOLE"
 
 const GROUP_EN_USERS_ID = "EN_USERS"
 
+export const TEST_BUTTON_COLOR = "BUTTON_COLOR"
+
 const config = {
-  tests: [
+  options: {
+    //TODO: runs only one test by session
+    separateTest: true,
+  },
+  tests: {
+    // Id of test
+    TEST_BUTTON_COLOR:
     {
-      // Id of test
-      id: "button_color",
       // Short description
-      description: "Check if user likes more red button or right button",
+      description: "Check if user likes more red button or blue button",
       // Groups which user must satisfy
       user_groups: [GROUP_EN_USERS_ID],
       // Overall usage in %
+      // TODO: solve by statistic - if 50% - serve to every 2. person
       usage: 100,
       // Array of variants
-      variants: [
-        {
-          // Variant id
-          id: "red",
+      variants: {
+        // Variant id
+        red: {
+          // TODO: If test is not user, always return default. If not specified, use first
+          // TODO: force user to specify default
+          default: true,
           // Variant value
           value: "RED",
           // Variant ratio to use
           ratio: 3,
         },
-        {
-          id: "blue",
+        blue: {
           value: "BLUE",
           ratio: 4,
         },
-      ],
+      },
       // Defined tracks for this test (array, or id, or single track function)
-      // TODO: only keys, not test specific functions
+      // TODO: takes keys of tracks, or specific tracks
       track: [
         TRACK_CONSOLE_ID,
-        (res) => {console.error(res)},
       ],
     },
-  ],
+  },
   // Define user groups
-  // TODO: use objects like id: {}, not array
-  user_groups: [
-    {
-      id: GROUP_EN_USERS_ID,
+  user_groups: {
+    GROUP_EN_USERS_ID: {
       check: {
         "language": ["en", "hk"],
       },
-    },
-  ],
+      functionCheck: (user) => true,
+    }
+  },
   // Define common tracks
-  // TODO: use objects like id: {}, not array
-  tracks: [
-    {
-      id: TRACK_CONSOLE_ID,
+  tracks: {
+    TRACK_CONSOLE_ID: {
       run: (res) => {console.log(res)},
     },
-  ],
+    INFINARIO: {
+      run: (res) => infinario(res)
+    }
+  },
 }
 
 export default config

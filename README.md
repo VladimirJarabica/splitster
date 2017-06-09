@@ -32,7 +32,7 @@ const tests = {
     description: "Check if user likes more red, blue or green button",
     
     // Groups which user must satisfy - optional
-    userGroups: [EN_USERS_GROUP],
+    userGroups: ["enUsers"],
     
     // Overall usage of test in % - optional - if not specified 100 is used
     usage: 100,
@@ -108,6 +108,28 @@ document.getElementById("button").addEventListener("click", () => {
 })
 ```
 ## userGroups
+Defines groups which user must satisfies if test can be started.
+```ecmascript 6
+splitster.run(test_id, user)
+// OR
+splitster.runAll(user)
+```
+Object of key value pairs
+```ecmascript 6
+const userGroups = {
+  enUsers: [
+    {"language": ["en", "hi"]}
+  ],
+  customUsers: [
+    (user) => user.isValid(),
+  ]
+}
+```
+one group is an array of rules which user object must satisfies.
+
+Rule can be object: defining structure of user object
+
+or function which takes user object and if returns true, rule passed
 
 ## tracks
 Object of tracks specified by id
@@ -124,4 +146,4 @@ tracks = {
 Other options to set
 
 **separateTest:** if true, only one test is used at time. Test is chosen randomly.  
-Useful when you don't want to pollute your results with too many test running same time. 
+Useful when you don't want to pollute your results with too many tests running at the same time. 

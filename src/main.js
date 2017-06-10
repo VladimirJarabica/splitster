@@ -1,5 +1,20 @@
-import * as splitster from "./splitster"
-export default splitster
+// Default export - init of splitster app
 
-export { default as Test } from "./containers/Test"
-export { default as server } from "./server"
+// Server export
+
+// Types exports:
+// Splitster
+// Config
+// Test
+// Variant
+// Track
+// Options
+// ...
+export type {
+  Config,
+  TestConfig,
+  VariantConfig,
+  UserGroupConfig,
+  TrackConfig,
+  OptionsConfig,
+} from "./types"

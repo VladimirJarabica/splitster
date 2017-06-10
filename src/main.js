@@ -1,5 +1,5 @@
 // Default export - init of splitster app
-
+export { default } from "./splitster"
 // Server export
 
 // Types exports:

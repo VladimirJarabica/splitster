@@ -11,6 +11,8 @@ export type OptionsConfig = {|
 // TODO: add test result type
 export type TrackConfig = (Object) => void
 
+export type TestTrackConfig = TrackId|TrackConfig|Array<TrackId|TrackConfig>
+
 export type UserGroupConfig = {
   [string]: any|Array<any>
 }| (Object) => boolean
@@ -33,7 +35,7 @@ export type TestConfig = {|
 
 export type Config = {|
   tests: { [TestsId]: TestConfig },
-  userGroups: { [GroupId]: UserGroupConfig },
-  tracks: { [TrackId]: TrackConfig },
-  options: OptionsConfig,
+  userGroups?: { [GroupId]: UserGroupConfig },
+  tracks?: { [TrackId]: TrackConfig },
+  options?: OptionsConfig,
 |}

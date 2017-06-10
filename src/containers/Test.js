@@ -5,16 +5,34 @@ import type {
   TestConfig,
   VariantConfig,
   TrackConfig,
+  TracksConfig,
+  TestTrackConfig,
+  TestTracksConfig,
 } from "../types"
+
+
+const reduceTrack = (configTrack: TestTrackConfig, tracks: TrackConfig): TrackConfig => {
+  return typeof configTrack === "string" ? tracks[configTrack] : configTrack
+}
+const reduceTracks = (configTracks: TestTracksConfig, tracks: TracksConfig): TrackConfig => {
+  return Array.isArray(configTracks)
+    ? R.map(R.partialRight(reduceTrack, [tracks]), configTracks)
+    : [reduceTrack(configTracks, tracks)]
+}
 
 export default class Test {
   variants: { [string]: VariantConfig }
+  runTrack: TracksConfig
+  useTrack: TracksConfig
+  endTrack: TracksConfig
   winningVariant: VariantConfig
   disabled: boolean
 
-  constructor(config: TestConfig, tracks: { [string]: TrackConfig }, disabled: ?boolean = false) {
-    console.log("test constructor", config)
+  constructor(config: TestConfig, tracks: TestTracksConfig, disabled: ?boolean = false) {
     this.variants = config.variants
+    this.runTrack = reduceTracks(config.runTrack, tracks)
+    this.useTrack = reduceTracks(config.useTrack, tracks)
+    this.endTrack = reduceTracks(config.endTrack, tracks)
     this.disabled = disabled
   }
 

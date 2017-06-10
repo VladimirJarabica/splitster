@@ -3,6 +3,8 @@ import type { Config } from "../../src/types"
 
 export const BUTTON_COLOR = "BUTTON_COLOR"
 
+const CONSOLE = "CONSOLE"
+
 const config: Config = {
   tests: {
     BUTTON_COLOR: {
@@ -17,6 +19,9 @@ const config: Config = {
           ratio: 1,
         },
       },
+      runTrack: CONSOLE,
+      useTrack: [CONSOLE],
+      endTrack: [CONSOLE, console.warn],
     },
   },
   tracks: {

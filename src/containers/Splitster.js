@@ -1,20 +1,21 @@
 // @flow
 import R from "ramda"
 
-import type { Config, OptionsConfig, TestConfig, VariantConfig, TrackConfig, UserGroupConfig } from "../types"
+import type {
+  Config,
+  OptionsConfig,
+  TestConfig,
+  VariantConfig,
+  TrackConfig,
+  UserGroupConfig,
+  TracksConfig,
+} from "../types"
 
 import Test from "./Test"
 import UserGroup from "./UserGroup"
 
 type Tests = { [string]: Test }
 type UserGroups = { [string]: UserGroup }
-type Tracks = { [string]: (Object) => void }
-
-const reduceTracks = (tracks: { [string]: TrackConfig } = {}) => R.reduce(
-  (acc: Tracks, key: string): Tracks => R.assoc(tracks[key], acc),
-  {},
-  R.keys(tracks)
-)
 
 const reduceTests = (tests: { [string]: TestConfig } = {}, tracks: { [string]: TrackConfig }) => R.reduce(
   (acc: Tests, key: string): Tests => R.assoc(key, new Test(tests[key], tracks), acc),
@@ -35,12 +36,12 @@ const reduceUserGroups = (userGroups: { [string]: UserGroupConfig } = {}) => R.r
 export default class Splitster {
   tests: Tests
   userGroups: UserGroups
-  tracks: Tracks
+  tracks: TracksConfig
   options: ?OptionsConfig
   user: Object|null
 
   constructor(config: Config, user?: Object = null) {
-    this.tracks = reduceTracks(config.tracks)
+    this.tracks = config.tracks
     this.tests = reduceTests(config.tests, this.tracks)
     this.userGroups = reduceUserGroups(config.userGroups)
     this.options = config.options

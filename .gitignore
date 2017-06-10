@@ -1,4 +1,5 @@
 .idea
 node_modules/
+draft/
 npm-debug.log
 draft/*/dist

@@ -5,9 +5,12 @@ type GroupId = string
 type TrackId = string
 
 export type OptionsConfig = {|
-  separateTest: boolean,
-  disableCookies: boolean,
-  cookiesExpiration: number,
+  separateTest: ?boolean,
+  cookies: ?{
+    disable: ?boolean,
+    expiration: ?number,
+    name: ?string, // Default "splitster"
+  },
 |}
 
 // TODO: add test result type

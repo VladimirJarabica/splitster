@@ -1,6 +1,7 @@
 // Default export - init of splitster app
-export { default } from "./splitster"
+export { default } from "./splitster/client"
 // Server export
+export { default as server } from "./splitster/server"
 
 // Types exports:
 // Splitster

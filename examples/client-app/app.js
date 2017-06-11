@@ -1,11 +1,13 @@
 // import splitster from "splitster"
 import splitsterInit from "../../src/main"
+import Cookies from "js-cookie"
 
 import config, { BUTTON_COLOR } from "./config"
 
 const splitster = splitsterInit(config)
 window.splitster = splitster
 window.config = config
+window.Cookies = Cookies
 
 splitster.run(BUTTON_COLOR)
 

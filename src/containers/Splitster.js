@@ -40,7 +40,7 @@ export default class Splitster {
   options: ?OptionsConfig
   user: Object|null
 
-  constructor(config: Config, user?: Object = null) {
+  constructor(config: Config, user?: Object = null, def?: Object = null) {
     this.tracks = config.tracks
     this.tests = reduceTests(config.tests, this.tracks)
     this.userGroups = reduceUserGroups(config.userGroups)
@@ -76,5 +76,15 @@ export default class Splitster {
 
   trackAll = (): void => {
     R.forEach(this.track, R.keys(this.tests))
+  }
+
+  getSimpleState = () => {
+    return R.reduce((acc, key: string) => {
+      const test: Test = this.tests[key]
+      if (!test.disabled) {
+        return R.assoc(key, test.winningVariant.value, acc)
+      }
+      return acc
+    }, {}, R.keys(this.tests))
   }
 }

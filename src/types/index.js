@@ -6,6 +6,8 @@ type TrackId = string
 
 export type OptionsConfig = {|
   separateTest: boolean,
+  disableCookies: boolean,
+  cookiesExpiration: number,
 |}
 
 // TODO: add test result type

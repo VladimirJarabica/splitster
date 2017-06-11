@@ -146,4 +146,9 @@ tracks = {
 Other options to set
 
 **separateTest:** if true, only one test is used at time. Test is chosen randomly.  
-Useful when you don't want to pollute your results with too many tests running at the same time. 
+Useful when you don't want to pollute your results with too many tests running at the same time.
+ 
+**disableCookies** if true, tests will not be saved to cookies.  
+Initialization won't get result from cookies but always run.
+
+**cookiesExpiration** number of days cookies should last.

@@ -29,15 +29,15 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.22.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.2",
     "flow-bin": "^0.42.0",
-    "immutable-devtools": "0.0.7"
+    "immutable-devtools": "0.0.7",
+    "webpack": "^3.0.0"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.3",
     "js-cookie": "^2.1.4",
     "ramda": "^0.24.1",
-    "random-js": "^1.0.8",
-    "webpack": "^2.3.2"
+    "random-js": "^1.0.8"
   }
 }

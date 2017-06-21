@@ -5,5 +5,9 @@
   "license": "MIT",
   "dependencies": {
     "splitster": "^0.0.4"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.3",
+    "webpack": "^3.0.0"
   }
 }

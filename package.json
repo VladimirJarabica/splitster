@@ -22,6 +22,7 @@
   "homepage": "https://github.com/VladimirJarabica/splitster#readme",
   "devDependencies": {
     "babel-core": "^6.24.0",
+    "babel-jest": "^20.0.3",
     "babel-loader": "^6.4.1",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-flow": "^6.23.0",

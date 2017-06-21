@@ -17,13 +17,17 @@ import UserGroup from "./UserGroup"
 type Tests = { [string]: Test }
 type UserGroups = { [string]: UserGroup }
 
-const reduceTests = (tests: { [string]: TestConfig } = {}, tracks: { [string]: TrackConfig }) => R.reduce(
+const reduceDefTests = () => {
+
+}
+
+const reduceTestsFromConfig = (tests: { [string]: TestConfig } = {}, tracks: { [string]: TrackConfig }) => R.reduce(
   (acc: Tests, key: string): Tests => R.assoc(key, new Test(tests[key], tracks), acc),
   {},
   R.keys(tests)
 )
 
-const reduceUserGroups = (userGroups: { [string]: UserGroupConfig } = {}) => R.reduce(
+const reduceUserGroupsFromConfig = (userGroups: { [string]: UserGroupConfig } = {}) => R.reduce(
   (acc: UserGroups, key: string): UserGroups => R.assoc(
     key,
     new UserGroup(userGroups[key]),
@@ -42,8 +46,8 @@ export default class Splitster {
 
   constructor(config: Config, user?: Object = null, def?: Object = null) {
     this.tracks = config.tracks
-    this.tests = reduceTests(config.tests, this.tracks)
-    this.userGroups = reduceUserGroups(config.userGroups)
+    this.tests = reduceTestsFromConfig(config.tests, this.tracks, reduceDefTests(def))
+    this.userGroups = reduceUserGroupsFromConfig(config.userGroups)
     this.options = config.options
     this.user = user
   }

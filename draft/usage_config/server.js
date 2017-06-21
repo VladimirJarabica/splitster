@@ -15,19 +15,21 @@ app.use(cookieParser())
 
 app.use(express.static(path.join(__dirname, 'dist')))
 
+// TODO: Write our tests in config, ask people to write hypotetic tests
+
 app.get("/", (req, res) => {
   //TODO: cookies expiration
-  
+
   //TODO: Redux actions middleware actions: {type:xxx, experiment: ID_EXPERIMENT}
   //TODO: on action dispatch experiment will be tracked
-  
+
   /**
    * TODO
    * send test results in html
    * send config with tracts atc as file js
    */
-  
-  
+
+
   // Some info about user - should be from request
   const user = {
     language: "en",
@@ -39,32 +41,32 @@ app.get("/", (req, res) => {
   // return variant
   // TODO: track - test war resolved - used "pageLoaded"
   splitster.run(TEST_BUTTON_COLOR, user)
-  
+
   // Run all experiments for user
   // return object of variants: {id: variant}
   splitster.runAll(user)
-  
+
   // Return winning for specified test.
   // Throws error if splitster not initialized or test not defined
   // TODO: in get set next tracking - "test was used" - just once
   const variant = splitster.get(TEST_BUTTON_COLOR)
   const variants = splitster.get()
-  
+
   if (variant.value === "RED") {
     res.send("red")
   } else if (variant.value === "BLUE") {
     res.send("blue")
   }
   res.send("neither")
-  
+
   setTimeout(() => {
     // Something good happened
     splitster.track(TEST_BUTTON_COLOR)
-    
+
     //TODO: track multiple test
     splitster.track([1,2,3,4])
-    
-    
+
+
     splitster.trackAll()
   }, 5000)
 })

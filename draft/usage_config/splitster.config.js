@@ -21,6 +21,8 @@ const config = {
       // Overall usage in %
       // TODO: solve by statistic - if 50% - serve to every 2. person
       usage: 100,
+      // TODO: default variant not in variants?
+      defaultVariant: "red",
       // Array of variants
       variants: {
         // Variant id
@@ -42,7 +44,36 @@ const config = {
       // TODO: takes keys of tracks, or specific tracks
       track: [
         TRACK_CONSOLE_ID,
+        () => {}
       ],
+    },
+    TIMELINE: {
+      user_groups: user => isModern(user.browser),
+      defaultVariant: "old",
+      variants: {
+        "new": {
+          ratio: 1,
+        },
+        old: {
+          ratio: 1
+        }
+      },
+      runTrack: () => {},
+      // TODO: track test lifetime from run to end
+      // TODO: rename ENDtrack? it can be called more than once
+      endTrack: (res) => { console.log(res.lifetime)},
+    },
+    HEADER: {
+      defaultVariant: "old",
+      variants: {
+        "new": {
+          ratio: 1,
+        },
+        old: {
+          ratio: 1
+        }
+      },
+      endTrack: () => {},
     },
   },
   // Define user groups

@@ -27,6 +27,7 @@ const defaultTestOptions: TestOptions = {
 
 // TODO: saving to cookies (add to option)
 export default class Test {
+  id: string
   variants: { [string]: VariantConfig }
   runTrack: Array<TrackConfig>
   useTrack: Array<TrackConfig>
@@ -38,15 +39,15 @@ export default class Test {
   disabled: boolean
   // Defines whether the test has been used at least once. Will be changed by first calling splitster.get("test_id")
   used: boolean = false
-  // Value is set from cookies - there will be no calculations for winning variant
-  // alreadySet: boolean = false
 
-  constructor(config: TestConfig, tracks: TestTracksConfig, opts: TestOptions) {
+  constructor(id: string, config: TestConfig, tracks: TestTracksConfig, opts: TestOptions) {
     const {
       disabled,
-      // alreadySet,
       winningVariant,
     }: TestOptions = Object.assign({}, defaultTestOptions, opts)
+    console.log("test with id", id, opts)
+
+    this.id = id
     this.variants = config.variants
     this.defVariant = R.find(R.propEq("def", true), R.values(this.variants))
     this.runTrack = reduceTracks(config.runTrack, tracks)
@@ -55,8 +56,8 @@ export default class Test {
     this.disabled = disabled
     if (winningVariant) {
       this.winningVariant = this.variants[winningVariant]
+      console.log("setting winningVariant", this.winningVariant)
     }
-    // this.alreadySet = alreadySet
   }
 
   run = (): void => {
@@ -69,18 +70,6 @@ export default class Test {
     }
 
     this.runTracksArray(this.runTrack)
-
-
-    // if (this.disabled) {
-    //   this.winningVariant = this.defVariant
-    // } else {
-    //   // Save to cookies - need some wrapper to client vs server splitster
-    //
-    //   this.runTracksArray(this.runTrack)
-    //
-    //   // TODO: test get winning variant
-    //   this.winningVariant = getWinningVariant(R.values(this.variants), this.defVariant)
-    // }
   }
 
   get = (): VariantConfig => {

@@ -29,6 +29,7 @@ export type VariantConfig = {|
   value: string,
   ratio: number,
 |}
+export type VariantsConfig = { [VariantId]: VariantConfig }
 
 export type TestConfig = {|
   description?: string,
@@ -37,7 +38,7 @@ export type TestConfig = {|
   runTrack?: TrackId|TrackConfig|Array<TrackId|TrackConfig>,
   useTrack?: TrackId|TrackConfig|Array<TrackId|TrackConfig>,
   endTrack?: TrackId|TrackConfig|Array<TrackId|TrackConfig>,
-  variants: { [VariantId]: VariantConfig },
+  variants: VariantsConfig,
 |}
 
 export type Config = {|

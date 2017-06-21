@@ -1,7 +1,7 @@
 // @flow
 import R from "ramda"
 
-type Cookies = { [string]: Object }
+export type Cookies = { [string]: Object }
 
 /**
  * How cookies will set

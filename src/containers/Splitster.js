@@ -11,21 +11,30 @@ import type {
   TracksConfig,
 } from "../types"
 
+import type { Cookies } from "../tools/cookiesTools"
+import type { TestOptions } from "./Test"
+
 import Test from "./Test"
 import UserGroup from "./UserGroup"
+
+import { parseCookies } from "../tools/cookiesTools"
 
 type Tests = { [string]: Test }
 type UserGroups = { [string]: UserGroup }
 
-const reduceDefTests = () => {
-
+const createTestsOpts = (id: string, test: TestConfig, def: Cookies): TestOptions => {
+  return {
+    winningVariant: def[id],
+  }
 }
 
-const reduceTestsFromConfig = (tests: { [string]: TestConfig } = {}, tracks: { [string]: TrackConfig }) => R.reduce(
-  (acc: Tests, key: string): Tests => R.assoc(key, new Test(tests[key], tracks), acc),
-  {},
-  R.keys(tests)
-)
+const reduceTestsFromConfig = (tests: { [string]: TestConfig } = {}, tracks: { [string]: TrackConfig }, def: Cookies) =>
+  R.reduce(
+    (acc: Tests, key: string): Tests =>
+      R.assoc(key, new Test(key, tests[key], tracks, createTestsOpts(key, tests[key], def)), acc),
+    {},
+    R.keys(tests)
+  )
 
 const reduceUserGroupsFromConfig = (userGroups: { [string]: UserGroupConfig } = {}) => R.reduce(
   (acc: UserGroups, key: string): UserGroups => R.assoc(
@@ -44,9 +53,10 @@ export default class Splitster {
   options: ?OptionsConfig
   user: Object|null
 
+  // TODO: better solve options - separateTest etc
   constructor(config: Config, user?: Object = null, def?: Object = null) {
     this.tracks = config.tracks
-    this.tests = reduceTestsFromConfig(config.tests, this.tracks, reduceDefTests(def))
+    this.tests = reduceTestsFromConfig(config.tests, this.tracks, parseCookies(def, "test_"))
     this.userGroups = reduceUserGroupsFromConfig(config.userGroups)
     this.options = config.options
     this.user = user

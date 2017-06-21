@@ -1,5 +1,5 @@
 // @flow
-type TestsId = string
+type TestId = string
 type VariantId = string
 type GroupId = string
 type TrackId = string
@@ -23,6 +23,7 @@ export type TestTracksConfig = TestTrackConfig|Array<TestTrackConfig>
 export type UserGroupConfig = {
   [string]: any|Array<any>
 }| (Object) => boolean
+export type UserGroupsConfig = { [GroupId]: UserGroupConfig }
 
 export type VariantConfig = {|
   def?: boolean,
@@ -35,15 +36,17 @@ export type TestConfig = {|
   description?: string,
   userGroup?: GroupId|UserGroupConfig|Array<GroupId|UserGroupConfig>,
   usage?: number,
-  runTrack?: TrackId|TrackConfig|Array<TrackId|TrackConfig>,
-  useTrack?: TrackId|TrackConfig|Array<TrackId|TrackConfig>,
-  endTrack?: TrackId|TrackConfig|Array<TrackId|TrackConfig>,
+  runTrack?: TestTracksConfig,
+  useTrack?: TestTracksConfig,
+  endTrack?: TestTracksConfig,
+  defaultVariant: string,
   variants: VariantsConfig,
 |}
+export type TestsConfig = { [TestId]: TestConfig }
 
 export type Config = {|
-  tests: { [TestsId]: TestConfig },
-  userGroups?: { [GroupId]: UserGroupConfig },
+  tests: TestsConfig,
+  userGroups?: UserGroupsConfig,
   tracks?: TracksConfig,
   options?: OptionsConfig,
 |}

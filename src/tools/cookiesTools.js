@@ -43,5 +43,5 @@ export const parseTests = (tests: Tests, prefix: string = "splitster_"): Cookies
   R.reduce(
     (acc, key) => R.assoc(prefix + key.id, parseTest(key), acc),
     {},
-    tests,
+    R.values(tests),
   )

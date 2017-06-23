@@ -37,6 +37,7 @@ export type Test = {|
 |}
 
 export type Tests = { [string]: Test }
+export type Variants = { [string]: VariantConfig }
 
 const defaultTestOptions: TestOptions = {
   disabled: false,

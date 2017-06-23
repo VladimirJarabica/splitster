@@ -1,7 +1,11 @@
 // @flow
 import Cookies from "js-cookie"
 
-import { parseCookies } from "../../tools/cookiesTools"
+import {
+  parseCookies,
+  parseTest,
+  parseTests,
+} from "../../tools/cookiesTools"
 import * as SplitsterFn from "../../containers/SplitsterFn"
 
 import type {
@@ -11,6 +15,9 @@ import type {
 import type {
   Splitster,
 } from "../../containers/SplitsterFn"
+import type {
+  Variants,
+} from "../../containers/TestFn"
 
 
 class SplitsterClient {
@@ -25,16 +32,20 @@ class SplitsterClient {
   run = (testId: string): void => {
     this.state = SplitsterFn.run(this.state, testId)
     // TODO: Save to cookies
+    const parsedTest = parseTest(this.state.tests[testId])
+    console.log("parsedTest", parsedTest)
   }
   runAll = (): void => {
     this.state = SplitsterFn.runAll(this.state)
     // TODO: Save to cookies
+    const parsedTests = parseTests(this.state.tests)
+    console.log("parsedTests", parsedTests)
   }
   get = (testId: string): VariantConfig => {
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)
   }
-  getAll = (): Array<VariantConfig> => {
+  getAll = (): Variants => {
     this.state = SplitsterFn.willGetAll(this.state)
     return SplitsterFn.getAll(this.state)
   }

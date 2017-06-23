@@ -9,7 +9,8 @@ window.splitster = splitster
 window.config = config
 window.Cookies = Cookies
 
-splitster.run(BUTTON_COLOR)
+// splitster.run(BUTTON_COLOR)
+splitster.runAll()
 
 const app = document.getElementById("app")
 const button = document.createElement("button")
@@ -18,6 +19,7 @@ button.innerHTML = "Button"
 app.appendChild(button)
 
 const variant = splitster.get(BUTTON_COLOR)
+console.log("getAll", splitster.getAll())
 if (variant.value === "RED") {
   button.style.backgroundColor = "red"
 } else if (variant.value === "BLUE") {

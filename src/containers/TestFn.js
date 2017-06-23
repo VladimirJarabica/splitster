@@ -14,6 +14,7 @@ import type {
   TrackConfig,
   TestConfig,
   TracksConfig,
+  Result,
 } from "../types"
 
 export type TestOptions = {|
@@ -87,5 +88,5 @@ export const get = (test: Test): VariantConfig => test.winningVariant || test.de
 export const track = (test: Test): void => runTracks(test.endTrack)
 
 // TODO: For now return VariantConfig - specify test result
-export const getResult = (test: Test): ?VariantConfig => test.winningVariant
+export const getResult = (test: Test): Result => test.winningVariant
 

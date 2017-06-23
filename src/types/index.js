@@ -13,8 +13,10 @@ export type OptionsConfig = {|
   },
 |}
 
+export type Result = ?VariantConfig
+
 // TODO: add test result type
-export type TrackConfig = (Object) => void
+export type TrackConfig = (Result) => void
 export type TracksConfig = { [TrackId]: TrackConfig }
 
 export type TestTrackConfig = TrackId|TrackConfig

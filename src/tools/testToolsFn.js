@@ -9,23 +9,34 @@ import type {
   TestTracksConfig,
   TrackConfig,
   TracksConfig,
+  Result,
 } from "../types"
 
 export const getDefaultVariant = (variants: VariantsConfig, defaultVariant: string): VariantConfig =>
   variants[defaultVariant] || R.find(R.propEq("def", true), R.values(variants))
 
-export const getTrack = (testTrack: TestTrackConfig, tracks: TracksConfig): TrackConfig =>
-  typeof testTrack === "string"
-    ? tracks[testTrack]
-    : testTrack
+export const getTrack = (testTrack: ?TestTrackConfig, tracks: ?TracksConfig = {}): ?TrackConfig => {
+  if (testTrack && tracks) {
+    if (typeof testTrack === "string") {
+      return tracks[testTrack]
+    }
+    return testTrack
+  }
+  return null
+}
 
-export const getTracks = (testTracks: TestTracksConfig, tracks: TracksConfig): Array<TrackConfig> =>
-  Array.isArray(testTracks)
-    ? R.map(R.partialRight(getTrack, [tracks]), testTracks)
-    : [getTrack(testTracks, tracks)]
+export const getTracks = (testTracks: ?TestTracksConfig, tracks: ?TracksConfig = {}): Array<TrackConfig> => {
+  if (Array.isArray(testTracks)) {
+    return R.filter(Boolean, R.map(R.partialRight(getTrack, [tracks]), testTracks))
+  }
+  if (Boolean(testTracks)) {
+    return R.filter(Boolean, R.map(R.partialRight(getTrack, [tracks]), [getTrack(testTracks, tracks)]))
+  }
+  return []
+}
 
 // TODO: type test result
-export const runTracks = (tracks: Array<TrackConfig>, result): void =>
+export const runTracks = (tracks: Array<TrackConfig>, result: Result): void =>
   R.forEach(
     (track: TrackConfig) => {
       track(result)
@@ -42,6 +53,5 @@ export const getWinningVariant = (variants: Array<VariantConfig>, defaultVariant
     rand -= variant.ratio
     return rand <= 0
   }, variants)
-  console.log("winningVariant", winningVariant)
   return winningVariant || defaultVariant
 }

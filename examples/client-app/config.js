@@ -8,9 +8,9 @@ const CONSOLE = "CONSOLE"
 const config: Config = {
   tests: {
     BUTTON_COLOR: {
+      defaultVariant: "red",
       variants: {
         red: {
-          def: true,
           value: "RED",
           ratio: 1,
         },

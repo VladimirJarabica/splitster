@@ -12,7 +12,7 @@ import type {
 } from "../types"
 
 export const getDefaultVariant = (variants: VariantsConfig, defaultVariant: string): VariantConfig =>
-  variants[defaultVariant] || R.find(R.propEq("def", true), R.values(this.variants))
+  variants[defaultVariant] || R.find(R.propEq("def", true), R.values(variants))
 
 export const getTrack = (testTrack: TestTrackConfig, tracks: TracksConfig): TrackConfig =>
   typeof testTrack === "string"
@@ -36,12 +36,12 @@ export const runTracks = (tracks: Array<TrackConfig>, result): void =>
 export const getWinningVariant = (variants: Array<VariantConfig>, defaultVariant: VariantConfig): VariantConfig => {
   const ratioSum = R.sum(R.map((variant: VariantConfig) => variant.ratio, variants))
 
-  let rand = Random.integer(0, ratioSum)(Random.engines.nativeMath)
+  let rand = Random.integer(1, ratioSum)(Random.engines.nativeMath)
 
   const winningVariant: VariantConfig = R.find((variant: VariantConfig) => {
     rand -= variant.ratio
-    return rand < 0
+    return rand <= 0
   }, variants)
-
+  console.log("winningVariant", winningVariant)
   return winningVariant || defaultVariant
 }

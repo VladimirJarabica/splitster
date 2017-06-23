@@ -1,4 +1,3 @@
-// @flow
 import SplitsterState from "../state/SplitsterState"
 
 type Opts = {

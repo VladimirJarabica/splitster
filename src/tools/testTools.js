@@ -1,4 +1,3 @@
-// @flow
 import R from "ramda"
 import Random from "random-js"
 

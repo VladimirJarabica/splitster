@@ -13,12 +13,12 @@ import type {
   VariantsConfig,
   TrackConfig,
   TestConfig,
-  TestTracksConfig,
+  TracksConfig,
 } from "../types"
 
 export type TestOptions = {|
-  disabled: ?boolean,
-  winningVariant: ?string,
+  disabled?: boolean,
+  winningVariant?: string,
 |}
 
 export type Test = {|
@@ -28,7 +28,7 @@ export type Test = {|
   useTrack: Array<TrackConfig>,
   endTrack: Array<TrackConfig>,
 
-  winningVariant: VariantConfig,
+  winningVariant: ?VariantConfig,
   defaultVariant: VariantConfig,
   disabled: boolean,
 
@@ -39,10 +39,9 @@ export type Tests = { [string]: Test }
 
 const defaultTestOptions: TestOptions = {
   disabled: false,
-  winningVariant: null,
 }
 
-export const constructTest = (id: string, config: TestConfig, tracks: TestTracksConfig, options: TestOptions): Test => {
+export const constructTest = (id: string, config: TestConfig, tracks: ?TracksConfig = {}, options: TestOptions): Test => {
   const {
     disabled,
     winningVariant,
@@ -54,7 +53,7 @@ export const constructTest = (id: string, config: TestConfig, tracks: TestTracks
     runTrack: getTracks(config.runTrack, tracks),
     useTrack: getTracks(config.useTrack, tracks),
     endTrack: getTracks(config.endTrack, tracks),
-    disabled,
+    disabled: disabled || false,
     winningVariant: winningVariant ? config.variants[winningVariant] : null,
     used: false,
   }
@@ -69,7 +68,7 @@ export const run = (test: Test): Test => {
 
   return R.assoc(
     "winningVariant",
-    test.disabled ? test.defaultVariant : getWinningVariant(test.variants, test.defaultVariant),
+    test.disabled ? test.defaultVariant : getWinningVariant(R.values(test.variants), test.defaultVariant),
     test
   )
 }
@@ -83,10 +82,10 @@ export const willGet = (test: Test): Test => {
   return setAsUsed(test)
 }
 
-export const get = (test: Test): VariantConfig => test.winningVariant
+export const get = (test: Test): VariantConfig => test.winningVariant || test.defaultVariant
 
 export const track = (test: Test): void => runTracks(test.endTrack)
 
 // TODO: For now return VariantConfig - specify test result
-export const getResult: VariantConfig = (test: Test) => test.winningVariant
+export const getResult = (test: Test): ?VariantConfig => test.winningVariant
 

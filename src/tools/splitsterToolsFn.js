@@ -9,10 +9,10 @@ import type {
 } from "../types"
 import type { Cookies } from "./cookiesTools"
 
-import type { Test, Tests, TestOptions } from "../containers/TestFn"
+import type { Tests, TestOptions } from "../containers/TestFn"
 import { constructTest } from "../containers/TestFn"
 
-import type { UserGroup, UserGroups } from "../containers/UserGroupFn"
+import type { UserGroups } from "../containers/UserGroupFn"
 import { constructUserGroup } from "../containers/UserGroupFn"
 
 export const createTestsOpts = (id: string, test: TestConfig, def: Cookies): TestOptions => {
@@ -21,7 +21,7 @@ export const createTestsOpts = (id: string, test: TestConfig, def: Cookies): Tes
   }
 }
 
-export const getTestsFromConfig = (tests: TestsConfig = {}, tracks: TracksConfig, def: Cookies) =>
+export const getTestsFromConfig = (tests: TestsConfig = {}, tracks: ?TracksConfig, def: Cookies) =>
   R.reduce(
     (acc: Tests, key: string): Tests =>
       R.assoc(key, constructTest(key, tests[key], tracks, createTestsOpts(key, tests[key], def)), acc),

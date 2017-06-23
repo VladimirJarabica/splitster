@@ -1,5 +1,3 @@
-// @flow
-
 import { Record, List } from "immutable"
 
 import Variant from "./Variant"
@@ -19,19 +17,19 @@ const TestRecord = Record({
 })
 
 export default class Test extends TestRecord {
-	
+
 	id: string
 	variants: List<Variant>
 	segments: ?List<Function>
 	winner: Variant
-	
+
 	constructor(opts: TestOpts) {
 		// TODO: Check cookies
-		
+
 		// TODO: Check from server
-		
+
 		// TODO: Check winner variant
-		
+
 		const variants = List(opts.variants.map(v => new Variant(v)))
 		// const winner = getWinningVariant(variants)
 		super({
@@ -41,7 +39,7 @@ export default class Test extends TestRecord {
 			segments: opts.segments,
 		})
 	}
-	
+
 	run() {
 		if (!this.winner) {
 			return this.set("winner", getWinningVariant(this.variants))

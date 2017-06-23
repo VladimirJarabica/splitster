@@ -11,9 +11,24 @@ import type {
   TracksConfig,
   Result,
 } from "../types"
+import type {
+  Variant,
+  Variants,
+} from "../containers/TestFn"
+
+export const getVariant = (variantId: string, variants: VariantsConfig): Variant =>
+  R.assoc("id", variantId, variants[variantId])
+
+export const getVariants = (variants: VariantsConfig): Variants =>
+  R.reduce(
+    (acc, key) =>
+      R.assoc(key, getVariant(key, variants), acc),
+    {},
+    R.keys(variants),
+  )
 
 // TODO: write tests
-export const getDefaultVariant = (variants: VariantsConfig, defaultVariant: string): VariantConfig =>
+export const getDefaultVariant = (variants: Variants, defaultVariant: string): Variant =>
   variants[defaultVariant] || R.find(R.propEq("def", true), R.values(variants))
 
 // TODO: write tests

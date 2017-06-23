@@ -2,6 +2,7 @@
 import R from "ramda"
 
 import type { Test, Tests } from "../containers/TestFn"
+import type { Splitster } from "../containers/SplitsterFn"
 
 export type Cookies = { [string]: string }
 
@@ -36,12 +37,20 @@ export const parseCookies = (cookies: Cookies, prefix: string = "splitster_"): C
 
 // TODO: write tests
 export const parseTest = (test: Test, prefix: string = "splitster_"): string =>
-  test.winningVariant ? test.winningVariant.value : ""
+  test.winningVariant ? test.winningVariant.id : ""
+
+export const parseTestIds = (testIds: Array<string>, splitster: Splitster, prefix: string = "splitster_"): Cookies =>
+  R.reduce(
+    (acc, testId) => R.assoc(`${prefix}test_${testId}`, parseTest(splitster.tests[testId]), acc),
+    {},
+    testIds,
+  )
 
 // TODO: write tests
+// TODO: unnecessary?
 export const parseTests = (tests: Tests, prefix: string = "splitster_"): Cookies =>
   R.reduce(
-    (acc, key) => R.assoc(prefix + key.id, parseTest(key), acc),
+    (acc, key) => R.assoc(`${prefix}test_${key.id}`, parseTest(key), acc),
     {},
     R.values(tests),
   )

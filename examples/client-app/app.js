@@ -1,6 +1,7 @@
 // import splitster from "splitster"
 import splitsterInit from "../../src/main"
 import Cookies from "js-cookie"
+import R from "ramda"
 
 import config, { BUTTON_COLOR } from "./config"
 
@@ -12,7 +13,16 @@ window.Cookies = Cookies
 // splitster.run(BUTTON_COLOR)
 splitster.runAll()
 
+
+// Button for deleting all cookies
+const deleteCookies = document.getElementById("delete_cookies")
+deleteCookies.onclick = function() {
+  R.forEach(Cookies.remove, R.keys(Cookies.get()))
+}
+
+
 const app = document.getElementById("app")
+
 const button = document.createElement("button")
 button.innerHTML = "Button"
 

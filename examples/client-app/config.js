@@ -23,10 +23,23 @@ const config: Config = {
       useTrack: [CONSOLE],
       endTrack: [CONSOLE, console.warn],
     },
+    SHOW_ADD: {
+      defaultVariant: "show",
+      variants: {
+        show: {
+          value: "SHOW",
+          ratio: 1,
+        },
+        hide: {
+          value: "HIDE",
+          ratio: 1,
+        },
+      },
+    }
   },
   options: {
     cookies: {
-      disable: true,
+      // disable: true,
     }
   },
   tracks: {

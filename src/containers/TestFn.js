@@ -2,6 +2,7 @@
 import R from "ramda"
 
 import {
+  getVariants,
   getDefaultVariant,
   getTracks,
   runTracks,
@@ -22,6 +23,13 @@ export type TestOptions = {|
   winningVariant?: string,
 |}
 
+export type Variant = {|
+  id: string,
+  def?: boolean,
+  value: string,
+  ratio: number,
+|}
+
 export type Test = {|
   id: string,
   variants: VariantsConfig,
@@ -37,7 +45,7 @@ export type Test = {|
 |}
 
 export type Tests = { [string]: Test }
-export type Variants = { [string]: VariantConfig }
+export type Variants = { [string]: Variant }
 
 const defaultTestOptions: TestOptions = {
   disabled: false,
@@ -48,15 +56,16 @@ export const constructTest = (id: string, config: TestConfig, tracks: ?TracksCon
     disabled,
     winningVariant,
   }: TestOptions = R.merge(defaultTestOptions, options)
+  const variants = getVariants(config.variants)
   return {
     id,
-    variants: config.variants,
-    defaultVariant: getDefaultVariant(config.variants, config.defaultVariant),
+    variants: getVariants(variants),
+    defaultVariant: getDefaultVariant(variants, config.defaultVariant),
     runTrack: getTracks(config.runTrack, tracks),
     useTrack: getTracks(config.useTrack, tracks),
     endTrack: getTracks(config.endTrack, tracks),
     disabled: disabled || false,
-    winningVariant: winningVariant ? config.variants[winningVariant] : null,
+    winningVariant: winningVariant ? variants[winningVariant] : null,
     used: false,
   }
 }

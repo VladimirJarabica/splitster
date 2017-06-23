@@ -34,10 +34,11 @@ export const parseCookies = (cookies: Cookies, prefix: string = "splitster_"): C
     filterCookiesByPrefix(cookies, prefix),
   )
 
+// TODO: write tests
 export const parseTest = (test: Test, prefix: string = "splitster_"): string =>
   test.winningVariant ? test.winningVariant.value : ""
 
-
+// TODO: write tests
 export const parseTests = (tests: Tests, prefix: string = "splitster_"): Cookies =>
   R.reduce(
     (acc, key) => R.assoc(prefix + key.id, parseTest(key), acc),

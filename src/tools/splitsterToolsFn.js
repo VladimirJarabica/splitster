@@ -15,12 +15,14 @@ import { constructTest } from "../containers/TestFn"
 import type { UserGroups } from "../containers/UserGroupFn"
 import { constructUserGroup } from "../containers/UserGroupFn"
 
+// TODO: write tests
 export const createTestsOpts = (id: string, test: TestConfig, def: Cookies): TestOptions => {
   return {
     winningVariant: def[id],
   }
 }
 
+// TODO: write tests
 export const getTestsFromConfig = (tests: TestsConfig = {}, tracks: ?TracksConfig, def: Cookies) =>
   R.reduce(
     (acc: Tests, key: string): Tests =>
@@ -29,6 +31,7 @@ export const getTestsFromConfig = (tests: TestsConfig = {}, tracks: ?TracksConfi
     R.keys(tests)
   )
 
+// TODO: write tests
 export const getUserGroupsFromConfig = (userGroups: UserGroupsConfig = {}): UserGroups =>
   R.reduce(
     (acc: UserGroups, key: string): UserGroups => R.assoc(

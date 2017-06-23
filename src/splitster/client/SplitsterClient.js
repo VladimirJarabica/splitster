@@ -24,9 +24,11 @@ class SplitsterClient {
 
   run = (testId: string): void => {
     this.state = SplitsterFn.run(this.state, testId)
+    // TODO: Save to cookies
   }
   runAll = (): void => {
     this.state = SplitsterFn.runAll(this.state)
+    // TODO: Save to cookies
   }
   get = (testId: string): VariantConfig => {
     this.state = SplitsterFn.willGet(this.state, testId)

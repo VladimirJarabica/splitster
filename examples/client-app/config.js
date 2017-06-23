@@ -24,6 +24,11 @@ const config: Config = {
       endTrack: [CONSOLE, console.warn],
     },
   },
+  options: {
+    cookies: {
+      disable: true,
+    }
+  },
   tracks: {
     CONSOLE: console.log
   },

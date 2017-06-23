@@ -1,6 +1,8 @@
 // @flow
 import R from "ramda"
 
+import type { Test, Tests } from "../containers/TestFn"
+
 export type Cookies = { [string]: string }
 
 /**
@@ -30,4 +32,15 @@ export const parseCookies = (cookies: Cookies, prefix: string = "splitster_"): C
     (acc, key) => R.assoc(R.slice(prefix.length , key.length, key), cookies[key], acc),
     {},
     filterCookiesByPrefix(cookies, prefix),
+  )
+
+export const parseTest = (test: Test, prefix: string = "splitster_"): string =>
+  test.winningVariant ? test.winningVariant.value : ""
+
+
+export const parseTests = (tests: Tests, prefix: string = "splitster_"): Cookies =>
+  R.reduce(
+    (acc, key) => R.assoc(prefix + key.id, parseTest(key), acc),
+    {},
+    tests,
   )

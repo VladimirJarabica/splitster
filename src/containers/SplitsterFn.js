@@ -29,12 +29,21 @@ export type Splitster = {|
   user: ?Object,
 |}
 
+const defaultOptions: OptionsConfig = {
+  separateTest: false,
+  cookies: {
+    disable: false,
+    expiration: 30,
+    name: "splitster",
+  }
+}
+
 export const constructSplitster = (config: Config, user?: Object = {}, def?: Cookies = {}): Splitster => {
   return {
     tests: getTestsFromConfig(config.tests, config.tracks, parseCookies(def, "test_")),
     userGroups: getUserGroupsFromConfig(config.userGroups),
     tracks: config.tracks,
-    options: config.options,
+    options: R.mergeDeepLeft(config.options, defaultOptions),
     user,
   }
 }

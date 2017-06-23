@@ -4,13 +4,15 @@ type VariantId = string
 type GroupId = string
 type TrackId = string
 
+export type CookiesOptionsConfig = {|
+  disable?: boolean,
+  expiration?: number,
+  name?: string, // Default "splitster"
+|}
+
 export type OptionsConfig = {|
-  separateTest: ?boolean,
-  cookies: ?{
-    disable: ?boolean,
-    expiration: ?number,
-    name: ?string, // Default "splitster"
-  },
+  separateTest?: boolean,
+  cookies?: CookiesOptionsConfig,
 |}
 
 export type Result = ?VariantConfig

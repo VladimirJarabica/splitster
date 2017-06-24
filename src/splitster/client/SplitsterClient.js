@@ -33,7 +33,6 @@ const getTestsToCookies = (splitster: Splitster, testIds: Array<string>, cookies
   )(testIds)
 }
 
-
 class SplitsterClient {
   state: Splitster
   cookies: Cookies

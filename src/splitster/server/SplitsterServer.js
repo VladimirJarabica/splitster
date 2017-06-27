@@ -3,9 +3,14 @@ import R from "ramda"
 
 import * as SplitsterFn from "../../containers/SplitsterFn"
 
+import {
+  testsToSaveResults,
+} from "../../tools/testToolsFn"
+
 import type {
   Config,
   VariantConfig,
+  SaveResults,
 } from "../../types"
 import type {
   Splitster,
@@ -21,6 +26,9 @@ class SplitsterServer {
     // TODO: def??
     this.state = SplitsterFn.constructSplitster(config, user)
   }
+
+  getSaveResults = (): SaveResults =>
+    testsToSaveResults(this.state.tests)
 
   run = (testId: string): void => {
     this.state = SplitsterFn.run(this.state, testId)
@@ -47,8 +55,6 @@ class SplitsterServer {
   trackAll = () => {
     SplitsterFn.trackAll(this.state)
   }
-
-  getState = () => this.state
 }
 
 export default SplitsterServer

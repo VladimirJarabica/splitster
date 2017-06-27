@@ -54,3 +54,5 @@ export type Config = {|
   tracks?: TracksConfig,
   options?: OptionsConfig,
 |}
+
+export type SaveResults = { [string]: string }

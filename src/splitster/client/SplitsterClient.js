@@ -4,14 +4,14 @@ import jsCookies from "js-cookie"
 
 import {
   parseCookies,
-  parseTestIds,
 } from "../../tools/cookiesTools"
 import * as SplitsterFn from "../../containers/SplitsterFn"
-import type { Cookies } from "../../tools/cookiesTools"
+import { testsToSaveResults } from "../../tools/testToolsFn"
 
 import type {
   Config,
   VariantConfig,
+  SaveResults,
 } from "../../types"
 import type {
   Splitster,
@@ -20,46 +20,37 @@ import type {
   Variants,
 } from "../../containers/TestFn"
 
-// TODO: create SplitsterClientTools.js
-
-const getTestsToCookies = (splitster: Splitster, testIds: Array<string>, cookies: Cookies): Array<Cookies> => {
-  if (splitster.options.cookies.disable) {
-    return []
-  }
-  return R.compose(
-    (testIds) => parseTestIds(testIds, splitster),
-    R.filter((testId) => !cookies[`test_${testId}`]),
-  )(testIds)
-}
-
 class SplitsterClient {
   state: Splitster
-  cookies: Cookies
 
-  constructor(config: Config, user: Object) {
-    this.cookies = parseCookies(jsCookies.get())
-    this.state = SplitsterFn.constructSplitster(config, user, this.cookies)
+  constructor(config: Config, user: Object, def?: SaveResults) {
+    const savedResults: SaveResults = def || parseCookies(jsCookies.get())
+    this.state = SplitsterFn.constructSplitster(config, user, savedResults)
   }
 
-  saveCookies = (cookies: Cookies): void => {
+  getSaveResults = (): SaveResults =>
+    testsToSaveResults(this.state.tests)
+
+  saveCookies = (saveResults: SaveResults): void => {
     R.forEach((key) => {
-      console.log("saving", key, cookies[key])
-      jsCookies.set(key, cookies[key])
-    }, R.keys(cookies))
+        jsCookies.set("splitster_" + key, saveResults[key])
+      },
+      R.keys(saveResults),
+    )
   }
 
   run = (testId: string): void => {
     this.state = SplitsterFn.run(this.state, testId)
 
-    const testsToCookies = getTestsToCookies(this.state, [testId], this.cookies)
-    this.saveCookies(testsToCookies)
+    const saveResults = testsToSaveResults([this.state.tests[testId]])
+    this.saveCookies(saveResults)
   }
 
   runAll = (): void => {
     this.state = SplitsterFn.runAll(this.state)
 
-    const testsToCookies = getTestsToCookies(this.state, R.keys(this.state.tests), this.cookies)
-    this.saveCookies(testsToCookies)
+    const saveResults = testsToSaveResults(this.state.tests)
+    this.saveCookies(saveResults)
   }
 
   get = (testId: string): VariantConfig => {

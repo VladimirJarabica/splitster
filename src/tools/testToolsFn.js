@@ -10,10 +10,13 @@ import type {
   TrackConfig,
   TracksConfig,
   Result,
+  SaveResults,
 } from "../types"
 import type {
   Variant,
   Variants,
+  Test,
+  Tests,
 } from "../containers/TestFn"
 
 export const getVariant = (variantId: string, variants: VariantsConfig): Variant =>
@@ -74,3 +77,11 @@ export const getWinningVariant = (variants: Array<VariantConfig>, defaultVariant
   }, variants)
   return winningVariant || defaultVariant
 }
+
+// TODO: write tests
+export const testToSaveResults = (saveResults: SaveResults, test: Test) =>
+  R.assoc(test.id, test.winningVariant ? test.winningVariant.id : "", saveResults)
+
+// TODO: write tests
+export const testsToSaveResults = (tests: Tests): SaveResults =>
+  R.reduce(testToSaveResults, {}, R.values(tests))

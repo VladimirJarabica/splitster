@@ -32,13 +32,13 @@ export type Variant = {|
 
 export type Test = {|
   id: string,
-  variants: VariantsConfig,
+  variants: Variants,
   runTrack: Array<TrackConfig>,
   useTrack: Array<TrackConfig>,
   endTrack: Array<TrackConfig>,
 
-  winningVariant: ?VariantConfig,
-  defaultVariant: VariantConfig,
+  winningVariant: ?Variant,
+  defaultVariant: Variant,
   disabled: boolean,
 
   used: boolean,

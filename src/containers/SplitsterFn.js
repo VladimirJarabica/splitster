@@ -12,6 +12,7 @@ import type {
   VariantConfig,
   TracksConfig,
   OptionsConfig,
+  SaveResults,
 } from "../types"
 
 import type { Tests, Variants } from "./TestFn"
@@ -38,9 +39,10 @@ const defaultOptions: OptionsConfig = {
   }
 }
 
-export const constructSplitster = (config: Config, user?: Object = {}, def?: Cookies = {}): Splitster => {
+export const constructSplitster = (config: Config, user?: Object = {}, def?: SaveResults = {}): Splitster => {
+  console.log("default", def)
   return {
-    tests: getTestsFromConfig(config.tests, config.tracks, parseCookies(def, "test_")),
+    tests: getTestsFromConfig(config.tests, config.tracks, def),
     userGroups: getUserGroupsFromConfig(config.userGroups),
     tracks: config.tracks,
     options: R.mergeDeepLeft(config.options, defaultOptions),

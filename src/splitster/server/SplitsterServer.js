@@ -1,6 +1,4 @@
 // @flow
-import R from "ramda"
-
 import * as SplitsterFn from "../../containers/SplitsterFn"
 
 import {

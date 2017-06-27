@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
-import R from "ramda"
 
 class App extends Component {
-  shouldComponentUpdate() {
-    console.log("shouldComponentUpdate")
-    return false
-  }
-
   render() {
+    const { splitster } = this.props
     console.log("render", this.props)
     return (
       <html>
       <head>
         <title>server rendering</title>
       </head>
-      <body data-splitster={JSON.stringify(this.props.splitster.getSaveResults())}>
-      {/*<body data-splitster={JSON.stringify(this.props.x)}>*/}
-      {/*<body>*/}
+      <body data-splitster={JSON.stringify(splitster.getSaveResults())}>
         <h1>server rendering</h1>
+        <div>
+          {splitster.get("BUTTON_COLOR").value === "RED" ? "red tho" : "blue bro"}
+        </div>
         <script src='/bundle.js' />
       </body>
       </html>

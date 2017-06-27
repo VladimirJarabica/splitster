@@ -7,12 +7,9 @@ import App from './app/App'
 import config from "./config"
 
 const splitsterState = JSON.parse(document.body.getAttribute("data-splitster"))
-const splitster = splitsterInit(config)
-
-console.log("splitster", splitster.getSaveResults())
+const splitster = splitsterInit(config, null, splitsterState)
 
 render(
   <App splitster={splitster} />,
-  //<App x={{x: 123}}/>,
   document
 )

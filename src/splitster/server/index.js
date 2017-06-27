@@ -5,6 +5,7 @@ import type {
   Config,
 } from "../../types"
 
-const splitsterInit = (config: Config, user: Object) => new SplitsterServer(config, user)
+const splitsterInit = (config: Config, user: Object) =>
+  new SplitsterServer(config, user)
 
 export default splitsterInit

@@ -19,7 +19,6 @@ app.get('/', (req, res) => {
 
   const html = renderToString(
     <App splitster={splitster} />
-    //<App x={{x: 123}}/>
   )
 
   res.send(html)

@@ -40,7 +40,6 @@ const defaultOptions: OptionsConfig = {
 }
 
 export const constructSplitster = (config: Config, user?: Object = {}, def?: SaveResults = {}): Splitster => {
-  console.log("default", def)
   return {
     tests: getTestsFromConfig(config.tests, config.tracks, def),
     userGroups: getUserGroupsFromConfig(config.userGroups),

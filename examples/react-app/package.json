@@ -9,6 +9,7 @@
   "dependencies": {
     "add": "^2.0.6",
     "concurrently": "^3.5.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
     "nodemon": "^1.11.0",
     "react": "^15.6.1",

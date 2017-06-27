@@ -20,9 +20,9 @@ import type {
 class SplitsterServer {
   state: Splitster
 
-  constructor(config: Config, user: Object) {
+  constructor(config: Config, user: Object, def?: SaveResults) {
     // TODO: def??
-    this.state = SplitsterFn.constructSplitster(config, user)
+    this.state = SplitsterFn.constructSplitster(config, user, def)
   }
 
   getSaveResults = (): SaveResults =>

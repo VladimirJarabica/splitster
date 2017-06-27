@@ -3,6 +3,8 @@ export { default } from "./splitster/client"
 // Server export
 export { default as server } from "./splitster/server"
 
+export { parseCookies }  from "./tools/cookiesTools"
+
 // Types exports:
 // Splitster
 // Config

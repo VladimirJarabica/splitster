@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "concurrently \"webpack -w\" \"http-server\""
+  },
   "dependencies": {
+    "concurrently": "^3.5.0",
     "splitster": "^0.0.4"
   },
   "devDependencies": {}

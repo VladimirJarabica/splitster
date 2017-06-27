@@ -17,7 +17,6 @@ import type {
   Splitster,
 } from "../../containers/SplitsterFn"
 import type {
-  Test,
   Variants,
 } from "../../containers/TestFn"
 

@@ -5,6 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "build": "babel src -d lib",
+    "build:watch": "babel src -d lib --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack-draft": "webpack --config webpack.draft.js",
     "webpack-draft-w": "webpack --config webpack.draft.js --watch",

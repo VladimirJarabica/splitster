@@ -7,13 +7,13 @@ import {
 
 import type {
   Config,
-  VariantConfig,
   SaveResults,
 } from "../../types"
 import type {
   Splitster,
 } from "../../containers/SplitsterFn"
 import type {
+  Variant,
   Variants,
 } from "../../containers/TestFn"
 
@@ -36,7 +36,7 @@ class SplitsterServer {
     this.state = SplitsterFn.runAll(this.state)
   }
 
-  get = (testId: string): VariantConfig => {
+  get = (testId: string): Variant => {
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)
   }

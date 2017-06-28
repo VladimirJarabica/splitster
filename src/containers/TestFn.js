@@ -59,7 +59,7 @@ export const constructTest = (id: string, config: TestConfig, tracks: ?TracksCon
   const variants = getVariants(config.variants)
   return {
     id,
-    variants: getVariants(variants),
+    variants: variants,
     defaultVariant: getDefaultVariant(variants, config.defaultVariant),
     runTrack: getTracks(config.runTrack, tracks),
     useTrack: getTracks(config.useTrack, tracks),
@@ -93,7 +93,7 @@ export const willGet = (test: Test): Test => {
   return setAsUsed(test)
 }
 
-export const get = (test: Test): VariantConfig => test.winningVariant || test.defaultVariant
+export const get = (test: Test): Variant => test.winningVariant || test.defaultVariant
 
 export const track = (test: Test): void => runTracks(test.endTrack)
 

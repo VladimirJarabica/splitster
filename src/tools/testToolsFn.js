@@ -66,12 +66,12 @@ export const runTracks = (tracks: Array<TrackConfig>, result: Result): void =>
   )
 
 // TODO: write tests ?? random
-export const getWinningVariant = (variants: Array<VariantConfig>, defaultVariant: VariantConfig): VariantConfig => {
+export const getWinningVariant = (variants: Array<Variant>, defaultVariant: Variant): Variant => {
   const ratioSum = R.sum(R.map((variant: VariantConfig) => variant.ratio, variants))
 
   let rand = Random.integer(1, ratioSum)(Random.engines.nativeMath)
 
-  const winningVariant: VariantConfig = R.find((variant: VariantConfig) => {
+  const winningVariant: Variant = R.find((variant: Variant) => {
     rand -= variant.ratio
     return rand <= 0
   }, variants)

@@ -5,21 +5,18 @@ import {
   getTestsFromConfig,
   getUserGroupsFromConfig,
 } from "../tools/splitsterToolsFn"
-import { parseCookies } from "../tools/cookiesTools"
 
 import type {
   Config,
-  VariantConfig,
   TracksConfig,
   OptionsConfig,
   SaveResults,
 } from "../types"
 
-import type { Tests, Variants } from "./TestFn"
+import type { Tests, Variants, Variant } from "./TestFn"
 import * as TestFn from "./TestFn"
 
 import type { UserGroups } from "./UserGroupFn"
-import type { Cookies } from "../tools/cookiesTools"
 
 
 export type Splitster = {|
@@ -39,7 +36,7 @@ const defaultOptions: OptionsConfig = {
   }
 }
 
-export const constructSplitster = (config: Config, user?: Object = {}, def?: SaveResults = {}): Splitster => {
+export const constructSplitster = (config: Config, user?: ?Object = {}, def?: SaveResults = {}): Splitster => {
   return {
     tests: getTestsFromConfig(config.tests, config.tracks, def),
     userGroups: getUserGroupsFromConfig(config.userGroups),
@@ -58,7 +55,7 @@ export const runAll = (splitster: Splitster): Splitster =>
 export const willGet = (splitster: Splitster, testId: string): Splitster =>
   R.assocPath(["tests", testId], TestFn.willGet(splitster.tests[testId]), splitster)
 
-export const get = (splitster: Splitster, testId: string): VariantConfig =>
+export const get = (splitster: Splitster, testId: string): Variant =>
   TestFn.get(splitster.tests[testId])
 
 export const willGetAll = (splitster: Splitster): Splitster =>

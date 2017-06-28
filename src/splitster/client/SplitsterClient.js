@@ -10,20 +10,20 @@ import { testsToSaveResults } from "../../tools/testToolsFn"
 
 import type {
   Config,
-  VariantConfig,
   SaveResults,
 } from "../../types"
 import type {
   Splitster,
 } from "../../containers/SplitsterFn"
 import type {
+  Variant,
   Variants,
 } from "../../containers/TestFn"
 
 class SplitsterClient {
   state: Splitster
 
-  constructor(config: Config, user: Object, def?: SaveResults) {
+  constructor(config: Config, user?: ?Object, def?: SaveResults) {
     const savedResults: SaveResults = def || parseCookies(jsCookies.get())
     this.state = SplitsterFn.constructSplitster(config, user, savedResults)
   }
@@ -42,7 +42,7 @@ class SplitsterClient {
   run = (testId: string): void => {
     this.state = SplitsterFn.run(this.state, testId)
 
-    const saveResults = testsToSaveResults([this.state.tests[testId]])
+    const saveResults = testsToSaveResults({testId: this.state.tests[testId]})
     this.saveCookies(saveResults)
   }
 
@@ -53,7 +53,7 @@ class SplitsterClient {
     this.saveCookies(saveResults)
   }
 
-  get = (testId: string): VariantConfig => {
+  get = (testId: string): Variant => {
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)
   }

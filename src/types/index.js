@@ -1,4 +1,6 @@
 // @flow
+import type { Variant } from "../containers/TestFn"
+
 type TestId = string
 type VariantId = string
 type GroupId = string
@@ -15,7 +17,7 @@ export type OptionsConfig = {|
   cookies?: CookiesOptionsConfig,
 |}
 
-export type Result = ?VariantConfig
+export type Result = ?Variant
 
 // TODO: add test result type
 export type TrackConfig = (Result) => void

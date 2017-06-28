@@ -24,6 +24,10 @@ class SplitsterClient {
   state: Splitster
 
   constructor(config: Config, user?: ?Object, def?: SaveResults) {
+    if (def) {
+      // If there is default set (server side) try to save it to cookies
+      this.saveCookies(def)
+    }
     const savedResults: SaveResults = def || parseCookies(jsCookies.get())
     this.state = SplitsterFn.constructSplitster(config, user, savedResults)
   }
@@ -33,7 +37,11 @@ class SplitsterClient {
 
   saveCookies = (saveResults: SaveResults): void => {
     R.forEach((key) => {
-        jsCookies.set("splitster_" + key, saveResults[key])
+        const cookieKey = "splitster_" + key
+        if (!jsCookies.get(cookieKey)) {
+          // Only save cookie if it is not saved already
+          jsCookies.set(cookieKey, saveResults[key])
+        }
       },
       R.keys(saveResults),
     )

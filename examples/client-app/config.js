@@ -38,6 +38,7 @@ const config: Config = {
     }
   },
   options: {
+    separateTest: false,
     cookies: {
       // disable: true,
     }

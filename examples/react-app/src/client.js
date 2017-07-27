@@ -3,13 +3,13 @@ import { render } from 'react-dom'
 
 import splitsterInit from "../../../lib/main"
 
-import App from './app/App'
+import Root from './app/Root'
 import config from "./config"
 
 const splitsterState = JSON.parse(document.body.getAttribute("data-splitster"))
 const splitster = splitsterInit(config, null, splitsterState)
 
 render(
-  <App splitster={splitster} />,
-  document
+  <Root splitster={splitster} />,
+  document.getElementById("app"),
 )

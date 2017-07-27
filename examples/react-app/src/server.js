@@ -2,13 +2,13 @@ import express from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import React from 'react'
-import { renderToString } from 'react-dom/server'
+import { renderToStaticMarkup } from 'react-dom/server'
 
 import { server as splitsterInit, parseCookies } from "../../../lib/main"
 import config from "./config"
 
 
-import App from './app/App'
+import App from './App'
 
 const app = express()
 
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   const splitster = splitsterInit(config, null, def)
   splitster.runAll()
 
-  const html = renderToString(
+  const html = renderToStaticMarkup(
     <App splitster={splitster} />
   )
 

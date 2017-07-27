@@ -57,6 +57,10 @@ export const constructTest = (id: string, config: TestConfig, tracks: ?TracksCon
     winningVariant,
   }: TestOptions = R.merge(defaultTestOptions, options)
   const variants = getVariants(config.variants)
+  const isDisabled = disabled || winningVariant && winningVariant === "__disabled" || false
+
+  const winningVariantSet = !isDisabled && winningVariant && winningVariant !== "__disabled"
+
   return {
     id,
     variants: variants,
@@ -64,9 +68,10 @@ export const constructTest = (id: string, config: TestConfig, tracks: ?TracksCon
     runTrack: getTracks(config.runTrack, tracks),
     useTrack: getTracks(config.useTrack, tracks),
     endTrack: getTracks(config.endTrack, tracks),
-    disabled: disabled || false,
-    winningVariant: winningVariant ? variants[winningVariant] : null,
-    used: false,
+    disabled: isDisabled,
+    // TODO: maybe create function for this long check
+    winningVariant: winningVariantSet ? variants[winningVariant] : null,
+    used: winningVariantSet,
   }
 }
 
@@ -99,4 +104,3 @@ export const track = (test: Test): void => runTracks(test.endTrack)
 
 // TODO: For now return VariantConfig - specify test result
 export const getResult = (test: Test): Result => test.winningVariant
-

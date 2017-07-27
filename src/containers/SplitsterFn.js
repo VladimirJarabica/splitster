@@ -36,9 +36,13 @@ const defaultOptions: OptionsConfig = {
   }
 }
 
-export const constructSplitster = (config: Config, user?: ?Object = {}, def?: SaveResults = {}): Splitster => {
+export const constructSplitster = (config: Config, user?: ?Object = {}, def?: SaveResults = null): Splitster => {
   return {
-    tests: getTestsFromConfig(config.tests, config.tracks, def),
+    tests: getTestsFromConfig(config.tests, {
+      tracks: config.tracks,
+      def,
+      separate: config.options.separateTest,
+    }),
     userGroups: getUserGroupsFromConfig(config.userGroups),
     tracks: config.tracks,
     options: R.mergeDeepLeft(config.options, defaultOptions),

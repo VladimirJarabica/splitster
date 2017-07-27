@@ -35,7 +35,7 @@ export type VariantConfig = {|
   def?: boolean,
   value: string,
   ratio: number,
-|}
+|} | string
 export type VariantsConfig = { [VariantId]: VariantConfig }
 
 export type TestConfig = {|

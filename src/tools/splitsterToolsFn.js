@@ -1,5 +1,6 @@
 // @flow
 import R from "ramda"
+import Random from "random-js"
 
 import type {
   TestConfig,
@@ -15,21 +16,51 @@ import { constructTest } from "../containers/TestFn"
 import type { UserGroups } from "../containers/UserGroupFn"
 import { constructUserGroup } from "../containers/UserGroupFn"
 
-// TODO: write tests
-export const createTestsOpts = (id: string, test: TestConfig, def: SaveResults): TestOptions => {
+export const createTestsOpts = (def: string = null, disabled: boolean = false): TestOptions => {
   return {
-    winningVariant: def[id],
+    disabled,
+    winningVariant: disabled ? "__disabled" : def,
   }
 }
 
+export type TestFromConfigOpts = {
+  tracks?: TracksConfig,
+  def?: SaveResults,
+  separate?: boolean,
+  runTest?: number,
+}
+export const getTestsFromConfig = (tests: TestsConfig = {}, opts: TestFromConfigOpts) => {
+  const { def, runTest, separate } = opts
+  if (!def && separate) {
+    return getSeparateTests(
+      tests,
+      R.assoc("runTest", runTest || Random.integer(0, R.length(R.keys(tests)) - 1)(Random.engines.nativeMath)),
+      opts,
+    )
+  }
+  return getNormalTests(tests, opts)
+}
+
 // TODO: write tests
-export const getTestsFromConfig = (tests: TestsConfig = {}, tracks: ?TracksConfig, def: SaveResults) =>
-  R.reduce(
-    (acc: Tests, key: string): Tests =>
-      R.assoc(key, constructTest(key, tests[key], tracks, createTestsOpts(key, tests[key], def)), acc),
+export const getSeparateTests = (tests: TestsConfig = {}, { runTest = 0, def = {}, tracks = {} }: TestFromConfigOpts) => {
+  return R.addIndex(R.reduce)(
+    (acc: Tests, key: string, index: number): Tests =>
+      R.assoc(key, constructTest(key, tests[key], tracks, createTestsOpts(def[key], index !== runTest)), acc),
     {},
     R.keys(tests)
   )
+}
+
+// TODO: write tests
+export const getNormalTests = (tests: TestsConfig = {}, { tracks, def }: TestFromConfigOpts) => {
+  console.log("getNormalTests", tests, def)
+  return R.reduce(
+    (acc: Tests, key: string): Tests =>
+      R.assoc(key, constructTest(key, tests[key], tracks, createTestsOpts(def[key])), acc),
+    {},
+    R.keys(tests)
+  )
+}
 
 // TODO: write tests
 export const getUserGroupsFromConfig = (userGroups: UserGroupsConfig = {}): UserGroups =>

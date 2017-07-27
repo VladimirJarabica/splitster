@@ -20,7 +20,9 @@ import type {
 } from "../containers/TestFn"
 
 export const getVariant = (variantId: string, variants: VariantsConfig): Variant =>
-  R.assoc("id", variantId, variants[variantId])
+  typeof variants[variantId] === "number"
+    ? {id: variantId, value: variantId, ratio: variants[variantId]}
+    : R.assoc("id", variantId, variants[variantId])
 
 export const getVariants = (variants: VariantsConfig): Variants =>
   R.reduce(
@@ -30,11 +32,9 @@ export const getVariants = (variants: VariantsConfig): Variants =>
     R.keys(variants),
   )
 
-// TODO: write tests
 export const getDefaultVariant = (variants: Variants, defaultVariant: string): Variant =>
   variants[defaultVariant] || R.find(R.propEq("def", true), R.values(variants))
 
-// TODO: write tests
 export const getTrack = (testTrack: ?TestTrackConfig, tracks: ?TracksConfig = {}): ?TrackConfig => {
   if (testTrack && tracks) {
     if (typeof testTrack === "string") {
@@ -45,7 +45,6 @@ export const getTrack = (testTrack: ?TestTrackConfig, tracks: ?TracksConfig = {}
   return null
 }
 
-// TODO: write tests
 export const getTracks = (testTracks: ?TestTracksConfig, tracks: ?TracksConfig = {}): Array<TrackConfig> => {
   if (Array.isArray(testTracks)) {
     return R.filter(Boolean, R.map(R.partialRight(getTrack, [tracks]), testTracks))
@@ -56,7 +55,6 @@ export const getTracks = (testTracks: ?TestTracksConfig, tracks: ?TracksConfig =
   return []
 }
 
-// TODO: type test result
 export const runTracks = (tracks: Array<TrackConfig>, result: Result): void =>
   R.forEach(
     (track: TrackConfig) => {
@@ -79,7 +77,7 @@ export const getWinningVariant = (variants: Array<Variant>, defaultVariant: Vari
 }
 
 // TODO: write tests
-export const testToSaveResults = (saveResults: SaveResults, test: Test) =>
+export const testToSaveResults = (saveResults: SaveResults, test: Test): SaveResults =>
   R.assoc(test.id, test.winningVariant ? test.winningVariant.id : "", saveResults)
 
 // TODO: write tests

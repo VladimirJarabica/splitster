@@ -9,7 +9,7 @@ class Root extends Component {
 
   render() {
     const { splitster } = this.props
-    console.log("render", this.props)
+    console.log("render", splitster.getSaveResults(), splitster.getAll())
     return (
       <div>
         <h1>server rendering</h1>

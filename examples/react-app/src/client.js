@@ -7,6 +7,7 @@ import Root from './app/Root'
 import config from "./config"
 
 const splitsterState = JSON.parse(document.body.getAttribute("data-splitster"))
+console.log("parsedState", splitsterState)
 const splitster = splitsterInit(config, null, splitsterState)
 
 render(

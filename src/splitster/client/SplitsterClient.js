@@ -24,11 +24,13 @@ class SplitsterClient {
   state: Splitster
 
   constructor(config: Config, user?: ?Object, def?: SaveResults) {
-    if (def) {
+    const cookiesDisabled = config.options.cookies.disable
+    console.log("client, cookiesDisabled", cookiesDisabled)
+    if (!cookiesDisabled && def) {
       // If there is default set (server side) try to save it to cookies
       this.saveCookies(def)
     }
-    const savedResults: SaveResults = def || parseCookies(jsCookies.get())
+    const savedResults: SaveResults = def || (cookiesDisabled ? {} : parseCookies(jsCookies.get()))
     this.state = SplitsterFn.constructSplitster(config, user, savedResults)
   }
 

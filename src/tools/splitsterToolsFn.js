@@ -3,18 +3,24 @@ import R from "ramda"
 import Random from "random-js"
 
 import type {
-  TestConfig,
+  Config,
   TestsConfig,
   UserGroupsConfig,
   TracksConfig,
   SaveResults,
 } from "../types"
 
+import defaultConfig from "./defaultConfig"
+
 import type { Tests, TestOptions } from "../containers/TestFn"
 import { constructTest } from "../containers/TestFn"
 
 import type { UserGroups } from "../containers/UserGroupFn"
 import { constructUserGroup } from "../containers/UserGroupFn"
+
+export const mergeDefaultConfig = (config: Config): Config => {
+  return R.mergeDeepLeft(config, defaultConfig)
+}
 
 export const createTestsOpts = (def: string = null, disabled: boolean = false): TestOptions => {
   return {
@@ -52,8 +58,7 @@ export const getSeparateTests = (tests: TestsConfig = {}, { runTest = 0, def = {
 }
 
 // TODO: write tests
-export const getNormalTests = (tests: TestsConfig = {}, { tracks, def }: TestFromConfigOpts) => {
-  console.log("getNormalTests", tests, def)
+export const getNormalTests = (tests: TestsConfig = {}, { tracks = {}, def = {} }: TestFromConfigOpts) => {
   return R.reduce(
     (acc: Tests, key: string): Tests =>
       R.assoc(key, constructTest(key, tests[key], tracks, createTestsOpts(def[key])), acc),

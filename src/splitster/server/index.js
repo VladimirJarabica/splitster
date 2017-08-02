@@ -6,7 +6,9 @@ import type {
   SaveResults,
 } from "../../types"
 
+import { mergeDefaultConfig } from "../../tools/splitsterToolsFn"
+
 const splitsterInit = (config: Config, user: Object, def?: SaveResults) =>
-  new SplitsterServer(config, user, def)
+  new SplitsterServer(mergeDefaultConfig(config), user, def)
 
 export default splitsterInit

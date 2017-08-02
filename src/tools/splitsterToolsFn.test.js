@@ -1,9 +1,13 @@
 // @flow
 import {
+  mergeDefaultConfig,
   createTestsOpts,
   getSeparateTests,
   getTestsFromConfig,
 } from "./splitsterToolsFn"
+
+import defaultConfig from "./defaultConfig"
+
 import type {
   TestsConfig,
 } from "../types"
@@ -26,6 +30,12 @@ const testsConfig: TestsConfig = {
 }
 
 describe("splitsterToolsFn tests", () => {
+  describe("merge default config", () => {
+    it("should return default", () => {
+      expect(mergeDefaultConfig({})).toEqual(defaultConfig)
+    })
+  })
+
   describe("test options", () => {
     it("without any params", () => {
       expect(createTestsOpts()).toEqual({disabled: false, winningVariant: null})
@@ -43,7 +53,8 @@ describe("splitsterToolsFn tests", () => {
 
   describe("separate tests", () => {
     it("with runTest only", () => {
-      expect(getSeparateTests(testsConfig, {})).toEqual({})
+      expect(getSeparateTests(testsConfig, {}).test_a.disabled).toEqual(false)
+      expect(getSeparateTests(testsConfig, {}).test_x.disabled).toEqual(true)
     })
   })
 

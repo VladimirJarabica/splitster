@@ -35,6 +35,12 @@ const config: Config = {
           ratio: 1,
         },
       },
+    },
+    MODAL: {
+      variants: {
+        hello: 1,
+        world: 1,
+      }
     }
   },
   options: {

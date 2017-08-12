@@ -18,6 +18,19 @@ class AddTodo extends Component {
     this.setState({ todo: e.target.value })
   }
 
+  renderButton = () => {
+    const { splitster } = this.props
+    const colorVariant = splitster.get('BUTTON_COLOR')
+    return (
+      <button
+        onClick={this.add}
+        style={{ backgroundColor: colorVariant.value }}
+      >
+        Add
+      </button>
+    )
+  }
+
   render() {
     return (
       <div>
@@ -26,10 +39,12 @@ class AddTodo extends Component {
           value={this.state.todo}
           onChange={this.handleChange}
         />
-        <button onClick={this.add}>Add</button>
+        {this.renderButton()}
       </div>
     )
   }
 }
 
-export default connect()(AddTodo)
+export default connect(({ splitster }) => ({
+  splitster,
+}))(AddTodo)

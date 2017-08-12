@@ -4,9 +4,8 @@ import cookieParser from 'cookie-parser'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { server as splitsterInit, parseCookies } from "../../../lib/main"
-import config from "./config"
-
+import { server as splitsterInit, parseCookies } from '../../../lib/main'
+import config from './config'
 
 import App from './App'
 
@@ -21,9 +20,7 @@ app.get('/', (req, res) => {
   const splitster = splitsterInit(config, null, def)
   splitster.runAll()
 
-  const html = renderToStaticMarkup(
-    <App splitster={splitster} />
-  )
+  const html = renderToStaticMarkup(<App splitster={splitster} />)
 
   res.send(html)
 })

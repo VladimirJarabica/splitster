@@ -1,23 +1,15 @@
 import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { Provider } from 'react-redux'
 
-import Root from './app/Root'
-
-const App = ({ store }) =>
+const App = ({ initialComponent, reduxState }) =>
   <html>
     <head>
       <title>server rendering</title>
     </head>
-    <body data-redux-state={JSON.stringify(store.getState())}>
+    <body data-redux-state={JSON.stringify(reduxState)}>
       <div
         id="app"
         dangerouslySetInnerHTML={{
-          __html: renderToString(
-            <Provider store={store}>
-              <Root />
-            </Provider>,
-          ),
+          __html: initialComponent,
         }}
       />
       <script src="/bundle.js" />

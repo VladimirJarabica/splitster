@@ -2,7 +2,7 @@ module.exports = {
   entry: './src/client.js',
   output: {
     filename: 'bundle.js',
-    path: 'lib/dist',
+    path: 'dist',
   },
   devtool: 'source-map',
   module: {

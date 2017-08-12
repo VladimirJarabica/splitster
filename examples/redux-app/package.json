@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"babel src --out-dir lib --watch\" \"webpack -w\" \"nodemon lib/server.js\""
+    "start": "concurrently \"webpack -w\" \"nodemon index.js\""
   },
   "dependencies": {
+    "babel-register": "^6.24.1",
     "concurrently": "^3.5.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.4",

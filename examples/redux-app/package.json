@@ -1,0 +1,19 @@
+{
+  "name": "redux-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "concurrently \"babel src --out-dir lib --watch\" \"webpack -w\" \"nodemon lib/server.js\""
+  },
+  "dependencies": {
+    "concurrently": "^3.5.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.4",
+    "ramda": "^0.24.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  }
+}

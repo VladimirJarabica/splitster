@@ -18,6 +18,7 @@
   ],
   "rules": {
     "no-console": "off",
-    "prettier/prettier": [ "error", { "singleQuote": true, "semi": false, } ]
+    "no-unused-vars": "off",
+    "prettier/prettier": [ "error", { "singleQuote": true, "semi": false, "trailingComma": "all" } ]
   }
 }

@@ -1,7 +1,7 @@
 // @flow
-import R from "ramda"
+import R from 'ramda'
 
-import type { SaveResults } from "../types"
+import type { SaveResults } from '../types'
 
 /**
  * How cookies will set
@@ -16,8 +16,10 @@ import type { SaveResults } from "../types"
  * ... so basically tests are enough for now
  */
 
-export const filterCookiesByPrefix = (cookies: SaveResults, prefix: string = "splitster_"): Array<string> =>
-  R.filter(R.startsWith(prefix), R.keys(cookies))
+export const filterCookiesByPrefix = (
+  cookies: SaveResults,
+  prefix: string = 'splitster_',
+): Array<string> => R.filter(R.startsWith(prefix), R.keys(cookies))
 
 /**
  * Parse cookies with keys {prefix_test_id} to {test_id}
@@ -25,9 +27,13 @@ export const filterCookiesByPrefix = (cookies: SaveResults, prefix: string = "sp
  * @param cookies
  * @returns {*}
  */
-export const parseCookies = (cookies: SaveResults, prefix: string = "splitster_"): SaveResults =>
+export const parseCookies = (
+  cookies: SaveResults,
+  prefix: string = 'splitster_',
+): SaveResults =>
   R.reduce(
-    (acc, key) => R.assoc(R.slice(prefix.length , key.length, key), cookies[key], acc),
+    (acc, key) =>
+      R.assoc(R.slice(prefix.length, key.length, key), cookies[key], acc),
     {},
     filterCookiesByPrefix(cookies, prefix),
   )

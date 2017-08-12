@@ -1,21 +1,11 @@
 // @flow
-import * as SplitsterFn from "../../containers/SplitsterFn"
+import * as SplitsterFn from '../../containers/SplitsterFn'
 
-import {
-  testsToSaveResults,
-} from "../../tools/testToolsFn"
+import { testsToSaveResults } from '../../tools/testToolsFn'
 
-import type {
-  Config,
-  SaveResults,
-} from "../../types"
-import type {
-  Splitster,
-} from "../../containers/SplitsterFn"
-import type {
-  Variant,
-  Variants,
-} from "../../containers/TestFn"
+import type { Config, SaveResults } from '../../types'
+import type { Splitster } from '../../containers/SplitsterFn'
+import type { Variant, Variants } from '../../containers/TestFn'
 
 class SplitsterServer {
   state: Splitster
@@ -25,8 +15,7 @@ class SplitsterServer {
     this.state = SplitsterFn.constructSplitster(config, user, def)
   }
 
-  getSaveResults = (): SaveResults =>
-    testsToSaveResults(this.state.tests)
+  getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
 
   run = (testId: string): void => {
     this.state = SplitsterFn.run(this.state, testId)
@@ -39,7 +28,7 @@ class SplitsterServer {
   get = (testId: string): Variant => {
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)
-  }
+  };
 
   getAll = (): Variants => {
     this.state = SplitsterFn.willGetAll(this.state)

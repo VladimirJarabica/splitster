@@ -1,58 +1,46 @@
 // @flow
-import R from "ramda"
-import jsCookies from "js-cookie"
+import R from 'ramda'
+import jsCookies from 'js-cookie'
 
-import {
-  parseCookies,
-} from "../../tools/cookiesTools"
-import * as SplitsterFn from "../../containers/SplitsterFn"
-import { testsToSaveResults } from "../../tools/testToolsFn"
+import { parseCookies } from '../../tools/cookiesTools'
+import * as SplitsterFn from '../../containers/SplitsterFn'
+import { testsToSaveResults } from '../../tools/testToolsFn'
 
-import type {
-  Config,
-  SaveResults,
-} from "../../types"
-import type {
-  Splitster,
-} from "../../containers/SplitsterFn"
-import type {
-  Variant,
-  Variants,
-} from "../../containers/TestFn"
+import type { Config, SaveResults } from '../../types'
+import type { Splitster } from '../../containers/SplitsterFn'
+import type { Variant, Variants } from '../../containers/TestFn'
 
 class SplitsterClient {
   state: Splitster
 
   constructor(config: Config, user?: ?Object, def?: SaveResults) {
     const cookiesDisabled = config.options.cookies.disable
-    console.log("client, cookiesDisabled", cookiesDisabled)
+    console.log('client, cookiesDisabled', cookiesDisabled)
     if (!cookiesDisabled && def) {
       // If there is default set (server side) try to save it to cookies
       this.saveCookies(def)
     }
-    const savedResults: SaveResults = def || (cookiesDisabled ? {} : parseCookies(jsCookies.get()))
+    const savedResults: SaveResults =
+      def || (cookiesDisabled ? {} : parseCookies(jsCookies.get()))
     this.state = SplitsterFn.constructSplitster(config, user, savedResults)
   }
 
-  getSaveResults = (): SaveResults =>
-    testsToSaveResults(this.state.tests)
+  getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
 
   saveCookies = (saveResults: SaveResults): void => {
-    R.forEach((key) => {
-        const cookieKey = "splitster_" + key
-        if (!jsCookies.get(cookieKey)) {
-          // Only save cookie if it is not saved already
-          jsCookies.set(cookieKey, saveResults[key])
-        }
-      },
-      R.keys(saveResults),
-    )
+    R.forEach(key => {
+      const cookieKey = `splitster_${key}`
+      if (!jsCookies.get(cookieKey)) {
+        // Only save cookie if it is not saved already
+        jsCookies.set(cookieKey, saveResults[key])
+      }
+    }, R.keys(saveResults))
   }
 
   run = (testId: string): void => {
     this.state = SplitsterFn.run(this.state, testId)
 
-    const saveResults = testsToSaveResults({testId: this.state.tests[testId]})
+    const saveResults = testsToSaveResults({ testId: this.state.tests[testId] })
     this.saveCookies(saveResults)
   }
 
@@ -66,7 +54,7 @@ class SplitsterClient {
   get = (testId: string): Variant => {
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)
-  }
+  };
 
   getAll = (): Variants => {
     this.state = SplitsterFn.willGetAll(this.state)

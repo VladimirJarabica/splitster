@@ -1,5 +1,5 @@
 // @flow
-import type { Config } from "../types"
+import type { Config } from '../types'
 
 const defaultConfig: Config = {
   test: {},
@@ -10,8 +10,8 @@ const defaultConfig: Config = {
     cookies: {
       disable: false,
       expiration: 30, // TODO: check if it is alright
-      name: "splitster",
-    }
+      name: 'splitster',
+    },
   },
 }
 

@@ -1,5 +1,5 @@
 // @flow
-import type { Variant } from "../containers/TestFn"
+import type { Variant } from '../containers/TestFn'
 
 type TestId = string
 type VariantId = string
@@ -20,27 +20,31 @@ export type OptionsConfig = {|
 export type Result = ?Variant
 
 // TODO: add test result type
-export type TrackConfig = (Result) => void
+export type TrackConfig = Result => void
 export type TracksConfig = { [TrackId]: TrackConfig }
 
-export type TestTrackConfig = TrackId|TrackConfig
-export type TestTracksConfig = TestTrackConfig|Array<TestTrackConfig>
+export type TestTrackConfig = TrackId | TrackConfig
+export type TestTracksConfig = TestTrackConfig | Array<TestTrackConfig>
 
-export type UserGroupConfig = {
-  [string]: any|Array<any>
-}| (Object) => boolean
+export type UserGroupConfig =
+  | {
+      [string]: any | Array<any>,
+    }
+  | (Object => boolean)
 export type UserGroupsConfig = { [GroupId]: UserGroupConfig }
 
-export type VariantConfig = {|
-  def?: boolean,
-  value: string,
-  ratio: number,
-|} | string
+export type VariantConfig =
+  | {|
+      def?: boolean,
+      value: string,
+      ratio: number,
+    |}
+  | string
 export type VariantsConfig = { [VariantId]: VariantConfig }
 
 export type TestConfig = {|
   description?: string,
-  userGroup?: GroupId|UserGroupConfig|Array<GroupId|UserGroupConfig>,
+  userGroup?: GroupId | UserGroupConfig | Array<GroupId | UserGroupConfig>,
   usage?: number,
   runTrack?: TestTracksConfig,
   useTrack?: TestTracksConfig,

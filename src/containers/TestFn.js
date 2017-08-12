@@ -1,5 +1,5 @@
 // @flow
-import R from "ramda"
+import R from 'ramda'
 
 import {
   getVariants,
@@ -7,7 +7,7 @@ import {
   getTracks,
   runTracks,
   getWinningVariant,
-} from "../tools/testToolsFn"
+} from '../tools/testToolsFn'
 
 import type {
   VariantConfig,
@@ -16,7 +16,7 @@ import type {
   TestConfig,
   TracksConfig,
   Result,
-} from "../types"
+} from '../types'
 
 export type TestOptions = {|
   disabled?: boolean,
@@ -51,19 +51,26 @@ const defaultTestOptions: TestOptions = {
   disabled: false,
 }
 
-export const constructTest = (id: string, config: TestConfig, tracks: ?TracksConfig = {}, options: TestOptions): Test => {
-  const {
-    disabled,
-    winningVariant,
-  }: TestOptions = R.merge(defaultTestOptions, options)
+export const constructTest = (
+  id: string,
+  config: TestConfig,
+  tracks: ?TracksConfig = {},
+  options: TestOptions,
+): Test => {
+  const { disabled, winningVariant }: TestOptions = R.merge(
+    defaultTestOptions,
+    options,
+  )
   const variants = getVariants(config.variants)
-  const isDisabled = disabled || winningVariant && winningVariant === "__disabled" || false
+  const isDisabled =
+    disabled || (winningVariant && winningVariant === '__disabled') || false
 
-  const winningVariantSet = !isDisabled && winningVariant && winningVariant !== "__disabled"
+  const winningVariantSet =
+    !isDisabled && winningVariant && winningVariant !== '__disabled'
 
   return {
     id,
-    variants: variants,
+    variants,
     defaultVariant: getDefaultVariant(variants, config.defaultVariant),
     runTrack: getTracks(config.runTrack, tracks),
     useTrack: getTracks(config.useTrack, tracks),
@@ -83,13 +90,15 @@ export const run = (test: Test): Test => {
   }
 
   return R.assoc(
-    "winningVariant",
-    test.disabled ? test.defaultVariant : getWinningVariant(R.values(test.variants), test.defaultVariant),
-    test
+    'winningVariant',
+    test.disabled
+      ? test.defaultVariant
+      : getWinningVariant(R.values(test.variants), test.defaultVariant),
+    test,
   )
 }
 
-export const setAsUsed = (test: Test): Test => R.assoc("used", true, test)
+export const setAsUsed = (test: Test): Test => R.assoc('used', true, test)
 
 export const willGet = (test: Test): Test => {
   if (!test.used) {
@@ -98,7 +107,8 @@ export const willGet = (test: Test): Test => {
   return setAsUsed(test)
 }
 
-export const get = (test: Test): Variant => test.winningVariant || test.defaultVariant
+export const get = (test: Test): Variant =>
+  test.winningVariant || test.defaultVariant
 
 export const track = (test: Test): void => runTracks(test.endTrack)
 

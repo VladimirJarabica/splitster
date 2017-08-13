@@ -30,6 +30,8 @@ export type Variant = {|
   ratio: number,
 |}
 
+export type Variants = { [string]: Variant }
+
 export type Test = {|
   id: string,
   variants: Variants,
@@ -45,7 +47,6 @@ export type Test = {|
 |}
 
 export type Tests = { [string]: Test }
-export type Variants = { [string]: Variant }
 
 const defaultTestOptions: TestOptions = {
   disabled: false,
@@ -109,6 +110,13 @@ export const willGet = (test: Test): Test => {
 
 export const get = (test: Test): Variant =>
   test.winningVariant || test.defaultVariant
+
+export const set = (test: Test, variantId: string): Test =>
+  R.assoc(
+    'winningVariant',
+    R.pathOr(test.winningVariant, ['variants', variantId], test),
+    test,
+  )
 
 export const track = (test: Test): void => runTracks(test.endTrack)
 

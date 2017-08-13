@@ -12,6 +12,7 @@ export type ActionType =
   | 'splitster/CLIENT_TO_SAVE'
   | 'splitster/SAVE_TO_CLIENT'
   | 'splitster/RUN'
+  | 'splitster/SET'
 
 export type Action = {
   type: ActionType,
@@ -42,6 +43,8 @@ const splitsterReducer = (
         state.runAll()
       }
       return state
+    case 'splitster/SET':
+      return state.set(action.testId, action.variantId)
     default:
       return state
   }
@@ -72,6 +75,12 @@ const run = (test: string): Action => ({
   test,
 })
 
+const set = (testId: string, variantId: string): Action => ({
+  type: 'splitster/SET',
+  testId,
+  variantId,
+})
+
 export default {
   splitsterReducer,
   initServer,
@@ -79,4 +88,5 @@ export default {
   serverToSave,
   clientToSave,
   run,
+  set,
 }

@@ -62,6 +62,18 @@ export const willGet = (splitster: Splitster, testId: string): Splitster =>
 export const get = (splitster: Splitster, testId: string): Variant =>
   TestFn.get(splitster.tests[testId])
 
+// Custom set of variant (debug)
+export const set = (
+  splitster: Splitster,
+  testId: string,
+  variantId: string,
+): Splitster =>
+  R.assocPath(
+    ['tests', testId],
+    TestFn.set(splitster.tests[testId], variantId),
+    splitster,
+  )
+
 export const willGetAll = (splitster: Splitster): Splitster =>
   R.reduce(willGet, splitster, R.keys(splitster.tests))
 

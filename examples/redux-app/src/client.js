@@ -14,6 +14,7 @@ const initState = JSON.parse(document.body.getAttribute('data-redux-state'))
 const store = createStore(reducers, initState)
 store.dispatch(splitsterRedux.initClient(config))
 
+window.splitsterRedux = splitsterRedux
 window.store = store
 
 render(

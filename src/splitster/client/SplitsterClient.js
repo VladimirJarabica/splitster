@@ -13,9 +13,17 @@ import type { Variant, Variants } from '../../containers/TestFn'
 class SplitsterClient {
   state: Splitster
 
-  constructor(config: Config, user?: ?Object, def?: SaveResults) {
+  constructor(
+    config: ?Config,
+    user?: ?Object,
+    def?: SaveResults,
+    copy?: Splitster,
+  ) {
+    if (!config && !user && !def && copy) {
+      this.state = copy
+      return
+    }
     const cookiesDisabled = config.options.cookies.disable
-    console.log('client, cookiesDisabled', cookiesDisabled)
     if (!cookiesDisabled && def) {
       // If there is default set (server side) try to save it to cookies
       this.saveCookies(def)
@@ -60,6 +68,14 @@ class SplitsterClient {
     this.state = SplitsterFn.willGetAll(this.state)
     return SplitsterFn.getAll(this.state)
   }
+
+  set = (testId: string, variantId: string): void =>
+    new SplitsterClient(
+      null,
+      null,
+      null,
+      SplitsterFn.set(this.state, testId, variantId),
+    );
 
   track = (testId: string) => {
     SplitsterFn.track(this.state, testId)

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda'
-import { constructTest, run, setAsUsed, get, willGet } from './TestFn'
+import { constructTest, run, setAsUsed, get, set, willGet } from './TestFn'
 import type { Test, TestOptions } from './TestFn'
 
 const defaultTest: Test = {
@@ -106,7 +106,7 @@ describe('testFn', () => {
     })
   })
 
-  describe('get and will get', () => {
+  describe('get, will get, set', () => {
     let counter = 0
     const increaseCounter = () => {
       counter++
@@ -136,6 +136,11 @@ describe('testFn', () => {
     it('get - winning variant set', () => {
       const winnerSet = R.assoc('winningVariant', variantB, getTest)
       expect(get(winnerSet)).toEqual(variantB)
+    })
+
+    it('set - should set custom wariant', () => {
+      expect(get(set(getTest, 'a'))).toEqual(variantA)
+      expect(get(set(getTest, 'b'))).toEqual(variantB)
     })
   })
 })

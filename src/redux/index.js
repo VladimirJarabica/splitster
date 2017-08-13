@@ -3,7 +3,7 @@ import client from '../splitster/client/SplitsterClient'
 import server from '../splitster/server/SplitsterServer'
 import splitsterInit, { server as serverInit } from '../main'
 
-import type { SaveResults } from '../types'
+import type { Config, SaveResults } from '../types'
 
 export type ActionType =
   | 'splitster/INIT_SERVER'
@@ -30,33 +30,39 @@ const splitsterReducer = (
 ) => {
   switch (action.type) {
     case 'splitster/INIT_SERVER':
+      // $FlowFixMe
       return serverInit(action.config, action.user, state)
     case 'splitster/INIT_CLIENT':
+      // $FlowFixMe
       return splitsterInit(action.config, action.user, state)
     case 'splitster/SERVER_TO_SAVE':
     case 'splitster/CLIENT_TO_SAVE':
+      // $FlowFixMe
       return state.getSaveResults()
     case 'splitster/RUN':
       if (action.test) {
+        // $FlowFixMe
         state.run(action.test)
       } else {
+        // $FlowFixMe
         state.runAll()
       }
       return state
     case 'splitster/SET':
+      // $FlowFixMe
       return state.set(action.testId, action.variantId)
     default:
       return state
   }
 }
 
-const initServer = (config, user): Action => ({
+const initServer = (config: Config, user?: Object): Action => ({
   type: 'splitster/INIT_SERVER',
   config,
   user,
 })
 
-const initClient = (config, user): Action => ({
+const initClient = (config: Config, user?: Object): Action => ({
   type: 'splitster/INIT_CLIENT',
   config,
   user,

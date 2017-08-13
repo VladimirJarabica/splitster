@@ -40,6 +40,7 @@ export type VariantConfig =
       ratio: number,
     |}
   | string
+  | number
 export type VariantsConfig = { [VariantId]: VariantConfig }
 
 export type TestConfig = {|

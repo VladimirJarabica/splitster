@@ -22,7 +22,7 @@ export const mergeDefaultConfig = (config: Config): Config =>
   R.mergeDeepLeft(config, defaultConfig)
 
 export const createTestsOpts = (
-  def: string = null,
+  def: string,
   disabled: boolean = false,
 ): TestOptions => ({
   disabled,

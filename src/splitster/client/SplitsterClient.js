@@ -16,20 +16,25 @@ class SplitsterClient {
   constructor(
     config: ?Config,
     user?: ?Object,
-    def?: SaveResults,
+    def?: ?SaveResults,
     copy?: Splitster,
   ) {
     if (!config && !user && !def && copy) {
       this.state = copy
       return
     }
-    const cookiesDisabled = config.options.cookies.disable
+    const cookiesDisabled = R.pathOr(
+      false,
+      ['options', 'cookies', 'disabled'],
+      config,
+    )
     if (!cookiesDisabled && def) {
       // If there is default set (server side) try to save it to cookies
       this.saveCookies(def)
     }
     const savedResults: SaveResults =
       def || (cookiesDisabled ? {} : parseCookies(jsCookies.get()))
+    // $FlowFixMe
     this.state = SplitsterFn.constructSplitster(config, user, savedResults)
   }
 
@@ -69,7 +74,7 @@ class SplitsterClient {
     return SplitsterFn.getAll(this.state)
   }
 
-  set = (testId: string, variantId: string): void =>
+  set = (testId: string, variantId: string): SplitsterClient =>
     new SplitsterClient(
       null,
       null,

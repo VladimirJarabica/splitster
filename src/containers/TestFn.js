@@ -66,8 +66,9 @@ export const constructTest = (
   const isDisabled =
     disabled || (winningVariant && winningVariant === '__disabled') || false
 
-  const winningVariantSet =
-    !isDisabled && winningVariant && winningVariant !== '__disabled'
+  const winningVariantSet = Boolean(
+    !isDisabled && winningVariant && winningVariant !== '__disabled',
+  )
 
   return {
     id,
@@ -78,7 +79,7 @@ export const constructTest = (
     endTrack: getTracks(config.endTrack, tracks),
     disabled: isDisabled,
     // TODO: maybe create function for this long check
-    winningVariant: winningVariantSet ? variants[winningVariant] : null,
+    winningVariant: winningVariantSet && winningVariant ? variants[winningVariant] : null,
     used: winningVariantSet,
   }
 }

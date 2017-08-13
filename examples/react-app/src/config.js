@@ -37,6 +37,7 @@ const config: Config = {
       },
     },
     MODAL: {
+      defaultVariant: "hello",
       variants: {
         hello: 1,
         world: 1,
@@ -53,4 +54,4 @@ const config: Config = {
   },
 }
 
-export default configAp
+export default config

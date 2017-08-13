@@ -2,7 +2,7 @@
 import type { Config } from '../types'
 
 const defaultConfig: Config = {
-  test: {},
+  tests: {},
   userGroups: {},
   tracks: {},
   options: {

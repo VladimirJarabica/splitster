@@ -77,9 +77,7 @@ export const getWinningVariant = (
   variants: Array<Variant>,
   defaultVariant: Variant,
 ): Variant => {
-  const ratioSum = R.sum(
-    R.map((variant: VariantConfig) => variant.ratio, variants),
-  )
+  const ratioSum = R.sum(R.map((variant: Variant) => variant.ratio, variants))
 
   let rand = Random.integer(1, ratioSum)(Random.engines.nativeMath)
 

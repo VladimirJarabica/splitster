@@ -33,12 +33,12 @@ const defaultOptions: OptionsConfig = {
 export const constructSplitster = (
   config: Config,
   user?: ?Object = {},
-  def?: SaveResults = null,
+  def?: SaveResults,
 ): Splitster => ({
   tests: getTestsFromConfig(config.tests, {
     tracks: config.tracks,
     def,
-    separate: config.options.separateTest,
+    separate: R.pathOr(false, ['options', 'separateTest'], config),
   }),
   userGroups: getUserGroupsFromConfig(config.userGroups),
   tracks: config.tracks,

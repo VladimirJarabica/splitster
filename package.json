@@ -41,7 +41,7 @@
     "express": "^4.15.2",
     "flow-bin": "^0.42.0",
     "immutable-devtools": "0.0.7",
-    "prettier": "^1.5.3",
+    "prettier": "^1.6.1",
     "webpack": "^3.0.0"
   },
   "dependencies": {

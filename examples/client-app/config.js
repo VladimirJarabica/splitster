@@ -9,7 +9,7 @@ const config: Config = {
   tests: {
     BUTTON_COLOR: {
       defaultVariant: 'red',
-      userGroup: 'enUsers',
+      userGroup: 'deUser',
       variants: {
         red: {
           value: 'RED',

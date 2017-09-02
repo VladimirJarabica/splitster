@@ -132,7 +132,7 @@ export const getTestsFromConfig = (
 ) => {
   const { def, userGroups, user } = opts
 
-  if (def) {
+  if (def && !R.isEmpty(def)) {
     return getNormalTests(opts)(tests)
   }
 

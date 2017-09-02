@@ -5,7 +5,10 @@ import splitsterInit from '../../src/main'
 
 import config, { BUTTON_COLOR } from './config'
 
-const splitster = splitsterInit(config)
+const user = {
+  language: 'de',
+}
+const splitster = splitsterInit(config, user)
 window.splitster = splitster
 window.config = config
 window.Cookies = Cookies

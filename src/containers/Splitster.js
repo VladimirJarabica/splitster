@@ -42,6 +42,7 @@ export const constructSplitster = (
       tracks: config.tracks,
       def,
       separate: R.pathOr(false, ['options', 'separateTest'], config),
+      user,
       userGroups,
     }),
     userGroups,

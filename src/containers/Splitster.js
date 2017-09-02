@@ -34,17 +34,22 @@ export const constructSplitster = (
   config: Config,
   user?: ?Object = {},
   def?: SaveResults,
-): Splitster => ({
-  tests: getTestsFromConfig(config.tests, {
+): Splitster => {
+  const userGroups: UserGroups = getUserGroupsFromConfig(config.userGroups)
+
+  return {
+    tests: getTestsFromConfig(config.tests, {
+      tracks: config.tracks,
+      def,
+      separate: R.pathOr(false, ['options', 'separateTest'], config),
+      userGroups,
+    }),
+    userGroups,
     tracks: config.tracks,
-    def,
-    separate: R.pathOr(false, ['options', 'separateTest'], config),
-  }),
-  userGroups: getUserGroupsFromConfig(config.userGroups),
-  tracks: config.tracks,
-  options: R.mergeDeepLeft(config.options, defaultOptions),
-  user,
-})
+    options: R.mergeDeepLeft(config.options, defaultOptions),
+    user,
+  }
+}
 
 export const run = (splitster: Splitster, testId: string): Splitster =>
   R.assocPath(['tests', testId], TestFn.run(splitster.tests[testId]), splitster)

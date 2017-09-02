@@ -9,6 +9,7 @@ const config: Config = {
   tests: {
     BUTTON_COLOR: {
       defaultVariant: 'red',
+      userGroup: 'enUsers',
       variants: {
         red: {
           value: 'RED',
@@ -42,6 +43,14 @@ const config: Config = {
     cookies: {
       // disable: true,
     },
+  },
+  userGroups: {
+    deUser: { language: 'de' },
+    enAdultUsers: [
+      { language: ['en', 'us'] },
+      (user: { age: number }) => user.age >= 18,
+    ],
+    isJohn: (user: { name: string }) => user.name.includes('John'),
   },
   tracks: {
     CONSOLE: console.log,

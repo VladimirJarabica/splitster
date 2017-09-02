@@ -1,7 +1,7 @@
 // @flow
 import type { Variant } from '../containers/Test'
 
-type TestId = string
+export type TestId = string
 type VariantId = string
 type GroupId = string
 type TrackId = string
@@ -26,11 +26,12 @@ export type TracksConfig = { [TrackId]: TrackConfig }
 export type TestTrackConfig = TrackId | TrackConfig
 export type TestTracksConfig = TestTrackConfig | Array<TestTrackConfig>
 
-export type UserGroupConfig =
+export type UserGroupSubConfig =
   | {
-      [string]: any | Array<any>,
+      [string]: string | string[],
     }
   | (Object => boolean)
+export type UserGroupConfig = UserGroupSubConfig[] | UserGroupSubConfig
 export type UserGroupsConfig = { [GroupId]: UserGroupConfig }
 
 export type VariantConfig =
@@ -43,9 +44,11 @@ export type VariantConfig =
   | number
 export type VariantsConfig = { [VariantId]: VariantConfig }
 
+export type TestUserGroupConfig = GroupId | UserGroupConfig | Array<GroupId | UserGroupConfig>
+
 export type TestConfig = {|
   description?: string,
-  userGroup?: GroupId | UserGroupConfig | Array<GroupId | UserGroupConfig>,
+  userGroup?: TestUserGroupConfig,
   usage?: number,
   runTrack?: TestTracksConfig,
   useTrack?: TestTracksConfig,

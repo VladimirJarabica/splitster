@@ -9,7 +9,7 @@ import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 
 import reducers from './store/reducers'
 
-import { splitsterRedux } from '../../../src/main'
+import { splitsterRedux, parseCookies } from '../../../src/main'
 import config from './config'
 
 import App from './App'
@@ -25,8 +25,9 @@ app.get('/', (req, res) => {
   // TODO: add splitster reducer
   const store = createStore(reducers)
 
-  // TODO: store.dispatch(toServer(config, ?user))
-  store.dispatch(splitsterRedux.initServer(config))
+  const def = parseCookies(req.cookies)
+  console.log("parsed cookies", def)
+  store.dispatch(splitsterRedux.initServer(config, null, def))
   store.dispatch(splitsterRedux.run())
   const initialComponent = renderToString(
     <Provider store={store}>

@@ -13,13 +13,6 @@ export { default as splitsterRedux } from './redux'
 // TODO: then split react and redux to separate modules
 
 // Types exports:
-// Splitster
-// Config
-// Test
-// Variant
-// Track
-// Options
-// ...
 export type {
   Config,
   TestConfig,

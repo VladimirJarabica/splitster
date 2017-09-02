@@ -31,7 +31,7 @@ const splitsterReducer = (
   switch (action.type) {
     case 'splitster/INIT_SERVER':
       // $FlowFixMe
-      return serverInit(action.config, action.user, state)
+      return serverInit(action.config, action.user, action.def || state)
     case 'splitster/INIT_CLIENT':
       // $FlowFixMe
       return splitsterInit(action.config, action.user, state)
@@ -56,10 +56,11 @@ const splitsterReducer = (
   }
 }
 
-const initServer = (config: Config, user?: Object): Action => ({
+const initServer = (config: Config, user?: Object, def?: SaveResults): Action => ({
   type: 'splitster/INIT_SERVER',
   config,
   user,
+  def,
 })
 
 const initClient = (config: Config, user?: Object): Action => ({

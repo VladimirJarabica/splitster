@@ -55,6 +55,7 @@ export type TestConfig = {|
   endTrack?: TestTracksConfig,
   defaultVariant: string,
   variants: VariantsConfig,
+  disabled?: boolean,
 |}
 export type TestsConfig = { [TestId]: TestConfig }
 

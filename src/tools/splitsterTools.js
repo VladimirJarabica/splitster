@@ -4,6 +4,7 @@ import Random from 'random-js'
 
 import type {
   Config,
+  TestId,
   TestConfig,
   TestsConfig,
   TestUserGroupConfig,
@@ -24,12 +25,8 @@ import { getUserGroup, checkUserToUserGroup } from './userGroupsTools'
 export const mergeDefaultConfig = (config: Config): Config =>
   R.mergeDeepLeft(config, defaultConfig)
 
-export const createTestsOpts = (
-  def: string,
-  disabled: boolean = false,
-): TestOptions => ({
-  disabled,
-  winningVariant: disabled ? '__disabled' : def,
+export const createTestsOpts = (def: string): TestOptions => ({
+  winningVariant: def || null,
 })
 
 export type TestFromConfigOpts = {
@@ -41,32 +38,43 @@ export type TestFromConfigOpts = {
   user?: user,
 }
 
-// TODO: write tests
-export const getSeparateTests = (
-  tests: TestsConfig = {},
-  { runTest = 0, def = {}, tracks = {} }: TestFromConfigOpts,
-) =>
-  R.addIndex(R.reduce)(
-    (acc: Tests, key: string, index: number): Tests =>
-      R.assoc(
-        key,
-        constructTest(
-          key,
-          tests[key],
-          tracks,
-          createTestsOpts(def[key], index !== runTest),
-        ),
-        acc,
-      ),
-    {},
-    R.keys(tests),
+/**
+ * Get id of test, which will be ran in separate mode.
+ */
+export const getSeparateRunTestId = (tests: TestsConfig, runTest: ?number) => {
+  const enabledTestsIds = R.compose(
+    R.filter(Boolean),
+    R.values,
+    R.mapObjIndexed(
+      (test: TestConfig, key: TestId) => (test.disabled ? null : key),
+    ),
+  )(tests)
+  const runTestNumber = Number.isInteger(runTest)
+    ? runTest
+    : Random.integer(0, enabledTestsIds.length - 1)(Random.engines.nativeMath)
+  return enabledTestsIds[runTestNumber]
+}
+
+export const disableBySeparateTests = ({
+  runTest,
+  separate = false,
+}: TestFromConfigOpts) => (tests: TestsConfig = {}): TestsConfig => {
+  if (!separate) return tests
+
+  const separateRunTestId = getSeparateRunTestId(tests, runTest)
+
+  return R.mapObjIndexed(
+    (test: TestConfig, key: TestId) =>
+      R.assoc('disabled', key !== separateRunTestId, test),
+    tests,
   )
+}
 
 // TODO: write tests
-export const getNormalTests = (
-  tests: TestsConfig = {},
-  { tracks = {}, def = {} }: TestFromConfigOpts,
-) =>
+export const getNormalTests = ({
+  tracks = {},
+  def = {},
+}: TestFromConfigOpts) => (tests: TestsConfig = {}): TestsConfig =>
   R.reduce(
     (acc: Tests, key: string): Tests =>
       R.assoc(
@@ -102,45 +110,39 @@ export const passTestUserGroups = (
   return checkUserToUserGroup(user, getUserGroup(testUserGroup))
 }
 
-export const getRunnableTest = (
+export const disableByUserGroups = (userGroups: ?UserGroups, user: ?Object) => (
   tests: TestsConfig,
-  userGroups: ?UserGroups,
-  user: ?Object,
 ): TestsConfig => {
   if (!user || R.isEmpty(user)) {
     return tests
   }
-  return R.pickBy(
-    (test: TestConfig) => passTestUserGroups(test.userGroup, userGroups, user),
-    tests,
-  )
+  return R.map((test: TestConfig) => {
+    return R.assoc(
+      'disabled',
+      test.disabled ||
+        R.not(passTestUserGroups(test.userGroup, userGroups, user)),
+      test,
+    )
+  }, tests)
 }
 
 export const getTestsFromConfig = (
-  allTests: TestsConfig = {},
+  tests: TestsConfig = {},
   opts: TestFromConfigOpts,
 ) => {
-  const { def, runTest, separate, userGroups, user } = opts
+  const { def, userGroups, user } = opts
 
-  const tests = getRunnableTest(allTests, userGroups, user)
-
-  if (!def && separate) {
-    return getSeparateTests(
-      tests,
-      R.assoc(
-        'runTest',
-        runTest ||
-          Random.integer(0, R.length(R.keys(tests)) - 1)(
-            Random.engines.nativeMath,
-          ),
-      ),
-      opts,
-    )
+  if (def) {
+    return getNormalTests(opts)(tests)
   }
-  return getNormalTests(tests, opts)
+
+  return R.compose(
+    getNormalTests(opts),
+    disableBySeparateTests(opts),
+    disableByUserGroups(userGroups, user),
+  )(tests)
 }
 
-// TODO: write tests
 export const getUserGroupsFromConfig = (
   userGroups: UserGroupsConfig = {},
 ): UserGroups => {

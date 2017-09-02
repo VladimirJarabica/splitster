@@ -4,16 +4,18 @@ import R from 'ramda'
 import {
   mergeDefaultConfig,
   createTestsOpts,
-  getSeparateTests,
-  getTestsFromConfig,
   passTestUserGroups,
+  disableByUserGroups,
+  getSeparateRunTestId,
+  disableBySeparateTests,
 } from './splitsterTools'
 
 import defaultConfig from './defaultConfig'
 
 import type { TestsConfig } from '../types'
-import type { TestUserGroupConfig } from '../types/index'
 import { getUserGroup } from './userGroupsTools'
+import type { TestFromConfigOpts } from './splitsterTools'
+import type { UserGroups } from '../containers/UserGroup'
 
 const testsConfig: TestsConfig = {
   test_a: {
@@ -22,6 +24,7 @@ const testsConfig: TestsConfig = {
       a: 1,
       b: 2,
     },
+    userGroups: 'isWise',
   },
   test_x: {
     defaultVariant: 'x',
@@ -29,8 +32,41 @@ const testsConfig: TestsConfig = {
       x: 2,
       y: 1,
     },
+    userGroup: ['notWise', 'maybeWise'],
+  },
+  test_h: {
+    defaultVariant: 'h',
+    variants: {
+      h: 2,
+      k: 1,
+    },
+    userGroup: ['maybeWise', user => user.name === 'Tyrion', { height: 130 }],
   },
 }
+
+const testsDef = {
+  test_a: 'b',
+  test_x: 'x',
+  test_h: 'k',
+}
+
+const tyrion = {
+  name: 'Tyrion',
+  height: 130,
+  wisdom: 'Great',
+}
+
+const userGroups: UserGroups = R.mapObjIndexed(
+  (value, key, obj) => getUserGroup(value),
+  {
+    isWise: { wisdom: 'Great' },
+    maybeWise: { wisdom: ['Great', 'Good'] },
+    notWise: user => user.wisdom === 'none',
+  },
+)
+
+const mapDisabledProp = (tests: TestsConfig): string[] =>
+  R.values(tests).map(test => test.disabled)
 
 describe('splitsterToolsFn tests', () => {
   describe('merge default config', () => {
@@ -42,58 +78,17 @@ describe('splitsterToolsFn tests', () => {
   describe('test options', () => {
     it('without any params', () => {
       expect(createTestsOpts()).toEqual({
-        disabled: false,
         winningVariant: null,
-      })
-    })
-    it('disabled no def', () => {
-      expect(createTestsOpts(null, true)).toEqual({
-        disabled: true,
-        winningVariant: '__disabled',
-      })
-    })
-    it('disabled with def', () => {
-      expect(createTestsOpts(null, true)).toEqual({
-        disabled: true,
-        winningVariant: '__disabled',
       })
     })
     it('default value', () => {
       expect(createTestsOpts('defValue')).toEqual({
-        disabled: false,
         winningVariant: 'defValue',
       })
     })
   })
 
-  describe('separate tests', () => {
-    it('with runTest only', () => {
-      expect(getSeparateTests(testsConfig, {}).test_a.disabled).toEqual(false)
-      expect(getSeparateTests(testsConfig, {}).test_x.disabled).toEqual(true)
-    })
-  })
-
-  describe('test from config', () => {
-    describe('normal tests', () => {})
-  })
-
-  describe.only('#pastTestUserGroups', () => {
-    const tyrion = {
-      name: 'Tyrion',
-      height: 130,
-      wisdom: 'Great',
-    }
-    const testUserGroups: TestUserGroupConfig = {}
-
-    const userGroups = R.mapObjIndexed(
-      (value, key, obj) => getUserGroup(value),
-      {
-        isWise: { wisdom: 'Great' },
-        maybeWise: { wisdom: ['Great', 'Good'] },
-        notWise: user => user.wisdom === 'none',
-      },
-    )
-
+  describe('#passTestUserGroups', () => {
     it('simple string reference to group', () => {
       expect(passTestUserGroups('isWise', userGroups, tyrion)).toEqual(true)
       expect(passTestUserGroups('notWise', userGroups, tyrion)).toEqual(false)
@@ -124,7 +119,7 @@ describe('splitsterToolsFn tests', () => {
         ),
       ).toEqual(false)
     })
-    it.only('custom test user group config', () => {
+    it('custom test user group config', () => {
       expect(
         passTestUserGroups(user => user.name === 'Tyrion', null, tyrion),
       ).toEqual(true)
@@ -142,6 +137,56 @@ describe('splitsterToolsFn tests', () => {
           tyrion,
         ),
       ).toEqual(false)
+    })
+  })
+
+  describe('#getTestsFromConfig', () => {
+    describe('#disableByUserGroups', () => {
+      it('should correctly disable', () => {
+        expect(
+          mapDisabledProp(disableByUserGroups(userGroups, tyrion)(testsConfig)),
+        ).toEqual([false, true, false])
+      })
+    })
+    describe('#disableBySeparateTests', () => {
+      const separateTests = {
+        one: { disabled: true },
+        two: { disabled: false },
+        three: { disabled: true },
+        four: { disabled: false },
+        five: { disabled: false },
+      }
+      it('should get right separate run test id', () => {
+        expect(getSeparateRunTestId(separateTests, 0)).toEqual('two')
+        expect(getSeparateRunTestId(separateTests, 1)).toEqual('four')
+        expect(getSeparateRunTestId(separateTests, 2)).toEqual('five')
+        expect(getSeparateRunTestId(separateTests, 3)).toEqual(undefined)
+        expect(getSeparateRunTestId(separateTests)).toBeDefined()
+        expect(getSeparateRunTestId(separateTests)).toMatch(/two|four|five/)
+      })
+      it('should disable except separate test', () => {
+        expect(
+          mapDisabledProp(
+            disableBySeparateTests({ runTest: 0, separate: true })(
+              separateTests,
+            ),
+          ),
+        ).toEqual([true, false, true, true, true])
+        expect(
+          mapDisabledProp(
+            disableBySeparateTests({ runTest: 2, separate: true })(
+              separateTests,
+            ),
+          ),
+        ).toEqual([true, true, true, true, false])
+        expect(
+          mapDisabledProp(
+            disableBySeparateTests({ runTest: 3, separate: true })(
+              separateTests,
+            ),
+          ),
+        ).toEqual([true, true, true, true, true])
+      })
     })
   })
 })

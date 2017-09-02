@@ -1,21 +1,21 @@
 // @flow
-import type { Config } from "../../src/types"
+import type { Config } from '../../src/types'
 
-export const BUTTON_COLOR = "BUTTON_COLOR"
+export const BUTTON_COLOR = 'BUTTON_COLOR'
 
-const CONSOLE = "CONSOLE"
+const CONSOLE = 'CONSOLE'
 
 const config: Config = {
   tests: {
     BUTTON_COLOR: {
-      defaultVariant: "red",
+      defaultVariant: 'red',
       variants: {
         red: {
-          value: "RED",
+          value: 'RED',
           ratio: 1,
         },
         blue: {
-          value: "BLUE",
+          value: 'BLUE',
           ratio: 1,
         },
       },
@@ -24,27 +24,27 @@ const config: Config = {
       endTrack: [CONSOLE, console.warn],
     },
     SHOW_ADD: {
-      defaultVariant: "show",
+      defaultVariant: 'show',
       variants: {
         show: {
-          value: "SHOW",
+          value: 'SHOW',
           ratio: 1,
         },
         hide: {
-          value: "HIDE",
+          value: 'HIDE',
           ratio: 1,
         },
       },
-    }
+    },
   },
   options: {
     separateTest: false,
     cookies: {
       // disable: true,
-    }
+    },
   },
   tracks: {
-    CONSOLE: console.log
+    CONSOLE: console.log,
   },
 }
 

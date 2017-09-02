@@ -7,7 +7,10 @@
     "start": "concurrently \"webpack -w\" \"http-server\""
   },
   "dependencies": {
+    "babel-register": "^6.26.0",
     "concurrently": "^3.5.0",
+    "js-cookie": "^2.1.4",
+    "ramda": "^0.24.1",
     "splitster": "^0.0.4"
   },
   "devDependencies": {}

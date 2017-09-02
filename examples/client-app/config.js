@@ -20,6 +20,7 @@ const config: Config = {
           ratio: 1,
         },
       },
+      usage: 50,
       runTrack: CONSOLE,
       useTrack: [CONSOLE],
       endTrack: [CONSOLE, console.warn],
@@ -36,6 +37,7 @@ const config: Config = {
           ratio: 1,
         },
       },
+      usage: 50,
     },
   },
   options: {

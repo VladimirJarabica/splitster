@@ -8,13 +8,13 @@ import {
   disableByUserGroups,
   getSeparateRunTestId,
   disableBySeparateTests,
+  disableByUsage,
 } from './splitsterTools'
 
 import defaultConfig from './defaultConfig'
 
 import type { TestsConfig } from '../types'
 import { getUserGroup } from './userGroupsTools'
-import type { TestFromConfigOpts } from './splitsterTools'
 import type { UserGroups } from '../containers/UserGroup'
 
 const testsConfig: TestsConfig = {
@@ -186,6 +186,30 @@ describe('splitsterToolsFn tests', () => {
             ),
           ),
         ).toEqual([true, true, true, true, true])
+      })
+    })
+    describe.only('#disableByUsage', () => {
+      it('should disable by specified usage', () => {
+        const testWithUsage = {
+          one: { usage: 10, disabled: false },
+          three: { usage: 50, disabled: false },
+          four: { usage: 100, disabled: false },
+        }
+        expect(mapDisabledProp(disableByUsage(testWithUsage, 10))).toEqual([
+          true,
+          false,
+          false,
+        ])
+        expect(mapDisabledProp(disableByUsage(testWithUsage, 55))).toEqual([
+          true,
+          true,
+          false,
+        ])
+        expect(mapDisabledProp(disableByUsage(testWithUsage, 100))).toEqual([
+          true,
+          true,
+          true,
+        ])
       })
     })
   })

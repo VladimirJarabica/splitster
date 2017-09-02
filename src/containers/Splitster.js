@@ -36,15 +36,16 @@ export const constructSplitster = (
   def?: SaveResults,
 ): Splitster => {
   const userGroups: UserGroups = getUserGroupsFromConfig(config.userGroups)
+  const tests = getTestsFromConfig(config.tests, {
+    tracks: config.tracks,
+    def,
+    separate: R.pathOr(false, ['options', 'separateTest'], config),
+    user,
+    userGroups,
+  })
 
   return {
-    tests: getTestsFromConfig(config.tests, {
-      tracks: config.tracks,
-      def,
-      separate: R.pathOr(false, ['options', 'separateTest'], config),
-      user,
-      userGroups,
-    }),
+    tests,
     userGroups,
     tracks: config.tracks,
     options: R.mergeDeepLeft(config.options, defaultOptions),

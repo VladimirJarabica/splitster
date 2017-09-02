@@ -126,6 +126,22 @@ export const disableByUserGroups = (userGroups: ?UserGroups, user: ?Object) => (
   }, tests)
 }
 
+export const disableByUsage = (
+  tests: TestsConfig,
+  testRandom?: number,
+): TestsConfig => {
+  return R.map((test: TestConfig) => {
+    if (!test.disabled && test.usage) {
+      const rand =
+        testRandom || Random.integer(0, 99)(Random.engines.nativeMath)
+      if (rand >= test.usage) {
+        return R.assoc('disabled', true, test)
+      }
+    }
+    return test
+  }, tests)
+}
+
 export const getTestsFromConfig = (
   tests: TestsConfig = {},
   opts: TestFromConfigOpts,
@@ -138,6 +154,7 @@ export const getTestsFromConfig = (
 
   return R.compose(
     getNormalTests(opts),
+    disableByUsage,
     disableBySeparateTests(opts),
     disableByUserGroups(userGroups, user),
   )(tests)

@@ -1,7 +1,7 @@
 // @flow
 import SplitsterClient from './SplitsterClient'
 
-import { mergeDefaultConfig } from '../../tools/splitsterToolsFn'
+import { mergeDefaultConfig } from '../../tools/splitsterTools'
 
 import type { Config, SaveResults } from '../../types'
 

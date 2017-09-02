@@ -1,5 +1,5 @@
 // @flow
-import type { Variant } from '../containers/TestFn'
+import type { Variant } from '../containers/Test'
 
 type TestId = string
 type VariantId = string

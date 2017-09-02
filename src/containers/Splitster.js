@@ -4,14 +4,14 @@ import R from 'ramda'
 import {
   getTestsFromConfig,
   getUserGroupsFromConfig,
-} from '../tools/splitsterToolsFn'
+} from '../tools/splitsterTools'
 
 import type { Config, TracksConfig, OptionsConfig, SaveResults } from '../types'
 
-import type { Tests, Variants, Variant } from './TestFn'
-import * as TestFn from './TestFn'
+import type { Tests, Variants, Variant } from './Test'
+import * as TestFn from './Test'
 
-import type { UserGroups } from './UserGroupFn'
+import type { UserGroups } from './UserGroup'
 
 export type Splitster = {|
   tests: Tests,

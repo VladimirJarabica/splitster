@@ -12,11 +12,11 @@ import type {
 
 import defaultConfig from './defaultConfig'
 
-import type { Tests, TestOptions } from '../containers/TestFn'
-import { constructTest } from '../containers/TestFn'
+import type { Tests, TestOptions } from '../containers/Test'
+import { constructTest } from '../containers/Test'
 
-import type { UserGroups } from '../containers/UserGroupFn'
-import { constructUserGroup } from '../containers/UserGroupFn'
+import type { UserGroups } from '../containers/UserGroup'
+import { constructUserGroup } from '../containers/UserGroup'
 
 export const mergeDefaultConfig = (config: Config): Config =>
   R.mergeDeepLeft(config, defaultConfig)

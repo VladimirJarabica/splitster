@@ -4,7 +4,7 @@ import {
   createTestsOpts,
   getSeparateTests,
   getTestsFromConfig,
-} from './splitsterToolsFn'
+} from './splitsterTools'
 
 import defaultConfig from './defaultConfig'
 

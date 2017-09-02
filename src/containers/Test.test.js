@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda'
-import { constructTest, run, setAsUsed, get, set, willGet } from './TestFn'
-import type { Test, TestOptions } from './TestFn'
+import { constructTest, run, setAsUsed, get, set, willGet } from './Test'
+import type { Test, TestOptions } from './Test'
 
 const defaultTest: Test = {
   id: '',

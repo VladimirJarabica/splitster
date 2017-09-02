@@ -12,7 +12,7 @@ import type {
   Result,
   SaveResults,
 } from '../types'
-import type { Variant, Variants, Test, Tests } from '../containers/TestFn'
+import type { Variant, Variants, Test, Tests } from '../containers/Test'
 
 export const getVariant = (
   variantId: string,

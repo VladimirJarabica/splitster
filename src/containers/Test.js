@@ -7,7 +7,7 @@ import {
   getTracks,
   runTracks,
   getWinningVariant,
-} from '../tools/testToolsFn'
+} from '../tools/testTools'
 
 import type {
   VariantConfig,

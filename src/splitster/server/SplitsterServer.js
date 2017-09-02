@@ -1,11 +1,11 @@
 // @flow
-import * as SplitsterFn from '../../containers/SplitsterFn'
+import * as SplitsterFn from '../../containers/Splitster'
 
-import { testsToSaveResults } from '../../tools/testToolsFn'
+import { testsToSaveResults } from '../../tools/testTools'
 
 import type { Config, SaveResults } from '../../types'
-import type { Splitster } from '../../containers/SplitsterFn'
-import type { Variant, Variants } from '../../containers/TestFn'
+import type { Splitster } from '../../containers/Splitster'
+import type { Variant, Variants } from '../../containers/Test'
 
 class SplitsterServer {
   state: Splitster

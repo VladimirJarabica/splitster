@@ -7,7 +7,7 @@ import {
   getTracks,
   testToSaveResults,
   testsToSaveResults,
-} from './testToolsFn'
+} from './testTools'
 
 describe('testToolsFn tests', () => {
   const variantsConfig = {

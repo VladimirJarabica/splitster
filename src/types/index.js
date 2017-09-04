@@ -1,5 +1,5 @@
 // @flow
-import type { Variant } from '../containers/Test'
+import type { Test } from '../containers/Test'
 
 export type TestId = string
 type VariantId = string
@@ -17,7 +17,7 @@ export type OptionsConfig = {|
   cookies?: CookiesOptionsConfig,
 |}
 
-export type Result = ?Variant
+export type Result = Test
 
 // TODO: add test result type
 export type TrackConfig = Result => void
@@ -44,7 +44,10 @@ export type VariantConfig =
   | number
 export type VariantsConfig = { [VariantId]: VariantConfig }
 
-export type TestUserGroupConfig = GroupId | UserGroupConfig | Array<GroupId | UserGroupConfig>
+export type TestUserGroupConfig =
+  | GroupId
+  | UserGroupConfig
+  | Array<GroupId | UserGroupConfig>
 
 export type TestConfig = {|
   description?: string,

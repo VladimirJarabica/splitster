@@ -21,3 +21,5 @@ export type {
   TrackConfig,
   OptionsConfig,
 } from './types'
+
+export type { Splitster } from './containers/Splitster'

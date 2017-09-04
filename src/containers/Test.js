@@ -78,7 +78,7 @@ export const constructTest = (
     defaultVariant: getDefaultVariant(variants, config.defaultVariant),
     disabled: isDisabled,
 
-    used: winningVariantSet,
+    used: false,
   }
 }
 

@@ -83,7 +83,9 @@ export const constructTest = (
 }
 
 export const run = (test: Test): Test => {
-  runTracks(test.runTrack, test)
+  if (!test.disabled) {
+    runTracks(test.runTrack, test)
+  }
 
   if (test.winningVariant) {
     return test
@@ -101,7 +103,11 @@ export const run = (test: Test): Test => {
 export const setAsUsed = (test: Test): Test => R.assoc('used', true, test)
 
 export const willGet = (test: Test): Test => {
-  if (!test.used) {
+  if (test.used) {
+    return test
+  }
+
+  if (!test.disabled) {
     runTracks(test.useTrack, test)
   }
   return setAsUsed(test)
@@ -117,7 +123,11 @@ export const set = (test: Test, variantId: string): Test =>
     test,
   )
 
-export const track = (test: Test): void => runTracks(test.endTrack, test)
+export const track = (test: Test): void => {
+  if (!test.disabled) {
+    runTracks(test.endTrack, test)
+  }
+}
 
 // TODO: For now return VariantConfig - specify test result
 export const getResult = (test: Test): Result => test

@@ -188,7 +188,7 @@ describe('splitsterToolsFn tests', () => {
         ).toEqual([true, true, true, true, true])
       })
     })
-    describe.only('#disableByUsage', () => {
+    describe('#disableByUsage', () => {
       it('should disable by specified usage', () => {
         const testWithUsage = {
           one: { usage: 10, disabled: false },

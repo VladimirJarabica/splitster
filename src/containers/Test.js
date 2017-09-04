@@ -58,9 +58,11 @@ export const constructTest = (
 ): Test => {
   const { winningVariant }: TestOptions = R.merge(defaultTestOptions, options)
   const variants: Variants = getVariants(config.variants)
-  const isDisabled = config.disabled || false
+  const isDisabled = config.disabled || winningVariant === '__disabled' || false
 
-  const winningVariantSet = Boolean(!isDisabled && winningVariant)
+  const winningVariantSet = Boolean(
+    !isDisabled && winningVariant && winningVariant !== '__disabled',
+  )
 
   return {
     id,
@@ -68,7 +70,7 @@ export const constructTest = (
     runTrack: getTracks(config.runTrack, tracks),
     useTrack: getTracks(config.useTrack, tracks),
     endTrack: getTracks(config.endTrack, tracks),
-    usage: R.pathOr('', 'usage', config),
+    usage: R.pathOr(100, 'usage', config),
     description: config.description,
 
     winningVariant:

@@ -9,6 +9,8 @@ const defaultTest: Test = {
   runTrack: [],
   useTrack: [],
   endTrack: [],
+  usage: 100,
+  description: undefined,
   winningVariant: null,
   defaultVariant: undefined,
   disabled: false,
@@ -22,11 +24,6 @@ describe('testFn', () => {
         R.assoc('id', 'abcd', defaultTest),
       )
     })
-    it('disabled in options', () => {
-      expect(constructTest('abcd', {}, null, { disabled: true })).toEqual(
-        R.merge(defaultTest, { id: 'abcd', disabled: true }),
-      )
-    })
     it('disabled by winning variant', () => {
       expect(
         constructTest('abcd', {}, null, { winningVariant: '__disabled' }),
@@ -37,14 +34,6 @@ describe('testFn', () => {
         constructTest('abcd', {}, null, {
           disabled: true,
           winningVariant: '__disabled',
-        }),
-      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true }))
-    })
-    it('disabled but winning variant set', () => {
-      expect(
-        constructTest('abcd', {}, null, {
-          disabled: true,
-          winningVariant: 'variantId',
         }),
       ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true }))
     })

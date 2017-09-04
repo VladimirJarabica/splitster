@@ -40,7 +40,7 @@ export type VariantConfig =
       value: string,
       ratio: number,
     |}
-  | string
+  // | string
   | number
 export type VariantsConfig = { [VariantId]: VariantConfig }
 

@@ -11,14 +11,15 @@ import {
 
 import type {
   TrackConfig,
+  TestId,
   TestConfig,
   TracksConfig,
   Result,
 } from '../types'
 
-export type TestOptions = {|
-  winningVariant?: string,
-|}
+export type TestOptions = {
+  winningVariant?: ?string,
+}
 
 export type Variant = {|
   id: string,
@@ -35,6 +36,8 @@ export type Test = {|
   runTrack: Array<TrackConfig>,
   useTrack: Array<TrackConfig>,
   endTrack: Array<TrackConfig>,
+  usage: number,
+  description: ?string,
 
   winningVariant: ?Variant,
   defaultVariant: Variant,
@@ -43,7 +46,7 @@ export type Test = {|
   used: boolean,
 |}
 
-export type Tests = { [string]: Test }
+export type Tests = { [TestId]: Test }
 
 const defaultTestOptions: TestOptions = {}
 
@@ -54,7 +57,7 @@ export const constructTest = (
   options: TestOptions,
 ): Test => {
   const { winningVariant }: TestOptions = R.merge(defaultTestOptions, options)
-  const variants = getVariants(config.variants)
+  const variants: Variants = getVariants(config.variants)
   const isDisabled = config.disabled || false
 
   const winningVariantSet = Boolean(!isDisabled && winningVariant)
@@ -62,14 +65,17 @@ export const constructTest = (
   return {
     id,
     variants,
-    defaultVariant: getDefaultVariant(variants, config.defaultVariant),
     runTrack: getTracks(config.runTrack, tracks),
     useTrack: getTracks(config.useTrack, tracks),
     endTrack: getTracks(config.endTrack, tracks),
-    disabled: isDisabled,
-    // TODO: maybe create function for this long check
+    usage: R.pathOr('', 'usage', config),
+    description: config.description,
+
     winningVariant:
       winningVariantSet && winningVariant ? variants[winningVariant] : null,
+    defaultVariant: getDefaultVariant(variants, config.defaultVariant),
+    disabled: isDisabled,
+
     used: winningVariantSet,
   }
 }

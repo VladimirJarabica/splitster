@@ -35,7 +35,7 @@ export type TestFromConfigOpts = {
   separate?: boolean,
   runTest?: number,
   userGroups?: UserGroups,
-  user?: user,
+  user: ?Object,
 }
 
 /**
@@ -74,7 +74,7 @@ export const disableBySeparateTests = ({
 export const getNormalTests = ({
   tracks = {},
   def = {},
-}: TestFromConfigOpts) => (tests: TestsConfig = {}): TestsConfig =>
+}: TestFromConfigOpts) => (tests: TestsConfig = {}): Tests =>
   R.reduce(
     (acc: Tests, key: string): Tests =>
       R.assoc(
@@ -120,7 +120,7 @@ export const disableByUserGroups = (userGroups: ?UserGroups, user: ?Object) => (
     return R.assoc(
       'disabled',
       test.disabled ||
-        R.not(passTestUserGroups(test.userGroup, userGroups, user)),
+        R.not(passTestUserGroups(test.userGroup, userGroups || {}, user || {})),
       test,
     )
   }, tests)
@@ -145,7 +145,7 @@ export const disableByUsage = (
 export const getTestsFromConfig = (
   tests: TestsConfig = {},
   opts: TestFromConfigOpts,
-) => {
+): Tests => {
   const { def, userGroups, user } = opts
 
   if (def && !R.isEmpty(def)) {

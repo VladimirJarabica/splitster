@@ -12,7 +12,8 @@
     "build-draft": "babel draft/usage_server/server.js > draft/usage_server/server.b.js && node draft/usage_server/server.b.js",
     "build-config-draft": "babel draft/usage_config/server.js > draft/usage_config/server.b.js && node draft/usage_config/server.b.js",
     "flow": "flow",
-    "flow:start": "flow start"
+    "flow:start": "flow start",
+    "flow:stop": "flow stop"
   },
   "repository": "git+https://github.com/VladimirJarabica/splitster.git",
   "author": "Vladimír Jarabica",
@@ -39,7 +40,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-prettier": "^2.1.2",
     "express": "^4.15.2",
-    "flow-bin": "^0.42.0",
+    "flow-bin": "^0.54.0",
     "immutable-devtools": "0.0.7",
     "prettier": "^1.6.1",
     "webpack": "^3.0.0"

@@ -38,4 +38,4 @@ export const getUserGroup = (userGroupConfig: UserGroupConfig): UserGroup => {
 export const checkUserToUserGroup = (
   user: Object,
   userGroup: UserGroup,
-): Boolean => R.allPass(userGroup)(user)
+): boolean => R.allPass(userGroup)(user)

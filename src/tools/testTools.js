@@ -3,7 +3,6 @@ import R from 'ramda'
 import Random from 'random-js'
 
 import type {
-  VariantConfig,
   VariantsConfig,
   TestTrackConfig,
   TestTracksConfig,

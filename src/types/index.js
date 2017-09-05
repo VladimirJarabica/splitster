@@ -7,7 +7,7 @@ type GroupId = string
 type TrackId = string
 
 export type CookiesOptionsConfig = {|
-  disable?: boolean,
+  disabled?: boolean,
   expiration?: number,
   name?: string, // Default "splitster"
 |}
@@ -36,7 +36,6 @@ export type UserGroupsConfig = { [GroupId]: UserGroupConfig }
 
 export type VariantConfig =
   | {|
-      def?: boolean,
       value: string,
       ratio: number,
     |}

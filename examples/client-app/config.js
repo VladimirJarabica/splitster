@@ -43,7 +43,7 @@ const config: Config = {
   options: {
     separateTest: false,
     cookies: {
-      disabled: true,
+      disabled: false,
     },
   },
   userGroups: {

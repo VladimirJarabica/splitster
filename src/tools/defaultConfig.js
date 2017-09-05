@@ -8,7 +8,7 @@ const defaultConfig: Config = {
   options: {
     separateTest: false,
     cookies: {
-      disable: false,
+      disabled: false,
       expiration: 30, // TODO: check if it is alright
       name: 'splitster',
     },

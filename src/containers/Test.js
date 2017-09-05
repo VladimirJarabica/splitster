@@ -23,7 +23,6 @@ export type TestOptions = {
 
 export type Variant = {|
   id: string,
-  def?: boolean,
   value: string,
   ratio: number,
 |}

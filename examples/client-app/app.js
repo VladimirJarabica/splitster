@@ -1,14 +1,14 @@
 // import splitster from "splitster"
 import Cookies from 'js-cookie'
 import R from 'ramda'
-import splitsterInit from '../../src/main'
+import splitsterInit, { parseCookies } from '../../src/main'
 
 import config, { BUTTON_COLOR } from './config'
 
 const user = {
   language: 'de',
 }
-const splitster = splitsterInit(config, user)
+const splitster = splitsterInit(config, user, parseCookies(Cookies.get()))
 window.splitster = splitster
 window.config = config
 window.Cookies = Cookies

@@ -3,7 +3,8 @@ Javascript AB testing tool
 
 # Configuration
 ```ecmascript 6
-splitster.init(config)
+import splitsterInit from "splitster"
+splitsterInit(config)
 ```
 Where config is an object with following structure:
 ```ecmascript 6
@@ -46,14 +47,18 @@ const tests = {
     // Array of tracks to use when test is successful
     endTrack: [],
 
+    // Test is disabled, always return default variant
+    disabled: false,
+
+    // Default variant id
+    defaultVariant: "RED",
+
     // Variants of the test specified by id.
     variants: {
 
-      // Variant with id red
-      red: {
+      // Variant with id RED
+      RED: {
         // If test is not ran, variant with specified default value is always returned
-        // At least one of variants must be default
-        default: true,
 
         // Actual value of variant. Will be return by calling splitser.get(test_id).value
         value: "RED",
@@ -62,14 +67,12 @@ const tests = {
         // ratio 1-1 (also 50-50) means 50% probability
         ratio: 3,
       },
-      blue: {
+      BLUE: {
         value: "BLUE",
         ratio: 4,
       },
-      green: {
-        value: "GREEN",
-        ration: 2,
-      },
+      // Shorthand - value is same as ID
+      GREEN: 2,
     },
   },
 }
@@ -107,12 +110,11 @@ document.getElementById("button").addEventListener("click", () => {
   splitster.track(test_id) //endTracks calling
 })
 ```
-## userGroups *in progress*
+## userGroups
 Defines groups which user must satisfies if test can be started.
 ```ecmascript 6
-splitster.run(test_id, user)
-// OR
-splitster.runAll(user)
+import splitsterInit from "splitster"
+splitsterInit(config, user)
 ```
 Object of key value pairs
 ```ecmascript 6
@@ -134,11 +136,11 @@ or function which takes user object and if returns true, rule passed
 ## tracks
 Object of tracks specified by id
 
-**Track** is a function taking result of test and doing developer specified tasks.
+**Track** is a function taking test object and doing developer specified tasks.
 Useful for logging, sending results etc.
 ```ecmascript 6
 tracks = {
-  CONSOLE_TRACK: (res) => { console.log(res) },
+  CONSOLE_TRACK: (test) => { console.log(test) },
 }
 ```
 
@@ -150,10 +152,10 @@ Other options to set
 Useful when you don't want to pollute your results with too many tests running at the same time.
 
 ### cookies
-**disable** if true, tests will not be saved to cookies.
+**disabled:** if true, tests will not be saved to cookies.
 Initialization won't get result from cookies but always run.
 
-**expiration** number of days cookies should last.
+**expiration:** number of days cookies should last.
 
-**name** prefix of cookies set in browser - default *splitster*
+**name:** prefix of cookies set in browser - default *splitster*
 {name_test_id}

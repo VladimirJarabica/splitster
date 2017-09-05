@@ -43,7 +43,7 @@ const config: Config = {
   options: {
     separateTest: false,
     cookies: {
-      // disable: true,
+      disabled: true,
     },
   },
   userGroups: {
@@ -55,7 +55,7 @@ const config: Config = {
     isJohn: (user: { name: string }) => user.name.includes('John'),
   },
   tracks: {
-    CONSOLE: console.log,
+    CONSOLE: (test) => console.log("tracking", test),
   },
 }
 

@@ -41,6 +41,11 @@ class SplitsterClient {
   getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
 
   saveCookies = (saveResults: SaveResults): void => {
+    if (
+      R.pathOr(false, ['config', 'options', 'cookies', 'disabled'], this.state)
+    ) {
+      return
+    }
     R.forEach(key => {
       const cookieKey = `splitster_${key}`
       if (!jsCookies.get(cookieKey)) {

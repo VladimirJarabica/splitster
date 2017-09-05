@@ -19,6 +19,7 @@ export type Splitster = {|
   tracks: ?TracksConfig,
   options: ?OptionsConfig,
   user: ?Object,
+  config: ?Config,
 |}
 
 const defaultOptions: OptionsConfig = {
@@ -50,6 +51,7 @@ export const constructSplitster = (
     tracks: config.tracks,
     options: R.mergeDeepLeft(config.options, defaultOptions),
     user,
+    config,
   }
 }
 

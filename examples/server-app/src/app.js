@@ -1,15 +1,15 @@
-import express from "express"
-import { server as splitsterInit } from "../../../lib/main"
+import express from 'express'
+import { server as splitsterInit } from '../../../src/main'
 
-import config from "./config"
+import config from './config'
 
 const app = express()
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   const user = {
-    language: "en",
-    os: "windows",
-    device: "chrome",
+    language: 'en',
+    os: 'windows',
+    device: 'chrome',
     location: {},
   }
 
@@ -18,9 +18,9 @@ app.get("/", (req, res) => {
 
   splitster.runAll()
 
-  res.json(splitster.getState())
+  res.json(splitster.getSaveResults())
 })
 
 app.listen(3000, () => {
-  console.log("Server client app running on port 3000!")
+  console.log('Server client app running on port 3000!')
 })

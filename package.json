@@ -46,6 +46,7 @@
     "webpack": "^3.0.0"
   },
   "dependencies": {
+    "babel-plugin-ramda": "^1.4.3",
     "js-cookie": "^2.1.4",
     "ramda": "^0.24.1",
     "random-js": "^1.0.8"

@@ -22,32 +22,32 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, './../dist')))
 
 app.get('/', (req, res) => {
-  // TODO: add splitster reducer
-  const store = createStore(reducers)
+	// TODO: add splitster reducer
+	const store = createStore(reducers)
 
-  const def = parseCookies(req.cookies)
-  console.log("parsed cookies", def)
-  store.dispatch(splitsterRedux.initServer(config, null, def))
-  store.dispatch(splitsterRedux.run())
-  const initialComponent = renderToString(
-    <Provider store={store}>
-      <Root />
-    </Provider>,
-  )
+	const def = parseCookies(req.cookies)
+	console.log('parsed cookies', def)
+	store.dispatch(splitsterRedux.initServer(config, null, def))
+	store.dispatch(splitsterRedux.run())
+	const initialComponent = renderToString(
+		<Provider store={store}>
+			<Root />
+		</Provider>,
+	)
 
-  // TODO: store.dispatch(serverToSave())
-  store.dispatch(splitsterRedux.serverToSave())
-  const reduxState = store.getState()
+	// TODO: store.dispatch(serverToSave())
+	store.dispatch(splitsterRedux.serverToSave())
+	const reduxState = store.getState()
 
-  const html = renderToStaticMarkup(
-    <App initialComponent={initialComponent} reduxState={reduxState} />,
-  )
+	const html = renderToStaticMarkup(
+		<App initialComponent={initialComponent} reduxState={reduxState} />,
+	)
 
-  res.send(html)
+	res.send(html)
 })
 
 const port = 4000
 
 app.listen(port, () => {
-  console.log('App listen on port', port)
+	console.log('App listen on port', port)
 })

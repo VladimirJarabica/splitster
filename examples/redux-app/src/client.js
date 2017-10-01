@@ -2,8 +2,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import * as splitsterRedux from 'splitster-redux'
 
-import { splitsterRedux } from './../../../src/main'
 import config from './config'
 
 import reducers from './store/reducers'

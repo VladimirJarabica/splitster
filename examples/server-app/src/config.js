@@ -19,12 +19,11 @@ const config: Config = {
           ratio: 1,
         },
       },
-      runTrack: CONSOLE,
-      useTrack: [CONSOLE],
-      endTrack: [CONSOLE, console.warn],
     },
+    // __disabled_config
     SHOW_ADD: {
       defaultVariant: 'show',
+      disabled: true,
       variants: {
         show: {
           value: 'SHOW',
@@ -35,6 +34,24 @@ const config: Config = {
           ratio: 1,
         },
       },
+    },
+    // __disabled_usage
+    UNIVERSE_QUESTION: {
+      defaultVariant: 'wise',
+      usage: 0,
+      variants: {
+        wise: 1,
+        dumb: 1,
+      },
+    },
+    // __disable_user_group
+    KEK: {
+      defaultVariant: 'lol',
+      variants: {
+        lol: 1,
+        bur: 1,
+      },
+      userGroup: () => false,
     },
   },
   options: {

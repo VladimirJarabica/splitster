@@ -13,7 +13,7 @@ import type {
   SaveResults,
 } from '../types'
 
-import defaultConfig from './defaultConfig'
+import defaultConfig, { defaultTestConfig } from './defaultConfig'
 
 import type { Tests, TestOptions } from '../containers/Test'
 import { constructTest } from '../containers/Test'
@@ -21,6 +21,9 @@ import { constructTest } from '../containers/Test'
 import type { UserGroups } from '../containers/UserGroup'
 import { constructUserGroup } from '../containers/UserGroup'
 import { getUserGroup, checkUserToUserGroup } from './userGroupsTools'
+
+export const mergeDefaultTests = (tests: TestsConfig): TestsConfig =>
+  R.map(R.mergeDeepRight(defaultTestConfig), tests)
 
 export const mergeDefaultConfig = (config: Config): Config =>
   R.mergeDeepLeft(config, defaultConfig)
@@ -63,11 +66,16 @@ export const disableBySeparateTests = ({
 
   const separateRunTestId = getSeparateRunTestId(tests, runTest)
 
-  return R.mapObjIndexed(
-    (test: TestConfig, key: TestId) =>
-      R.assoc('disabled', key !== separateRunTestId, test),
-    tests,
-  )
+  return R.mapObjIndexed((test: TestConfig, key: TestId) => {
+    if (test.disabled || key === separateRunTestId) {
+      return test
+    }
+    return R.merge(test, {
+      disabledReason: 'separate_test',
+      disabled: true,
+    })
+    // return R.assoc('disabled', key !== separateRunTestId, test),
+  }, tests)
 }
 
 // TODO: write tests
@@ -85,6 +93,15 @@ export const getNormalTests = ({
     {},
     R.keys(tests),
   )
+
+export const setReasonIfDisabled = (tests: TestsConfig = {}): Tests =>
+  R.map((test: TestConfig) => {
+    if (test.disabled) {
+      console.log("disabled")
+      return R.assoc('disabledReason', 'config', test)
+    }
+    return test
+  })(tests)
 
 export const passTestUserGroups = (
   testUserGroup: TestUserGroupConfig = '',
@@ -117,56 +134,62 @@ export const disableByUserGroups = (userGroups: ?UserGroups, user: ?Object) => (
     return tests
   }
   return R.map((test: TestConfig) => {
-    return R.assoc(
-      'disabled',
-      test.disabled ||
-        R.not(passTestUserGroups(test.userGroup, userGroups || {}, user || {})),
-      test,
+    if (test.disabled) {
+      return test
+    }
+
+    const disabledByUserGroups = R.not(
+      passTestUserGroups(test.userGroup, userGroups || {}, user || {}),
     )
+    return R.compose(
+      R.assoc('disabledReason', disabledByUserGroups ? 'user_group' : null),
+      R.assoc('disabled', disabledByUserGroups),
+    )(test)
   }, tests)
 }
 
 export const disableByUsage = (
   tests: TestsConfig,
   testRandom?: number,
-): TestsConfig => {
-  return R.map((test: TestConfig) => {
-    if (!test.disabled && test.usage) {
-      const rand =
-        testRandom || Random.integer(0, 99)(Random.engines.nativeMath)
-      if (rand >= test.usage) {
-        return R.assoc('disabled', true, test)
-      }
+): TestsConfig =>
+  R.map((test: TestConfig) => {
+    if (test.disabled || R.isNil(test.usage)) {
+      return test
+    }
+    const rand = testRandom || Random.integer(0, 99)(Random.engines.nativeMath)
+    if (rand >= test.usage) {
+      return R.merge(test, {
+        disabled: true,
+        disabledReason: 'usage',
+      })
     }
     return test
   }, tests)
-}
 
 export const getTestsFromConfig = (
   tests: TestsConfig = {},
   opts: TestFromConfigOpts,
 ): Tests => {
   const { def, userGroups, user } = opts
-
   if (def && !R.isEmpty(def)) {
     return getNormalTests(opts)(tests)
   }
-
   return R.compose(
     getNormalTests(opts),
     disableByUsage,
     disableBySeparateTests(opts),
     disableByUserGroups(userGroups, user),
+    setReasonIfDisabled,
+    mergeDefaultTests,
   )(tests)
 }
 
 export const getUserGroupsFromConfig = (
   userGroups: UserGroupsConfig = {},
-): UserGroups => {
-  return R.reduce(
+): UserGroups =>
+  R.reduce(
     (acc: UserGroups, key: string): UserGroups =>
       R.assoc(key, constructUserGroup(userGroups[key]), acc),
     {},
     R.keys(userGroups),
   )
-}

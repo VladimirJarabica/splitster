@@ -1,5 +1,5 @@
 // @flow
-import type { Config } from '../types'
+import type { Config, TestConfig } from '../types'
 
 const defaultConfig: Config = {
   tests: {},
@@ -13,6 +13,19 @@ const defaultConfig: Config = {
       name: 'splitster',
     },
   },
+}
+
+export const defaultTestConfig: TestConfig = {
+  description: '',
+  userGroup: {},
+  usage: 100,
+  // runTrack: '',
+  // useTrack: '',
+  // endTrack: '',
+  defaultVariant: '',
+  variants: {},
+  disabled: false,
+  disabledReason: null,
 }
 
 export default defaultConfig

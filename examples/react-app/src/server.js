@@ -16,8 +16,11 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/', (req, res) => {
+  const user = {
+    lang: "en",
+  }
   const def = parseCookies(req.cookies)
-  const splitster = splitsterInit(config, null, def)
+  const splitster = splitsterInit(config, user, def)
   splitster.runAll()
 
   const html = renderToStaticMarkup(<App splitster={splitster} />)

@@ -23,6 +23,14 @@ const config: Config = {
       useTrack: [CONSOLE],
       endTrack: [CONSOLE, console.warn],
     },
+    UNIVERSE_QUESTION: {
+      defaultVariant: 'wise',
+      disabled: true,
+      variants: {
+        wise: 1,
+        dumb: 1,
+      },
+    },
   },
   options: {
     cookies: {

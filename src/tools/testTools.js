@@ -8,6 +8,8 @@ import type {
   TestTracksConfig,
   TrackConfig,
   TracksConfig,
+  DisabledReason,
+  TestConfig,
   Result,
   SaveResults,
 } from '../types'
@@ -87,6 +89,16 @@ export const getWinningVariant = (
   return winningVariant || defaultVariant
 }
 
+export const getTestSaveResult = (test: Test): string => {
+  if (test.disabled) {
+    return `__disabled_${test.disabledReason}`
+  }
+  if (test.winningVariant) {
+    return test.winningVariant.id
+  }
+  return ''
+}
+
 // TODO: write tests
 export const testToSaveResults = (
   saveResults: SaveResults,
@@ -94,10 +106,36 @@ export const testToSaveResults = (
 ): SaveResults =>
   R.assoc(
     test.id,
-    test.winningVariant ? test.winningVariant.id : '',
+    getTestSaveResult(test),
     saveResults,
   )
 
 // TODO: write tests
 export const testsToSaveResults = (tests: Tests): SaveResults =>
   R.reduce(testToSaveResults, {}, R.values(tests))
+
+export const DisabledReasons: string[] = [
+  '__disabled_usage',
+  '__disabled_separate_test',
+  '__disabled_user_group',
+  '__disabled_config',
+]
+export const parseWinningVariant = (
+  winningVariant: ?string,
+  config: TestConfig,
+): {
+  disabled: boolean,
+  disabledReason: ?DisabledReason,
+} => {
+  if (winningVariant && R.contains(winningVariant, DisabledReasons)) {
+    console.log("parse winning variant")
+    return {
+      disabled: true,
+      disabledReason: R.slice(11, Infinity, winningVariant),
+    }
+  }
+  return {
+    disabled: config.disabled,
+    disabledReason: config.disabledReason,
+  }
+}

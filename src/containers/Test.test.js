@@ -14,6 +14,7 @@ const defaultTest: Test = {
   winningVariant: null,
   defaultVariant: undefined,
   disabled: false,
+  disabledReason: null,
   used: false,
 }
 
@@ -26,16 +27,17 @@ describe('testFn', () => {
     })
     it('disabled by winning variant', () => {
       expect(
-        constructTest('abcd', {}, null, { winningVariant: '__disabled' }),
-      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true }))
-    })
-    it('both disabled', () => {
+        constructTest('abcd', {}, null, { winningVariant: '__disabled_usage' }),
+      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'usage' }))
       expect(
-        constructTest('abcd', {}, null, {
-          disabled: true,
-          winningVariant: '__disabled',
-        }),
-      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true }))
+        constructTest('abcd', {}, null, { winningVariant: '__disabled_separate_test' }),
+      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'separate_test' }))
+      expect(
+        constructTest('abcd', {}, null, { winningVariant: '__disabled_user_group' }),
+      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'user_group' }))
+      expect(
+        constructTest('abcd', {}, null, { winningVariant: '__disabled_config' }),
+      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'config' }))
     })
     it('should construct test with variants', () => {
       expect(constructTest('abcd', { variants: { a: 1, b: 2 } })).toEqual(
@@ -77,6 +79,7 @@ describe('testFn', () => {
       const disabledTest = R.merge(runTest, {
         disabled: true,
         defaultVariant: 'def',
+        disabledReason: 'config',
       })
       expect(run(disabledTest)).toEqual(
         R.assoc('winningVariant', 'def', disabledTest),

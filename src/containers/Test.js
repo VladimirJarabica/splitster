@@ -7,12 +7,14 @@ import {
   getTracks,
   runTracks,
   getWinningVariant,
+  parseWinningVariant,
 } from '../tools/testTools'
 
 import type {
   TrackConfig,
   TestId,
   TestConfig,
+  DisabledReason,
   TracksConfig,
   Result,
 } from '../types'
@@ -41,6 +43,7 @@ export type Test = {|
   winningVariant: ?Variant,
   defaultVariant: Variant,
   disabled: boolean,
+  disabledReason: ?DisabledReason,
 
   used: boolean,
 |}
@@ -56,12 +59,13 @@ export const constructTest = (
   options: TestOptions,
 ): Test => {
   const { winningVariant }: TestOptions = R.merge(defaultTestOptions, options)
-  const variants: Variants = getVariants(config.variants)
-  const isDisabled = config.disabled || winningVariant === '__disabled' || false
 
-  const winningVariantSet = Boolean(
-    !isDisabled && winningVariant && winningVariant !== '__disabled',
+  const { disabled, disabledReason } = parseWinningVariant(
+    winningVariant,
+    config,
   )
+
+  const variants: Variants = getVariants(config.variants)
 
   return {
     id,
@@ -73,9 +77,10 @@ export const constructTest = (
     description: config.description,
 
     winningVariant:
-      winningVariantSet && winningVariant ? variants[winningVariant] : null,
+      !disabled && winningVariant ? variants[winningVariant] : null,
     defaultVariant: getDefaultVariant(variants, config.defaultVariant),
-    disabled: isDisabled,
+    disabled,
+    disabledReason: disabled ? disabledReason : null,
 
     used: false,
   }

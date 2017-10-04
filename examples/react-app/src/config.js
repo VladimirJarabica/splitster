@@ -26,6 +26,7 @@ const config: Config = {
     SHOW_ADD: {
       defaultVariant: 'show',
       disabled: true,
+      usage: 0,
       variants: {
         show: {
           value: 'SHOW',

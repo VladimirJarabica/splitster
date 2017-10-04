@@ -7,7 +7,6 @@ import {
   getTracks,
   runTracks,
   getWinningVariant,
-  parseWinningVariant,
 } from '../tools/testTools'
 
 import type {
@@ -42,6 +41,7 @@ export type Test = {|
 
   winningVariant: ?Variant,
   defaultVariant: Variant,
+
   disabled: boolean,
   disabledReason: ?DisabledReason,
 
@@ -60,11 +60,6 @@ export const constructTest = (
 ): Test => {
   const { winningVariant }: TestOptions = R.merge(defaultTestOptions, options)
 
-  const { disabled, disabledReason } = parseWinningVariant(
-    winningVariant,
-    config,
-  )
-
   const variants: Variants = getVariants(config.variants)
 
   return {
@@ -77,10 +72,11 @@ export const constructTest = (
     description: config.description,
 
     winningVariant:
-      !disabled && winningVariant ? variants[winningVariant] : null,
+      !config.disabled && winningVariant ? variants[winningVariant] : null,
     defaultVariant: getDefaultVariant(variants, config.defaultVariant),
-    disabled,
-    disabledReason: disabled ? disabledReason : null,
+
+    disabled: config.disabled,
+    disabledReason: config.disabledReason,
 
     used: false,
   }

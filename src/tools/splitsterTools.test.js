@@ -6,6 +6,7 @@ import {
   mergeDefaultTests,
   createTestsOpts,
   passTestUserGroups,
+  disableByConfig,
   disableByUserGroups,
   getSeparateRunTestId,
   disableBySeparateTests,
@@ -144,6 +145,49 @@ describe('splitsterToolsFn tests', () => {
   })
 
   describe('#getTestsFromConfig', () => {
+    describe('#disableByConfig', () => {
+      const testsConfigDisabled = R.compose(
+        R.assocPath(['test_a', 'disabled'], true),
+        R.assocPath(['test_h', 'disabled'], true),
+      )(testsConfig)
+      it('without def', () => {
+        const result1 = disableByConfig()(testsConfig)
+        expect(mapDisabledProp(result1)).toEqual([false, false, false])
+        expect(mapDisabledReasonProp(result1)).toEqual([null, null, null])
+      })
+      it('rewrite disabled in def by not disabled in config', () => {
+        const result1 = disableByConfig({
+          test_a: '__disabled_config',
+        })(testsConfig)
+        expect(mapDisabledProp(result1)).toEqual([false, false, false])
+        expect(mapDisabledReasonProp(result1)).toEqual([null, null, null])
+        const result2 = disableByConfig({
+          test_a: '__disabled_config',
+          test_x: '__disabled_config',
+          test_h: '__disabled_config',
+        })(testsConfig)
+        expect(mapDisabledProp(result2)).toEqual([false, false, false])
+        expect(mapDisabledReasonProp(result2)).toEqual([null, null, null])
+      })
+      it('disable by config', () => {
+        const result1 = disableByConfig()(testsConfigDisabled)
+        expect(mapDisabledProp(result1)).toEqual([true, false, true])
+        expect(mapDisabledReasonProp(result1)).toEqual([
+          'config',
+          null,
+          'config',
+        ])
+      })
+      it('rewrite winning variant by disabled in config', () => {
+        const result1 = disableByConfig(testsDef)(testsConfigDisabled)
+        expect(mapDisabledProp(result1)).toEqual([true, false, true])
+        expect(mapDisabledReasonProp(result1)).toEqual([
+          'config',
+          null,
+          'config',
+        ])
+      })
+    })
     describe('#disableByUserGroups', () => {
       it('should correctly disable', () => {
         expect(
@@ -214,7 +258,13 @@ describe('splitsterToolsFn tests', () => {
               separateTests,
             ),
           ),
-      ).toEqual([null, 'separate_test', null, 'separate_test', 'separate_test'])
+        ).toEqual([
+          null,
+          'separate_test',
+          null,
+          'separate_test',
+          'separate_test',
+        ])
       })
     })
     describe('#disableByUsage', () => {
@@ -224,36 +274,30 @@ describe('splitsterToolsFn tests', () => {
           three: { usage: 50, disabled: false },
           four: { usage: 100, disabled: false },
         })
-        expect(mapDisabledProp(disableByUsage(testWithUsage, 10))).toEqual([
+        expect(mapDisabledProp(disableByUsage()(testWithUsage, 10))).toEqual([
           true,
           false,
           false,
         ])
-        expect(mapDisabledReasonProp(disableByUsage(testWithUsage, 10))).toEqual([
-          'usage',
-          null,
-          null,
-        ])
-        expect(mapDisabledProp(disableByUsage(testWithUsage, 55))).toEqual([
+        expect(
+          mapDisabledReasonProp(disableByUsage()(testWithUsage, 10)),
+        ).toEqual(['usage', null, null])
+        expect(mapDisabledProp(disableByUsage()(testWithUsage, 55))).toEqual([
           true,
           true,
           false,
         ])
-        expect(mapDisabledReasonProp(disableByUsage(testWithUsage, 55))).toEqual([
-          'usage',
-          'usage',
-          null,
-        ])
-        expect(mapDisabledProp(disableByUsage(testWithUsage, 100))).toEqual([
+        expect(
+          mapDisabledReasonProp(disableByUsage()(testWithUsage, 55)),
+        ).toEqual(['usage', 'usage', null])
+        expect(mapDisabledProp(disableByUsage()(testWithUsage, 100))).toEqual([
           true,
           true,
           true,
         ])
-        expect(mapDisabledReasonProp(disableByUsage(testWithUsage, 100))).toEqual([
-          'usage',
-          'usage',
-          'usage',
-        ])
+        expect(
+          mapDisabledReasonProp(disableByUsage()(testWithUsage, 100)),
+        ).toEqual(['usage', 'usage', 'usage'])
       })
     })
   })

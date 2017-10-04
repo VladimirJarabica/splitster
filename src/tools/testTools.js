@@ -103,39 +103,8 @@ export const getTestSaveResult = (test: Test): string => {
 export const testToSaveResults = (
   saveResults: SaveResults,
   test: Test,
-): SaveResults =>
-  R.assoc(
-    test.id,
-    getTestSaveResult(test),
-    saveResults,
-  )
+): SaveResults => R.assoc(test.id, getTestSaveResult(test), saveResults)
 
 // TODO: write tests
 export const testsToSaveResults = (tests: Tests): SaveResults =>
   R.reduce(testToSaveResults, {}, R.values(tests))
-
-export const DisabledReasons: string[] = [
-  '__disabled_usage',
-  '__disabled_separate_test',
-  '__disabled_user_group',
-  '__disabled_config',
-]
-export const parseWinningVariant = (
-  winningVariant: ?string,
-  config: TestConfig,
-): {
-  disabled: boolean,
-  disabledReason: ?DisabledReason,
-} => {
-  if (winningVariant && R.contains(winningVariant, DisabledReasons)) {
-    console.log("parse winning variant")
-    return {
-      disabled: true,
-      disabledReason: R.slice(11, Infinity, winningVariant),
-    }
-  }
-  return {
-    disabled: config.disabled,
-    disabledReason: config.disabledReason,
-  }
-}

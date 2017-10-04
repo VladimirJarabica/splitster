@@ -18,29 +18,17 @@ const defaultTest: Test = {
   used: false,
 }
 
+const setUpConfig = R.merge({ disabled: false, disabledReason: null })
+
 describe('testFn', () => {
   describe('construct test', () => {
     it('should construct test just with id', () => {
-      expect(constructTest('abcd', {})).toEqual(
+      expect(constructTest('abcd', setUpConfig({}))).toEqual(
         R.assoc('id', 'abcd', defaultTest),
       )
     })
-    it('disabled by winning variant', () => {
-      expect(
-        constructTest('abcd', {}, null, { winningVariant: '__disabled_usage' }),
-      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'usage' }))
-      expect(
-        constructTest('abcd', {}, null, { winningVariant: '__disabled_separate_test' }),
-      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'separate_test' }))
-      expect(
-        constructTest('abcd', {}, null, { winningVariant: '__disabled_user_group' }),
-      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'user_group' }))
-      expect(
-        constructTest('abcd', {}, null, { winningVariant: '__disabled_config' }),
-      ).toEqual(R.merge(defaultTest, { id: 'abcd', disabled: true, disabledReason: 'config' }))
-    })
     it('should construct test with variants', () => {
-      expect(constructTest('abcd', { variants: { a: 1, b: 2 } })).toEqual(
+      expect(constructTest('abcd', setUpConfig({ variants: { a: 1, b: 2 } }))).toEqual(
         R.merge(defaultTest, {
           id: 'abcd',
           variants: {

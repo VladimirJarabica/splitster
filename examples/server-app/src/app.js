@@ -13,8 +13,12 @@ app.get('/', (req, res) => {
     location: {},
   }
 
+  const def = {
+    // KEK: '__disabled_user_group',
+  }
+
   // TODO: create config
-  const splitster = splitsterInit(config, user)
+  const splitster = splitsterInit(config, user, def)
 
   splitster.runAll()
 

@@ -101,9 +101,12 @@ export const checkDisabled = (def: ?string) => {
 export const disableByDef = (def: ?SaveResults = {}) => (
   tests: TestsConfig,
 ): TestsConfig =>
-  R.mapObjIndexed((test: TestConfig, testId: TestId) =>
-    R.merge(test, checkDisabled(def[testId])),
-  )(tests)
+  R.mapObjIndexed((test: TestConfig, testId: TestId) => {
+    if (test.disabled) {
+      return test
+    }
+    return R.merge(test, checkDisabled(def[testId]))
+  })(tests)
 
 export const passTestUserGroups = (
   testUserGroup: TestUserGroupConfig = '',
@@ -242,8 +245,8 @@ export const getTestsFromConfig = (
     disableByUsage(def), // disable by usage
     disableBySeparateTests(opts, def), // disable by separate tests
     disableByUserGroups(userGroups, user, def), // disable by user group
-    disableByConfig(def), // set disabled by default or config
     disableByDef(def),
+    disableByConfig(def), // set disabled by default or config
     mergeDefaultTests,
   )(tests)
 }

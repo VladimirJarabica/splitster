@@ -47,11 +47,12 @@ const config: Config = {
     // __disable_user_group
     KEK: {
       defaultVariant: 'lol',
+      // disabled: true,
       variants: {
         lol: 1,
         bur: 1,
       },
-      userGroup: () => false,
+      userGroup: () => true,
     },
   },
   options: {

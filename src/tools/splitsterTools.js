@@ -11,6 +11,7 @@ import type {
   UserGroupsConfig,
   TracksConfig,
   SaveResults,
+  DisabledReason,
 } from '../types'
 
 import defaultConfig, { defaultTestConfig } from './defaultConfig'
@@ -74,6 +75,35 @@ export const disableByConfig = (def: ?SaveResults = {}) => (
     // Not disabled at all
     return test
   }, tests)
+
+export const checkDisabled = (def: ?string) => {
+  if (!def) {
+    return {
+      disabled: false,
+      disabledReason: null,
+    }
+  }
+  const [_, disabled, reason] = R.match(/^(__disabled_)(\w+)$/, def)
+  const reasons: DisabledReason[] = ['usage', 'separate_test', 'user_group']
+
+  if (Boolean(disabled) && R.contains(reason, reasons)) {
+    return {
+      disabled: true,
+      disabledReason: reason,
+    }
+  }
+  return {
+    disabled: false,
+    disabledReason: null,
+  }
+}
+
+export const disableByDef = (def: ?SaveResults = {}) => (
+  tests: TestsConfig,
+): TestsConfig =>
+  R.mapObjIndexed((test: TestConfig, testId: TestId) =>
+    R.merge(test, checkDisabled(def[testId])),
+  )(tests)
 
 export const passTestUserGroups = (
   testUserGroup: TestUserGroupConfig = '',
@@ -213,6 +243,7 @@ export const getTestsFromConfig = (
     disableBySeparateTests(opts, def), // disable by separate tests
     disableByUserGroups(userGroups, user, def), // disable by user group
     disableByConfig(def), // set disabled by default or config
+    disableByDef(def),
     mergeDefaultTests,
   )(tests)
 }

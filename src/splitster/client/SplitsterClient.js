@@ -87,13 +87,22 @@ class SplitsterClient {
     return SplitsterFn.getAll(this.state)
   }
 
-  set = (testId: string, variantId: string): SplitsterClient =>
-    new SplitsterClient(
+  set = (
+    testId: string,
+    variantId: string,
+    cookies: Boolean,
+  ): SplitsterClient => {
+    if (cookies) {
+      const cookieKey = `splitster_${testId}`
+      jsCookies.set(cookieKey, variantId)
+    }
+    return new SplitsterClient(
       null,
       null,
       null,
       SplitsterFn.set(this.state, testId, variantId),
-    );
+    )
+  };
 
   track = (testId: string) => {
     SplitsterFn.track(this.state, testId)

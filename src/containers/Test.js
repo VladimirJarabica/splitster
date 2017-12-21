@@ -32,6 +32,7 @@ export type Variants = { [string]: Variant }
 
 export type Test = {|
   id: string,
+  code: string, // unique code
   variants: Variants,
   runTrack: Array<TrackConfig>,
   useTrack: Array<TrackConfig>,

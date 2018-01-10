@@ -18,6 +18,9 @@ class SplitsterServer {
   getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
 
   run = (testId: string): void => {
+    if (!SplitsterFn.hasTest(this.state, testId)) {
+      return
+    }
     this.state = SplitsterFn.run(this.state, testId)
   }
 
@@ -25,7 +28,10 @@ class SplitsterServer {
     this.state = SplitsterFn.runAll(this.state)
   }
 
-  get = (testId: string): Variant => {
+  get = (testId: string): ?Variant => {
+    if (!SplitsterFn.hasTest(this.state, testId)) {
+      return null
+    }
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)
   };
@@ -36,6 +42,9 @@ class SplitsterServer {
   }
 
   track = (testId: string) => {
+    if (!SplitsterFn.hasTest(this.state, testId)) {
+      return
+    }
     SplitsterFn.track(this.state, testId)
   }
 

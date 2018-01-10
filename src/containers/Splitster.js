@@ -55,6 +55,9 @@ export const constructSplitster = (
   }
 }
 
+export const hasTest = (splitster: Splitster, testId: string): Boolean =>
+  R.compose(R.has(testId), R.prop('tests'))(splitster)
+
 export const run = (splitster: Splitster, testId: string): Splitster =>
   R.assocPath(['tests', testId], TestFn.run(splitster.tests[testId]), splitster)
 

@@ -64,6 +64,9 @@ class SplitsterClient {
   }
 
   run = (testId: string): void => {
+    if (!SplitsterFn.hasTest(this.state, testId)) {
+      return
+    }
     this.state = SplitsterFn.run(this.state, testId)
 
     const saveResults = testsToSaveResults({ testId: this.state.tests[testId] })
@@ -77,7 +80,10 @@ class SplitsterClient {
     this.saveCookies(saveResults)
   }
 
-  get = (testId: string): Variant => {
+  get = (testId: string): ?Variant => {
+    if (!SplitsterFn.hasTest(this.state, testId)) {
+      return null
+    }
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)
   };
@@ -92,6 +98,9 @@ class SplitsterClient {
     variantId: string,
     cookies: Boolean,
   ): SplitsterClient => {
+    if (!SplitsterFn.hasTest(this.state, testId)) {
+      return this
+    }
     if (cookies) {
       const cookieKey = `splitster_${testId}`
       jsCookies.set(cookieKey, variantId)
@@ -105,6 +114,9 @@ class SplitsterClient {
   };
 
   track = (testId: string) => {
+    if (!SplitsterFn.hasTest(this.state, testId)) {
+      return
+    }
     SplitsterFn.track(this.state, testId)
   }
 

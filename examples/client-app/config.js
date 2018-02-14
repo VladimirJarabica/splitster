@@ -24,6 +24,7 @@ const config: Config = {
       runTrack: CONSOLE,
       useTrack: [CONSOLE],
       endTrack: [CONSOLE, console.warn],
+      deadline: '2018-2-15',
     },
     SHOW_ADD: {
       defaultVariant: 'show',
@@ -55,7 +56,7 @@ const config: Config = {
     isJohn: (user: { name: string }) => user.name.includes('John'),
   },
   tracks: {
-    CONSOLE: (test) => console.log("tracking", test),
+    CONSOLE: test => console.log('tracking', test),
   },
 }
 

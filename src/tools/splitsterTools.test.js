@@ -7,10 +7,13 @@ import {
   createTestsOpts,
   passTestUserGroups,
   disableByConfig,
+  disableByDeadline,
   disableByUserGroups,
   getSeparateRunTestId,
   disableBySeparateTests,
-  disableByUsage, checkDisabled, disableByDef,
+  disableByUsage,
+  checkDisabled,
+  disableByDef,
 } from './splitsterTools'
 
 import defaultConfig from './defaultConfig'
@@ -147,14 +150,38 @@ describe('splitsterToolsFn tests', () => {
   describe('#getTestsFromConfig', () => {
     describe('#disableByDef', () => {
       it('should return correct disabled', () => {
-        expect(checkDisabled()).toEqual({disabled: false, disabledReason: null})
-        expect(checkDisabled('irrelevant')).toEqual({disabled: false, disabledReason: null})
-        expect(checkDisabled('b')).toEqual({disabled: false, disabledReason: null})
-        expect(checkDisabled('__disabled_config')).toEqual({disabled: false, disabledReason: null})
-        expect(checkDisabled('__disabled_irrelevant')).toEqual({disabled: false, disabledReason: null})
-        expect(checkDisabled('__disabled_usage')).toEqual({disabled: true, disabledReason: 'usage'})
-        expect(checkDisabled('__disabled_separate_test')).toEqual({disabled: true, disabledReason: 'separate_test'})
-        expect(checkDisabled('__disabled_user_group')).toEqual({disabled: true, disabledReason: 'user_group'})
+        expect(checkDisabled()).toEqual({
+          disabled: false,
+          disabledReason: null,
+        })
+        expect(checkDisabled('irrelevant')).toEqual({
+          disabled: false,
+          disabledReason: null,
+        })
+        expect(checkDisabled('b')).toEqual({
+          disabled: false,
+          disabledReason: null,
+        })
+        expect(checkDisabled('__disabled_config')).toEqual({
+          disabled: false,
+          disabledReason: null,
+        })
+        expect(checkDisabled('__disabled_irrelevant')).toEqual({
+          disabled: false,
+          disabledReason: null,
+        })
+        expect(checkDisabled('__disabled_usage')).toEqual({
+          disabled: true,
+          disabledReason: 'usage',
+        })
+        expect(checkDisabled('__disabled_separate_test')).toEqual({
+          disabled: true,
+          disabledReason: 'separate_test',
+        })
+        expect(checkDisabled('__disabled_user_group')).toEqual({
+          disabled: true,
+          disabledReason: 'user_group',
+        })
       })
     })
     describe('#disableByDef', () => {
@@ -209,6 +236,46 @@ describe('splitsterToolsFn tests', () => {
           null,
           'config',
         ])
+      })
+    })
+    describe('#disableByDeadline', () => {
+      const now = new Date()
+      const yesterdayString = `${now.getFullYear()}-${now.getMonth() +
+        1}-${now.getDate() - 1}`
+      const tomorrowString = `${now.getFullYear()}-${now.getMonth() +
+        1}-${now.getDate() + 1}`
+
+      it('should correctly disable by string and date object', () => {
+        const result = disableByDeadline([
+          {
+            deadline: yesterdayString,
+            disabled: false,
+            disabledReason: null,
+          },
+          {
+            deadline: new Date(yesterdayString),
+            disabled: false,
+            disabledReason: null,
+          },
+        ])
+        expect(mapDisabledProp(result)).toEqual([true, true])
+        expect(mapDisabledReasonProp(result)).toEqual(['deadline', 'deadline'])
+      })
+      it('should correctly enable by string and date object', () => {
+        const result = disableByDeadline([
+          {
+            deadline: tomorrowString,
+            disabled: false,
+            disabledReason: null,
+          },
+          {
+            deadline: new Date(tomorrowString),
+            disabled: false,
+            disabledReason: null,
+          },
+        ])
+        expect(mapDisabledProp(result)).toEqual([false, false])
+        expect(mapDisabledReasonProp(result)).toEqual([null, null])
       })
     })
     describe('#disableByUserGroups', () => {

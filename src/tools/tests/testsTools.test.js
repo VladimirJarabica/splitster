@@ -3,7 +3,7 @@ import R from 'ramda'
 
 import type { TestsConfig } from '../../types/index'
 import { mergeDefaultTests, testDefProperlySet } from './testsTools'
-import { getUserGroup } from '../userGroupsTools'
+import getUserGroup from '../userGroups/getUserGroup'
 
 export const testsConfig: TestsConfig = mergeDefaultTests({
   test_a: {

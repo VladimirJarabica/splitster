@@ -2,7 +2,9 @@
 import R from 'ramda'
 
 import { testDefProperlySet } from './testsTools'
-import { checkUserToUserGroup, getUserGroup } from '../userGroupsTools'
+
+import getUserGroup from '../userGroups/getUserGroup'
+import checkUserToUserGroup from '../userGroups/checkUserToUserGroup'
 
 import type { TestsConfig, TestUserGroupConfig } from '../../types/index'
 import type { UserGroups } from '../../containers/UserGroup'

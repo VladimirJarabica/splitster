@@ -1,6 +1,6 @@
 // @flow
 import type { UserGroupConfig } from '../types'
-import { getUserGroup } from '../tools/userGroupsTools'
+import getUserGroup from '../tools/userGroups/getUserGroup'
 
 export type UserGroupRule = Object => boolean
 export type UserGroup = UserGroupRule[]

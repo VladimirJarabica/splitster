@@ -19,7 +19,8 @@ import type { Tests, TestOptions } from '../containers/Test'
 import { constructTest } from '../containers/Test'
 
 import type { UserGroups } from '../containers/UserGroup'
-import { getUserGroup, checkUserToUserGroup } from './userGroupsTools'
+import getUserGroup from './userGroups/getUserGroup'
+import checkUserToUserGroup from './userGroups/checkUserToUserGroup'
 
 export type TestFromConfigOpts = {
   tracks?: TracksConfig,

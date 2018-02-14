@@ -4,6 +4,7 @@ import R from 'ramda'
 import { constructUserGroup } from '../../containers/UserGroup'
 
 import type { UserGroups } from '../../containers/UserGroup'
+import type { UserGroupsConfig } from '../../types/index'
 
 export const getUserGroupsFromConfig = (
   userGroups: UserGroupsConfig = {},

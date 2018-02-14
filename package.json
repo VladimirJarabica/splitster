@@ -13,7 +13,8 @@
     "build-config-draft": "babel draft/usage_config/server.js > draft/usage_config/server.b.js && node draft/usage_config/server.b.js",
     "flow": "flow",
     "flow:start": "flow start",
-    "flow:stop": "flow stop"
+    "flow:stop": "flow stop",
+    "eslint": "eslint '**/*.js'"
   },
   "repository": "git+https://github.com/VladimirJarabica/splitster.git",
   "author": "Vladimír Jarabica",

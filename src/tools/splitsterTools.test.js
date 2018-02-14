@@ -19,7 +19,7 @@ import {
 import defaultConfig from './defaultConfig'
 
 import type { TestsConfig } from '../types'
-import { getUserGroup } from './userGroupsTools'
+import getUserGroup from './userGroups/getUserGroup'
 import type { UserGroups } from '../containers/UserGroup'
 
 const testsConfig: TestsConfig = mergeDefaultTests({

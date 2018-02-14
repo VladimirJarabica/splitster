@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda'
 
-import { getTestsFromConfig } from '../tools/splitsterTools'
+import { getTestsFromConfig } from '../tools/tests/testsTools'
 
 import { getUserGroupsFromConfig } from '../tools/userGroups/userGroupsTools'
 

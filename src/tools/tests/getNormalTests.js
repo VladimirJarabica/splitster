@@ -5,7 +5,7 @@ import { constructTest } from '../../containers/Test'
 
 import type { TestFromConfigOpts } from './testsTools'
 import type { TestsConfig } from '../../types/index'
-import type { Tests } from '../../containers/Test'
+import type { TestOptions, Tests } from '../../containers/Test'
 
 export const createTestsOpts = (def: string): TestOptions => ({
   winningVariant: def || null,

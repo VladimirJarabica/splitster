@@ -9,9 +9,6 @@ export { default as SplitsterServer } from './splitster/server/SplitsterServer'
 
 export { parseCookies } from './tools/cookiesTools'
 
-// TODO: react
-// TODO: then split react and redux to separate modules
-
 // Types exports:
 export type {
   Config,

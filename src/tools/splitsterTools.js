@@ -76,6 +76,23 @@ export const disableByConfig = (def: ?SaveResults = {}) => (
     return test
   }, tests)
 
+export const disableTestByDeadline = (test: TestConfig): TestConfig => {
+  if (test.disabled || !test.deadline) {
+    return test
+  }
+  if (new Date(test.deadline) < new Date()) {
+    return R.compose(
+      R.assoc('disabledReason', 'deadline'),
+      R.assoc('disabled', true),
+    )(test)
+  }
+  return test
+}
+
+export const disableByDeadline: TestsConfig => TestsConfig = R.map(
+  disableTestByDeadline,
+)
+
 export const checkDisabled = (def: ?string) => {
   if (!def) {
     return {
@@ -245,6 +262,7 @@ export const getTestsFromConfig = (
     disableByUsage(def), // disable by usage
     disableBySeparateTests(opts, def), // disable by separate tests
     disableByUserGroups(userGroups, user, def), // disable by user group
+    disableByDeadline,
     disableByDef(def),
     disableByConfig(def), // set disabled by default or config
     mergeDefaultTests,

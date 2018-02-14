@@ -6,7 +6,12 @@ type VariantId = string
 type GroupId = string
 type TrackId = string
 
-export type DisabledReason = 'usage' | 'separate_test' | 'user_group' | 'config'
+export type DisabledReason =
+  | 'usage'
+  | 'separate_test'
+  | 'user_group'
+  | 'config'
+  | 'deadline'
 
 export type CookiesOptionsConfig = {|
   disabled?: boolean,
@@ -54,6 +59,7 @@ export type TestConfig = {|
   description?: string,
   userGroup?: TestUserGroupConfig,
   usage?: number,
+  deadline?: string | Date,
   runTrack?: TestTracksConfig,
   useTrack?: TestTracksConfig,
   endTrack?: TestTracksConfig,

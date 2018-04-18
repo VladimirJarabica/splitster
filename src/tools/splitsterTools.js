@@ -46,10 +46,30 @@ export const createTestsOpts = (def: string): TestOptions => ({
 export const testDefProperlySet = (testId: TestId, def: ?SaveResults) =>
   R.has(testId, def) && def[testId] !== '__disabled_config'
 
+/**
+ * Permanently disable all tests, if '__disabled_dev' is present in def
+ * TODO: document
+ */
+export const disableByDev = (def: ?SaveResults = {}) => (
+  tests: TestsConfig,
+): TestsConfig =>
+  R.mapObjIndexed((test: TestConfig, testId: TestId) => {
+    if (def[testId] && def[testId] === '__disabled_dev') {
+      return R.merge(test, {
+        disabled: true,
+        disabledReasom: 'dev',
+      })
+    }
+    return test
+  }, tests)
+
 export const disableByConfig = (def: ?SaveResults = {}) => (
   tests: TestsConfig,
 ): TestsConfig =>
   R.mapObjIndexed((test: TestConfig, testId: TestId) => {
+    if (test.disabled) {
+      return test
+    }
     if (def[testId] && def[testId] === '__disabled_config') {
       // Disabled by def
       if (!test.disabled) {
@@ -265,6 +285,7 @@ export const getTestsFromConfig = (
     disableByDeadline,
     disableByDef(def),
     disableByConfig(def), // set disabled by default or config
+    disableByDev(def),
     mergeDefaultTests,
   )(tests)
 }

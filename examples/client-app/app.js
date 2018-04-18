@@ -13,6 +13,7 @@ window.splitster = splitster
 window.config = config
 window.Cookies = Cookies
 
+console.log("config", config, splitster)
 // splitster.run(BUTTON_COLOR)
 splitster.runAll()
 

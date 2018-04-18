@@ -12,6 +12,7 @@ export type DisabledReason =
   | 'user_group'
   | 'config'
   | 'deadline'
+  | 'dev'
 
 export type CookiesOptionsConfig = {|
   disabled?: boolean,

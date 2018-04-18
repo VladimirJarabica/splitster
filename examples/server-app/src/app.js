@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 
   const def = {
     // KEK: '__disabled_user_group',
+    KEK: '__disabled_dev'
   }
 
   // TODO: create config

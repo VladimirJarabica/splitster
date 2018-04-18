@@ -57,7 +57,7 @@ export const disableByDev = (def: ?SaveResults = {}) => (
     if (def[testId] && def[testId] === '__disabled_dev') {
       return R.merge(test, {
         disabled: true,
-        disabledReasom: 'dev',
+        disabledReason: 'dev',
       })
     }
     return test

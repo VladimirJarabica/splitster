@@ -69,7 +69,9 @@ class SplitsterClient {
     }
     this.state = SplitsterFn.run(this.state, testId)
 
-    const saveResults = testsToSaveResults({ testId: this.state.tests[testId] })
+    const saveResults = testsToSaveResults({
+      testId: this.state.tests[testId],
+    })
     this.saveCookies(saveResults)
   }
 
@@ -82,7 +84,12 @@ class SplitsterClient {
 
   get = (testId: string): ?Variant => {
     if (!SplitsterFn.hasTest(this.state, testId)) {
-      return null
+      console.warn(
+        `Splitster: Trying to access not existing test: ${testId}, your value will be null.`,
+      )
+      return {
+        value: null,
+      }
     }
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)

@@ -30,7 +30,12 @@ class SplitsterServer {
 
   get = (testId: string): ?Variant => {
     if (!SplitsterFn.hasTest(this.state, testId)) {
-      return null
+      console.warn(
+        `Splitster: Trying to access not existing test: ${testId}, your value will null.`,
+      )
+      return {
+        value: null,
+      }
     }
     this.state = SplitsterFn.willGet(this.state, testId)
     return SplitsterFn.get(this.state, testId)

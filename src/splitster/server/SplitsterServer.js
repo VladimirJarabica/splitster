@@ -31,7 +31,7 @@ class SplitsterServer {
   get = (testId: string): ?Variant => {
     if (!SplitsterFn.hasTest(this.state, testId)) {
       console.warn(
-        `Splitster: Trying to access not existing test: ${testId}, your value will null.`,
+        `Splitster: Trying to access not existing test: ${testId}, your value will be null.`,
       )
       return {
         value: null,

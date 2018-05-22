@@ -19,6 +19,7 @@ const config: Config = {
           ratio: 1,
         },
       },
+      version: 7,
     },
     // __disabled_config
     SHOW_ADD: {

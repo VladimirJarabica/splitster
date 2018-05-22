@@ -26,6 +26,7 @@ export const defaultTestConfig: TestConfig = {
   variants: {},
   disabled: false,
   disabledReason: null,
+  version: 0,
 }
 
 export default defaultConfig

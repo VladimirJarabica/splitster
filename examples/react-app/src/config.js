@@ -22,6 +22,7 @@ const config: Config = {
       runTrack: CONSOLE,
       useTrack: [CONSOLE],
       endTrack: [CONSOLE, console.warn],
+      version: 7,
     },
     SHOW_ADD: {
       defaultVariant: 'show',

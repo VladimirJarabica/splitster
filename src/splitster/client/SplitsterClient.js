@@ -46,9 +46,23 @@ class SplitsterClient {
     ) {
       return
     }
+    const cookieKeys = R.keys(jsCookies.get())
     R.forEach(key => {
-      const cookieKey = `splitster_${key}`
+      const [testId, _, version] = key.split(/(_)(?!.*_)/)
+      const unversionedPrefix = `splitster_${testId}`
+      const cookieKey = `${unversionedPrefix}_${version}`
       const cookieValue = jsCookies.get(cookieKey)
+
+      // Get all cookies of this test except current version
+      const testCookies = R.filter(
+        testCookie =>
+          testCookie !== cookieKey &&
+          R.startsWith(unversionedPrefix, testCookie),
+      )(cookieKeys)
+
+      // Remove all cookies of test expect current version
+      testCookies.forEach(testCookie => jsCookies.remove(testCookie))
+
       if (
         // Cookie is not set already
         !cookieValue ||
@@ -61,6 +75,7 @@ class SplitsterClient {
         (cookieValue !== '__disabled_config' &&
           saveResults[key] === '__disabled_config')
       ) {
+        console.log('writing', cookieKey)
         jsCookies.set(cookieKey, saveResults[key])
       }
     }, R.keys(saveResults))
@@ -112,7 +127,8 @@ class SplitsterClient {
       return this
     }
     if (cookies) {
-      const cookieKey = `splitster_${testId}`
+      const cookieKey = `splitster_${testId}_${this.state.tests[testId]
+        .version}`
       jsCookies.set(cookieKey, variantId)
     }
     return new SplitsterClient(

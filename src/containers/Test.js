@@ -46,6 +46,7 @@ export type Test = {|
   disabledReason: ?DisabledReason,
 
   used: boolean,
+  version: number,
 |}
 
 export type Tests = { [TestId]: Test }
@@ -79,6 +80,7 @@ export const constructTest = (
     disabledReason: config.disabledReason,
 
     used: false,
+    version: config.version,
   }
 }
 

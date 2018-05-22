@@ -103,7 +103,13 @@ export const getTestSaveResult = (test: Test): string => {
 export const testToSaveResults = (
   saveResults: SaveResults,
   test: Test,
-): SaveResults => R.assoc(test.id, getTestSaveResult(test), saveResults)
+): SaveResults =>
+  R.assoc(
+    // If version is greater than 0, add it as after postfix (compatibility) variantId_versionNum
+    `${test.id}${test.version > 0 ? `_${test.version}` : ''}`,
+    getTestSaveResult(test),
+    saveResults,
+  )
 
 // TODO: write tests
 export const testsToSaveResults = (tests: Tests): SaveResults =>

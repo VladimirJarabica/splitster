@@ -33,7 +33,10 @@ export type TestFromConfigOpts = {
 }
 
 export const mergeDefaultTests = (tests: TestsConfig): TestsConfig =>
-  R.map(R.mergeDeepRight(defaultTestConfig), tests)
+{
+  console.log("mergeDefaultTests", defaultTestConfig, R.map(R.mergeDeepRight(defaultTestConfig), tests))
+  return R.map(R.mergeDeepRight(defaultTestConfig), tests)
+}
 
 export const mergeDefaultConfig = (config: Config): Config =>
   R.mergeDeepLeft(config, defaultConfig)
@@ -265,7 +268,7 @@ export const getTestsFromConfig = (
   // TODO: change from __disabled_config to another, if disabled in config has changed
   const { def, userGroups, user } = opts
 
-  return R.compose(
+  const res = R.compose(
     getNormalTests(opts), // construct tests
     disableByUsage(def), // disable by usage
     disableBySeparateTests(opts, def), // disable by separate tests
@@ -276,6 +279,8 @@ export const getTestsFromConfig = (
     disableByDev(def),
     mergeDefaultTests,
   )(tests)
+  console.log("res", res)
+  return res
 }
 
 export const getUserGroupsFromConfig = (

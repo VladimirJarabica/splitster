@@ -63,36 +63,16 @@ export const disableByDev = (def: ?SaveResults = {}) => (
     return test
   }, tests)
 
-export const disableByConfig = (def: ?SaveResults = {}) => (
-  tests: TestsConfig,
-): TestsConfig =>
-  R.mapObjIndexed((test: TestConfig, testId: TestId) => {
-    if (test.disabled) {
-      return test
-    }
-    if (def[testId] && def[testId] === '__disabled_config') {
-      // Disabled by def
-      if (!test.disabled) {
-        // Not disabled by config => change
-        return test
-      }
-      if (test.disabled) {
-        // Still disabled in config => set reason
-        return R.merge(test, {
-          disabled: true,
-          disabledReason: 'config',
-        })
-      }
-    }
-    // Not disabled by def
-    if (test.disabled) {
-      // Disabled in config => set reason
+// TODO remove () =>
+export const disableByConfig = (tests: TestsConfig): TestsConfig =>
+  R.mapObjIndexed((test: TestConfig) => {
+    // Disabled by config and not already with reason set
+    if (test.disabled && !test.disabledReason) {
       return R.merge(test, {
         disabled: true,
         disabledReason: 'config',
       })
     }
-    // Not disabled at all
     return test
   }, tests)
 
@@ -121,7 +101,13 @@ export const checkDisabled = (def: ?string) => {
     }
   }
   const [_, disabled, reason] = R.match(/^(__disabled_)(\w+)$/, def)
-  const reasons: DisabledReason[] = ['usage', 'separate_test', 'user_group']
+  const reasons: DisabledReason[] = [
+    'usage',
+    'separate_test',
+    'user_group',
+    'deadline',
+    'dev',
+  ]
 
   if (Boolean(disabled) && R.contains(reason, reasons)) {
     return {
@@ -283,8 +269,8 @@ export const getTestsFromConfig = (
     disableBySeparateTests(opts, def), // disable by separate tests
     disableByUserGroups(userGroups, user, def), // disable by user group
     disableByDeadline,
+    disableByConfig, // set disabled by default or config
     disableByDef(def),
-    disableByConfig(def), // set disabled by default or config
     disableByDev(def),
     mergeDefaultTests,
   )(tests)

@@ -107,12 +107,14 @@ export const checkDisabled = (def: ?string) => {
     'user_group',
     'deadline',
     'dev',
+    'null',
   ]
 
   if (Boolean(disabled) && R.contains(reason, reasons)) {
     return {
       disabled: true,
-      disabledReason: reason,
+      // TODO: temporary fix, remove 'null'
+      disabledReason: reason === 'null' ? 'config' : reason,
     }
   }
   return {

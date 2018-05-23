@@ -63,7 +63,6 @@ export const disableByDev = (def: ?SaveResults = {}) => (
     return test
   }, tests)
 
-// TODO remove () =>
 export const disableByConfig = (tests: TestsConfig): TestsConfig =>
   R.mapObjIndexed((test: TestConfig) => {
     // Disabled by config and not already with reason set

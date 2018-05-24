@@ -42,9 +42,11 @@ export const createTestsOpts = (def: string): TestOptions => ({
   winningVariant: def || null,
 })
 
-// If test is set to disabled config, it will consider as rewritable in cookies
+// If test is set to disabled config (or wrong 'null'), it will consider as rewritable in cookies
 export const testDefProperlySet = (testId: TestId, def: ?SaveResults) =>
-  R.has(testId, def) && def[testId] !== '__disabled_config'
+  R.has(testId, def) &&
+  def[testId] !== '__disabled_config' &&
+  def[testId] !== '__disabled_null'
 
 /**
  * Permanently disable all tests, if '__disabled_dev' is present in def
@@ -106,7 +108,6 @@ export const checkDisabled = (def: ?string) => {
     'user_group',
     'deadline',
     'dev',
-    'null',
   ]
 
   if (Boolean(disabled) && R.contains(reason, reasons)) {

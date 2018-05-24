@@ -48,14 +48,17 @@ class SplitsterClient {
     }
     R.forEach(key => {
       const cookieKey = `splitster_${key}`
+      const cookieValue = jsCookies.get(cookieKey)
       if (
         // Cookie is not set already
-        !jsCookies.get(cookieKey) ||
+        !cookieValue ||
+        // Rewrite wrong set cookie
+        cookieValue === '__disabled_null' ||
         // Rewrite disabled by config
-        (jsCookies.get(cookieKey) === '__disabled_config' &&
+        (cookieValue === '__disabled_config' &&
           saveResults[key] !== '__disabled_config') ||
         // Rewrite to disabled by config
-        (jsCookies.get(cookieKey) !== '__disabled_config' &&
+        (cookieValue !== '__disabled_config' &&
           saveResults[key] === '__disabled_config')
       ) {
         jsCookies.set(cookieKey, saveResults[key])

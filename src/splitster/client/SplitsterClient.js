@@ -28,6 +28,9 @@ class SplitsterClient {
       ['options', 'cookies', 'disabled'],
       config,
     )
+    if (cookiesDisabled) {
+      this.deleteCookies()
+    }
     if (!cookiesDisabled && def) {
       // If there is default set (server side) try to save it to cookies
       this.saveCookies(def)
@@ -65,6 +68,15 @@ class SplitsterClient {
       }
     }, R.keys(saveResults))
   }
+
+  deleteCookies = (): void =>
+    R.compose(
+      R.forEach(jsCookies.remove),
+      R.filter(R.startsWith('splitster_')),
+      R.map(R.head),
+      R.map(R.split('=')),
+      R.split('; '),
+    )(document.cookie || '')
 
   run = (testId: string): void => {
     if (!SplitsterFn.hasTest(this.state, testId)) {

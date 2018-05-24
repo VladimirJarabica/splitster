@@ -66,7 +66,7 @@ const config: Config = {
   },
   options: {
     cookies: {
-      // disable: true,
+      disabled: true,
     },
   },
   tracks: {

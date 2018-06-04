@@ -279,7 +279,6 @@ export const parseTestVersionKey = (
   testId: TestId,
   version: number,
 } => {
-  console.log("parseTestVersionKey", key, config)
   const arr = key.split('_')
   const last = R.last(arr)
   if (!isNaN(last)) {

@@ -79,7 +79,6 @@ class SplitsterClient {
         (cookieValue !== '__disabled_config' &&
           saveResults[key] === '__disabled_config')
       ) {
-        console.log('writing', cookieKey)
         jsCookies.set(cookieKey, saveResults[key])
       }
     }, R.keys(saveResults))

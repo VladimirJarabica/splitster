@@ -31,17 +31,6 @@ const defaultOptions: OptionsConfig = {
   },
 }
 
-export const pickDefaultValues = (def: ?SaveResults = {}, tests: TestsConfig = {}) => {
-  return R.pickBy((key, value) => {
-    console.log("picking key", key)
-    const [testId, _, version = 0] = value.split(/(-)(\d+(.\d+)?)$/)
-
-    const test = tests[testId]
-    console.log("testId", testId, "version", version, "test:", test)
-
-  }, def)
-}
-
 export const constructSplitster = (
   config: Config,
   user?: ?Object = {},

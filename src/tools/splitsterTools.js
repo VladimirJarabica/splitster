@@ -38,7 +38,7 @@ export const mergeDefaultTests = (tests: TestsConfig): TestsConfig =>
 export const mergeDefaultConfig = (config: Config): Config =>
   R.mergeDeepLeft(config, defaultConfig)
 
-export const createTestsOpts = (def: string): TestOptions => ({
+export const createTestsOpts = (def: ?string): TestOptions => ({
   winningVariant: def || null,
 })
 
@@ -241,6 +241,31 @@ export const disableByUsage = (def: ?SaveResults = {}) => (
     return test
   }, tests)
 
+export const getDefaultByTestVersion = (
+  def: {},
+  key: TestId,
+  version: number,
+): ?string => def[`${key}_${version}`] || def[key]
+
+export const parseTestVersionKey = (
+  key: string,
+  config: Config,
+): {
+  testId: TestId,
+  version: number,
+} => {
+  const arr = key.split('_')
+  const last = R.last(arr)
+  if (!isNaN(last)) {
+    const [testId, _, version] = key.split(/(_)(?!.*_)/)
+    return { testId, version: Number(version) }
+  }
+  return {
+    testId: key,
+    version: R.pathOr(0, ['tests', key, 'version'], config),
+  }
+}
+
 // TODO: write tests
 export const getNormalTests = ({
   tracks = {},
@@ -250,7 +275,14 @@ export const getNormalTests = ({
     (acc: Tests, key: string): Tests =>
       R.assoc(
         key,
-        constructTest(key, tests[key], tracks, createTestsOpts(def[key])),
+        constructTest(
+          key,
+          tests[key],
+          tracks,
+          createTestsOpts(
+            getDefaultByTestVersion(def, key, tests[key].version),
+          ),
+        ),
         acc,
       ),
     {},

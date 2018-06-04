@@ -22,11 +22,13 @@ const config: Config = {
       runTrack: CONSOLE,
       useTrack: [CONSOLE],
       endTrack: [CONSOLE, console.warn],
+      version: 7,
     },
     SHOW_ADD: {
       defaultVariant: 'show',
-      disabled: true,
-      usage: 0,
+      disabled: false,
+      version: 7,
+      usage: 100,
       variants: {
         show: {
           value: 'SHOW',

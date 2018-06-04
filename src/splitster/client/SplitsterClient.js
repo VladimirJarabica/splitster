@@ -5,6 +5,7 @@ import jsCookies from 'js-cookie'
 import { parseCookies } from '../../tools/cookiesTools'
 import * as SplitsterFn from '../../containers/Splitster'
 import { testsToSaveResults } from '../../tools/testTools'
+import { parseTestVersionKey } from "../../tools/splitsterTools"
 
 import type { Config, SaveResults } from '../../types'
 import type { Splitster } from '../../containers/Splitster'
@@ -33,7 +34,7 @@ class SplitsterClient {
     }
     if (!cookiesDisabled && def) {
       // If there is default set (server side) try to save it to cookies
-      this.saveCookies(def)
+      this.saveCookies(def, config)
     }
     const savedResults: SaveResults =
       def || (cookiesDisabled ? {} : parseCookies(jsCookies.get()))
@@ -43,15 +44,29 @@ class SplitsterClient {
 
   getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
 
-  saveCookies = (saveResults: SaveResults): void => {
+  saveCookies = (saveResults: SaveResults, config: Config): void => {
     if (
       R.pathOr(false, ['config', 'options', 'cookies', 'disabled'], this.state)
     ) {
       return
     }
+    const cookieKeys = R.keys(jsCookies.get())
     R.forEach(key => {
-      const cookieKey = `splitster_${key}`
+      const { testId, version } = parseTestVersionKey(key, config)
+      const unversionedPrefix = `splitster_${testId}`
+      const cookieKey = `${unversionedPrefix}_${version}`
       const cookieValue = jsCookies.get(cookieKey)
+
+      // Get all cookies of this test except current version
+      const testCookies = R.filter(
+        testCookie =>
+          testCookie !== cookieKey &&
+          R.startsWith(unversionedPrefix, testCookie),
+      )(cookieKeys)
+
+      // Remove all cookies of test expect current version
+      testCookies.forEach(testCookie => jsCookies.remove(testCookie))
+
       if (
         // Cookie is not set already
         !cookieValue ||
@@ -124,7 +139,8 @@ class SplitsterClient {
       return this
     }
     if (cookies) {
-      const cookieKey = `splitster_${testId}`
+      const cookieKey = `splitster_${testId}_${this.state.tests[testId]
+        .version}`
       jsCookies.set(cookieKey, variantId)
     }
     return new SplitsterClient(

@@ -68,6 +68,7 @@ export type TestConfig = {|
   variants: VariantsConfig,
   disabled?: boolean,
   disabledReason?: ?DisabledReason,
+  version?: number,
 |}
 export type TestsConfig = { [TestId]: TestConfig }
 

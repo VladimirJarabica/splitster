@@ -32,14 +32,8 @@ export type TestFromConfigOpts = {
   user: ?Object,
 }
 
-export const mergeDefaultTests = (tests: TestsConfig): TestsConfig => {
-  // console.log(
-  //   'mergeDefaultTests',
-  //   defaultTestConfig,
-  //   R.map(R.mergeDeepRight(defaultTestConfig), tests),
-  // )
-  return R.map(R.mergeDeepRight(defaultTestConfig), tests)
-}
+export const mergeDefaultTests = (tests: TestsConfig): TestsConfig =>
+  R.map(R.mergeDeepRight(defaultTestConfig), tests)
 
 export const mergeDefaultConfig = (config: Config): Config =>
   R.mergeDeepLeft(config, defaultConfig)
@@ -47,25 +41,6 @@ export const mergeDefaultConfig = (config: Config): Config =>
 export const createTestsOpts = (def: ?string): TestOptions => ({
   winningVariant: def || null,
 })
-
-export const parseTestKey = (
-  key: string,
-): {
-  testId: TestId,
-  version: number,
-} => {
-  const arr = key.split('_')
-  const last = R.last(arr)
-  if (!isNaN(last)) {
-    const [testId, _, version] = key.split(/(_)(?!.*_)/)
-    console.log('key', key, 'has version specified', version)
-    return { testId, version: Number(version) }
-  }
-  return {
-    testId: key,
-    version: 0,
-  }
-}
 
 // If test is set to disabled config (or wrong 'null'), it will consider as rewritable in cookies
 export const testDefProperlySet = (testId: TestId, def: ?SaveResults) =>
@@ -322,7 +297,7 @@ export const getTestsFromConfig = (
   // TODO: change from __disabled_config to another, if disabled in config has changed
   const { def, userGroups, user } = opts
 
-  const res = R.compose(
+  return R.compose(
     getNormalTests(opts), // construct tests
     disableByUsage(def), // disable by usage
     disableBySeparateTests(opts, def), // disable by separate tests
@@ -333,8 +308,6 @@ export const getTestsFromConfig = (
     disableByDev(def),
     mergeDefaultTests,
   )(tests)
-  console.log('res', res)
-  return res
 }
 
 export const getUserGroupsFromConfig = (

@@ -22,12 +22,14 @@ export type Splitster = {|
   config: ?Config,
 |}
 
-const defaultOptions: OptionsConfig = {
+export const defaultOptions: OptionsConfig = {
   separateTest: false,
   cookies: {
     disabled: false,
-    expiration: 30,
     name: 'splitster',
+    cookiesOptions: {
+      expires: 365,
+    },
   },
 }
 

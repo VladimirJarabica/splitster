@@ -157,7 +157,7 @@ class SplitsterClient {
         variantId,
         R.pathOr(
           SplitsterFn.defaultOptions,
-          ['config', 'cookies', 'cookiesOptions'],
+          ['config', 'options', 'cookies', 'cookiesOptions'],
           this.state,
         ),
       )

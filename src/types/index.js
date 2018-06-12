@@ -16,8 +16,10 @@ export type DisabledReason =
 
 export type CookiesOptionsConfig = {|
   disabled?: boolean,
-  expiration?: number,
   name?: string, // Default "splitster"
+  cookiesOptions?: {
+    expires?: number,
+  },
 |}
 
 export type OptionsConfig = {|

@@ -68,7 +68,10 @@ const config: Config = {
   },
   options: {
     cookies: {
-      disabled: true,
+      disabled: false,
+      cookiesOptions: {
+        expires: 30,
+      },
     },
   },
   tracks: {

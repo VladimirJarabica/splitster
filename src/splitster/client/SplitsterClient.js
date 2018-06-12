@@ -5,7 +5,7 @@ import jsCookies from 'js-cookie'
 import { parseCookies } from '../../tools/cookiesTools'
 import * as SplitsterFn from '../../containers/Splitster'
 import { testsToSaveResults } from '../../tools/testTools'
-import { parseTestVersionKey } from "../../tools/splitsterTools"
+import { parseTestVersionKey } from '../../tools/splitsterTools'
 
 import type { Config, SaveResults } from '../../types'
 import type { Splitster } from '../../containers/Splitster'
@@ -44,12 +44,15 @@ class SplitsterClient {
 
   getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
 
-  saveCookies = (saveResults: SaveResults, config: Config): void => {
-    if (
-      R.pathOr(false, ['config', 'options', 'cookies', 'disabled'], this.state)
-    ) {
+  saveCookies = (saveResults: SaveResults, customConfig: Config): void => {
+    const config = this.state ? this.state.config : customConfig
+    if (R.pathOr(false, ['options', 'cookies', 'disabled'], config)) {
       return
     }
+    const options = R.mergeDeepLeft(
+      R.propOr({}, 'options', config),
+      SplitsterFn.defaultOptions,
+    )
     const cookieKeys = R.keys(jsCookies.get())
     R.forEach(key => {
       const { testId, version } = parseTestVersionKey(key, config)
@@ -79,7 +82,15 @@ class SplitsterClient {
         (cookieValue !== '__disabled_config' &&
           saveResults[key] === '__disabled_config')
       ) {
-        jsCookies.set(cookieKey, saveResults[key])
+        jsCookies.set(
+          cookieKey,
+          saveResults[key],
+          R.pathOr(
+            SplitsterFn.defaultOptions,
+            ['cookies', 'cookiesOptions'],
+            options,
+          ),
+        )
       }
     }, R.keys(saveResults))
   }
@@ -141,7 +152,15 @@ class SplitsterClient {
     if (cookies) {
       const cookieKey = `splitster_${testId}_${this.state.tests[testId]
         .version}`
-      jsCookies.set(cookieKey, variantId)
+      jsCookies.set(
+        cookieKey,
+        variantId,
+        R.pathOr(
+          SplitsterFn.defaultOptions,
+          ['config', 'cookies', 'cookiesOptions'],
+          this.state,
+        ),
+      )
     }
     return new SplitsterClient(
       null,

@@ -32,6 +32,20 @@ export type TestFromConfigOpts = {
   user: ?Object,
 }
 
+export const parseDef = (tests: TestsConfig, def: SaveResults): SaveResults =>
+  R.compose(
+    R.reduce((acc, testId) => {
+      // Def might be specified with version or without
+      const testDef =
+        def[`${testId}_${tests[testId].version || 0}`] || def[testId]
+      if (testDef) {
+        return R.assoc(testId, testDef, acc)
+      }
+      return acc
+    }, {}),
+    R.keys,
+  )(tests)
+
 export const mergeDefaultTests = (tests: TestsConfig): TestsConfig =>
   R.map(R.mergeDeepRight(defaultTestConfig), tests)
 
@@ -47,14 +61,10 @@ export const testDefProperlySet = (
   testId: TestId,
   version: number,
   def: ?SaveResults,
-) => {
-  const key = `${testId}_${version}`
-  return (
-    R.has(key, def) &&
-    def[key] !== '__disabled_config' &&
-    def[key] !== '__disabled_null'
-  )
-}
+) =>
+  R.has(testId, def) &&
+  def[testId] !== '__disabled_config' &&
+  def[testId] !== '__disabled_null'
 
 /**
  * Permanently disable all tests, if '__disabled_dev' is present in def
@@ -249,12 +259,6 @@ export const disableByUsage = (def: ?SaveResults = {}) => (
     return test
   }, tests)
 
-export const getDefaultByTestVersion = (
-  def: {},
-  key: TestId,
-  version: number,
-): ?string => def[`${key}_${version}`] || def[key]
-
 export const parseTestVersionKey = (
   key: string,
   config: Config,
@@ -288,7 +292,7 @@ export const getNormalTests = ({
           tests[key],
           tracks,
           createTestsOpts(
-            getDefaultByTestVersion(def, key, tests[key].version),
+            def[key],
           ),
         ),
         acc,

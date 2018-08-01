@@ -2,6 +2,7 @@
 import R from 'ramda'
 
 import {
+  parseDef,
   mergeDefaultConfig,
   mergeDefaultTests,
   createTestsOpts,
@@ -76,6 +77,26 @@ const mapDisabledReasonProp = (tests: TestsConfig): string[] =>
   R.values(tests).map(test => test.disabledReason)
 
 describe('splitsterToolsFn tests', () => {
+  describe('#parseDef', () => {
+    it('should parse def correctly', () => {
+      const tests = {
+        kek: { version: 1 },
+        bur: { version: 2 },
+        lol: { version: 3 },
+      }
+      const def = {
+        kek_0: 'B',
+        kek_1: 'A',
+        bur_2: 'C',
+        lol_0: 'D',
+      }
+      expect(parseDef(tests, def)).toEqual({
+        kek: 'A',
+        bur: 'C',
+      })
+    })
+  })
+
   describe('merge default config', () => {
     it('should return default', () => {
       expect(mergeDefaultConfig({})).toEqual(defaultConfig)

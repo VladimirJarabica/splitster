@@ -3,9 +3,15 @@ import SplitsterServer from './SplitsterServer'
 
 import type { Config, SaveResults } from '../../types'
 
-import { mergeDefaultConfig } from '../../tools/splitsterTools'
+import { mergeDefaultConfig, parseDef } from '../../tools/splitsterTools'
 
-const splitsterInit = (config: Config, user: Object, def?: SaveResults) =>
-  new SplitsterServer(mergeDefaultConfig(config), user, def)
+const splitsterInit = (config: Config, user: Object, def?: SaveResults) => {
+  const mergedConfig = mergeDefaultConfig(config)
+  return new SplitsterServer(
+    mergedConfig,
+    user,
+    parseDef(mergedConfig.tests, def),
+  )
+}
 
 export default splitsterInit

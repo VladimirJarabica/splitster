@@ -42,7 +42,8 @@ class SplitsterClient {
     this.state = SplitsterFn.constructSplitster(config, user, savedResults)
   }
 
-  getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
+  getSaveResults = (includeVersion?: boolean = false): SaveResults =>
+    testsToSaveResults(this.state.tests, includeVersion)
 
   saveCookies = (saveResults: SaveResults, customConfig: Config): void => {
     const config = this.state ? this.state.config : customConfig

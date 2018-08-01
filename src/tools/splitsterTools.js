@@ -43,10 +43,18 @@ export const createTestsOpts = (def: ?string): TestOptions => ({
 })
 
 // If test is set to disabled config (or wrong 'null'), it will consider as rewritable in cookies
-export const testDefProperlySet = (testId: TestId, def: ?SaveResults) =>
-  R.has(testId, def) &&
-  def[testId] !== '__disabled_config' &&
-  def[testId] !== '__disabled_null'
+export const testDefProperlySet = (
+  testId: TestId,
+  version: number,
+  def: ?SaveResults,
+) => {
+  const key = `${testId}_${version}`
+  return (
+    R.has(key, def) &&
+    def[key] !== '__disabled_config' &&
+    def[key] !== '__disabled_null'
+  )
+}
 
 /**
  * Permanently disable all tests, if '__disabled_dev' is present in def
@@ -165,7 +173,7 @@ export const disableByUserGroups = (
     return tests
   }
   return R.mapObjIndexed((test: TestConfig, testId: TestId) => {
-    if (testDefProperlySet(testId, def) || test.disabled) {
+    if (testDefProperlySet(testId, test.version || 0, def) || test.disabled) {
       return test
     }
 
@@ -206,7 +214,7 @@ export const disableBySeparateTests = (
 
   return R.mapObjIndexed((test: TestConfig, testId: TestId) => {
     if (
-      testDefProperlySet(testId, def) ||
+      testDefProperlySet(testId, test.version || 0, def) ||
       test.disabled ||
       testId === separateRunTestId
     ) {
@@ -225,7 +233,7 @@ export const disableByUsage = (def: ?SaveResults = {}) => (
 ): TestsConfig =>
   R.mapObjIndexed((test: TestConfig, testId: TestId) => {
     if (
-      testDefProperlySet(testId, def) ||
+      testDefProperlySet(testId, test.version || 0, def) ||
       test.disabled ||
       R.isNil(test.usage)
     ) {

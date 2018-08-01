@@ -100,11 +100,19 @@ export const getTestSaveResult = (test: Test): string => {
 }
 
 // TODO: write tests
-export const testToSaveResults = (
+export const testToSaveResults = (includeVersion: boolean) => (
   saveResults: SaveResults,
   test: Test,
-): SaveResults => R.assoc(test.id, getTestSaveResult(test), saveResults)
+): SaveResults =>
+  R.assoc(
+    includeVersion ? `${test.id}_${test.version}` : test.id,
+    getTestSaveResult(test),
+    saveResults,
+  )
 
 // TODO: write tests
-export const testsToSaveResults = (tests: Tests): SaveResults =>
-  R.reduce(testToSaveResults, {}, R.values(tests))
+export const testsToSaveResults = (
+  tests: Tests,
+  includeVersion: boolean,
+): SaveResults =>
+  R.reduce(testToSaveResults(includeVersion), {}, R.values(tests))

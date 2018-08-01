@@ -15,7 +15,8 @@ class SplitsterServer {
     this.state = SplitsterFn.constructSplitster(config, user, def)
   }
 
-  getSaveResults = (): SaveResults => testsToSaveResults(this.state.tests)
+  getSaveResults = (includeVersion?: boolean = false): SaveResults =>
+    testsToSaveResults(this.state.tests, includeVersion)
 
   run = (testId: string): void => {
     if (!SplitsterFn.hasTest(this.state, testId)) {

@@ -10,6 +10,7 @@ import {
   disableByConfig,
   disableByDeadline,
   disableByUserGroups,
+  disableByUserGroupsExclude,
   getSeparateRunTestId,
   disableBySeparateTests,
   disableByUsage,
@@ -203,6 +204,10 @@ describe('splitsterToolsFn tests', () => {
           disabled: true,
           disabledReason: 'user_group',
         })
+        expect(checkDisabled('__disabled_user_group_exclude')).toEqual({
+          disabled: true,
+          disabledReason: 'user_group_exclude',
+        })
       })
     })
     describe('#disableByDef', () => {
@@ -303,6 +308,31 @@ describe('splitsterToolsFn tests', () => {
             disableByUserGroups(userGroups, tyrion)(testsConfig),
           ),
         ).toEqual([null, 'user_group', null])
+      })
+    })
+    describe('#disableByUserGroupsExclude', () => {
+      it('should correctly disable', () => {
+        const tests = {
+          kek: {
+            defaultVariant: 'bur',
+            variants: {
+              bur: 1,
+              lol: 1,
+            },
+            userGroupExclude: {
+              lang: ['en'],
+            },
+          },
+        }
+
+        expect(
+          mapDisabledProp(disableByUserGroupsExclude(null, { lang: 'en' })(tests)),
+        ).toEqual([true])
+        expect(
+          mapDisabledReasonProp(
+            disableByUserGroupsExclude(null, { lang: 'en' })(tests),
+          ),
+        ).toEqual(['user_group_exclude'])
       })
     })
     describe('#disableBySeparateTests', () => {

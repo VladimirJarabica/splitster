@@ -10,6 +10,7 @@ export type DisabledReason =
   | 'usage'
   | 'separate_test'
   | 'user_group'
+  | 'user_group_exclude'
   | 'config'
   | 'deadline'
   | 'dev'
@@ -61,6 +62,7 @@ export type TestUserGroupConfig =
 export type TestConfig = {|
   description?: string,
   userGroup?: TestUserGroupConfig,
+  userGroupExclude?: TestUserGroupConfig,
   usage?: number,
   deadline?: string | Date,
   runTrack?: TestTracksConfig,

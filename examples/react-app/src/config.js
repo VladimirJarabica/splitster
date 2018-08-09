@@ -65,6 +65,14 @@ const config: Config = {
       },
       userGroup: { lang: ['de', 'us'] },
     },
+    BUR: {
+      defaultVariant: 'lol',
+      variants: {
+        lol: 1,
+        kek: 1,
+      },
+      userGroupExclude: { lang: ['en'] },
+    },
   },
   options: {
     cookies: {

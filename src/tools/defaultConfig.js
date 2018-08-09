@@ -18,6 +18,7 @@ const defaultConfig: Config = {
 export const defaultTestConfig: TestConfig = {
   description: '',
   userGroup: {},
+  userGroupExclude: {},
   usage: 100,
   // runTrack: '',
   // useTrack: '',

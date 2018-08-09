@@ -124,6 +124,7 @@ export const checkDisabled = (def: ?string) => {
     'usage',
     'separate_test',
     'user_group',
+    'user_group_exclude',
     'deadline',
     'dev',
   ]
@@ -193,6 +194,36 @@ export const disableByUserGroups = (
     return R.compose(
       R.assoc('disabledReason', disabledByUserGroups ? 'user_group' : null),
       R.assoc('disabled', disabledByUserGroups),
+    )(test)
+  }, tests)
+}
+export const disableByUserGroupsExclude = (
+  userGroups: ?UserGroups,
+  user: ?Object,
+  def: ?SaveResults = {},
+) => (tests: TestsConfig): TestsConfig => {
+  if (!user || R.isEmpty(user)) {
+    return tests
+  }
+  return R.mapObjIndexed((test: TestConfig, testId: TestId) => {
+    if (
+      testDefProperlySet(testId, test.version || 0, def) ||
+      test.disabled ||
+      R.isEmpty(test.userGroupExclude)
+    ) {
+      return test
+    }
+    const disabledByUserGroupsExclude = passTestUserGroups(
+      test.userGroupExclude,
+      userGroups || {},
+      user || {},
+    )
+    return R.compose(
+      R.assoc(
+        'disabledReason',
+        disabledByUserGroupsExclude ? 'user_group_exclude' : null,
+      ),
+      R.assoc('disabled', disabledByUserGroupsExclude),
     )(test)
   }, tests)
 }
@@ -287,14 +318,7 @@ export const getNormalTests = ({
     (acc: Tests, key: string): Tests =>
       R.assoc(
         key,
-        constructTest(
-          key,
-          tests[key],
-          tracks,
-          createTestsOpts(
-            def[key],
-          ),
-        ),
+        constructTest(key, tests[key], tracks, createTestsOpts(def[key])),
         acc,
       ),
     {},
@@ -313,6 +337,7 @@ export const getTestsFromConfig = (
     getNormalTests(opts), // construct tests
     disableByUsage(def), // disable by usage
     disableBySeparateTests(opts, def), // disable by separate tests
+    disableByUserGroupsExclude(userGroups, user, def), // disabled by user group excluded
     disableByUserGroups(userGroups, user, def), // disable by user group
     disableByDeadline,
     disableByConfig, // set disabled by default or config

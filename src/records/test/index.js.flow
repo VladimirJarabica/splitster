@@ -1,0 +1,48 @@
+// @flow
+import type { TestId, TestConfig } from '../config';
+
+export type DisabledReason =
+  | 'usage'
+  | 'separate_test'
+  | 'user_group'
+  | 'user_group_exclude'
+  | 'config'
+  | 'deadline'
+  | 'dev';
+
+// export type TestOptions = {|
+//   winningVariant?: ?string,
+// |};
+
+export type Variant = {|
+  id: string,
+  value: string,
+  ratio: number,
+|};
+
+export type Variants = { [string]: Variant };
+
+export type Test = {|
+  id: string,
+  variants: Variants,
+  version: number,
+  description?: string,
+
+  winningVariant: ?string,
+  defaultVariant: string,
+
+  usage: number,
+
+  disabled: boolean,
+  disabledReason: ?DisabledReason,
+
+  used: boolean, // TODO: why is this here?
+|};
+
+export type Tests = { [TestId]: Test };
+
+// export type constructTest = (
+//   id: string,
+//   testConfig: TestConfig,
+//   testOptions: TestOptions,
+// ) => Test;

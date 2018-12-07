@@ -1,0 +1,33 @@
+// @flow
+import type { Tests } from '../records/test';
+import type { Config, OptionsConfig } from '../records/config';
+
+export type VariantValue = {|
+  value: string,
+|};
+
+export type SplitsterResults = { [string]: string };
+
+export type ClientInput = {|
+  config?: Config,
+  user?: Object,
+  userId?: string,
+  override?: SplitsterResults,
+|};
+
+// export interface SplitsterClient {
+declare export default class SplitsterClient {
+  options: OptionsConfig,
+
+  user: string,
+
+  result: SplitsterResults,
+
+  constructor(input: ClientInput, copy: ClientInput): SplitsterClient,
+
+  getSaveResults(): SplitsterResults,
+
+  get(testId: string): VariantValue,
+
+  set(testId: string, variantId: string, cookie?: boolean): Client,
+}

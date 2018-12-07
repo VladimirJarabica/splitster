@@ -1,0 +1,8 @@
+// @flow
+import typeof SplitsterBrowserType from './clients/browser/SplitsterBrowser';
+import typeof SplitsterServerType from './clients/server/SplitsterServer';
+import typeof parrseCookies from './utils/cookies';
+
+declare export var SplitsterBrowser: SplitsterBrowserType;
+declare export var SplitsterServer: SplitsterServerType;
+declare export var parseCookies: parseCookies;

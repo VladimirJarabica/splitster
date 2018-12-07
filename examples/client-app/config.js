@@ -1,15 +1,14 @@
 // @flow
-import type { Config } from '../../src/types'
+import type { Config } from '../../src/types';
 
-export const BUTTON_COLOR = 'BUTTON_COLOR'
+export const BUTTON_COLOR = 'BUTTON_COLOR';
 
-const CONSOLE = 'CONSOLE'
+const CONSOLE = 'CONSOLE';
 
 const config: Config = {
   tests: {
     BUTTON_COLOR: {
       defaultVariant: 'red',
-      userGroup: 'deUser',
       variants: {
         red: {
           value: 'RED',
@@ -20,11 +19,8 @@ const config: Config = {
           ratio: 1,
         },
       },
-      usage: 50,
-      runTrack: CONSOLE,
-      useTrack: [CONSOLE],
-      endTrack: [CONSOLE, console.warn],
-      deadline: '2018-2-15',
+      usage: 100,
+      // disabled: true,
     },
     SHOW_ADD: {
       defaultVariant: 'show',
@@ -38,26 +34,17 @@ const config: Config = {
           ratio: 1,
         },
       },
-      usage: 50,
+      userGroup: {
+        lang: ['en', 'de'],
+      },
+      usage: 100,
     },
   },
   options: {
-    separateTest: false,
     cookies: {
       disabled: false,
     },
   },
-  userGroups: {
-    deUser: { language: 'de' },
-    enAdultUsers: [
-      { language: ['en', 'us'] },
-      (user: { age: number }) => user.age >= 18,
-    ],
-    isJohn: (user: { name: string }) => user.name.includes('John'),
-  },
-  tracks: {
-    CONSOLE: test => console.log('tracking', test),
-  },
-}
+};
 
-export default config
+export default config;

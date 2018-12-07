@@ -1,0 +1,22 @@
+// @flow strict
+import type { Tests } from '../../records/test';
+import type { Config, OptionsConfig } from '../../records/config';
+import type { SplitsterResults, ClientInput, VariantValue } from '../index';
+
+import SplitsterClient from '../index';
+
+declare export default class SplitsterBrowser extends SplitsterClient {
+  options: OptionsConfig,
+
+  user: string,
+
+  result: SplitsterResults,
+
+  constructor(input: ClientInput, copy: ClientInput): SplitsterBrowser,
+
+  getSaveResults(): SplitsterResults,
+
+  get(testId: string): VariantValue,
+
+  set(testId: string, variantId: string, cookie?: boolean): Client,
+}

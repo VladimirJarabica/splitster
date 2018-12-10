@@ -14,5 +14,7 @@
     "ramda": "^0.24.1",
     "splitster": "^0.0.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "flow-bin": "^0.87.0"
+  }
 }

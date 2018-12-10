@@ -1,2 +1,8 @@
 [ignore]
 .*\.test\.js
+<PROJECT_ROOT>/src/splitster/**.**
+<PROJECT_ROOT>/src/tools/**.**
+<PROJECT_ROOT>/src/types/**.**
+<PROJECT_ROOT>/src/containers/**.**
+<PROJECT_ROOT>/src/examples/**.**
+<PROJECT_ROOT>/src/main.js

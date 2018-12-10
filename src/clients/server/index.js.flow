@@ -3,7 +3,7 @@ import type { Config } from '../../records/config';
 import type { SplitsterResults } from '../index';
 import type { SplitsterServer } from './SplitsterServer';
 
-type init = (
+export type init = (
   config: Config,
   user: Object,
   userId: string,

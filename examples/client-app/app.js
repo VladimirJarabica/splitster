@@ -1,8 +1,9 @@
+// @flow
 // import splitster from "splitster"
 // import Cookies from 'js-cookie';
 // import R from 'ramda';
-
 import { initSplitsterBrowser } from '../../src/index';
+import type { SplitsterBrowser } from '../../src/index';
 // import splitsterInit, { parseCookies } from '../../src/main'
 
 import config, { BUTTON_COLOR } from './config';
@@ -11,7 +12,13 @@ console.log('kek', config);
 
 console.log('initSplitsterBrowser ', initSplitsterBrowser);
 
-window.splitster = initSplitsterBrowser(config, { lang: 'en' }, 'kekburlolasd');
+const splitster: SplitsterBrowser = initSplitsterBrowser(
+  config,
+  { lang: 'en' },
+  'kekburlolasd',
+);
+
+window.splitster = splitster;
 // const user = {
 //   language: 'de',
 // }

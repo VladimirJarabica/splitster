@@ -1,5 +1,5 @@
 // @flow
-import type { Config } from '../../src/types';
+import type { Config } from '../../src/index';
 
 export const BUTTON_COLOR = 'BUTTON_COLOR';
 

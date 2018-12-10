@@ -5,7 +5,7 @@ import type { SplitsterResults, ClientInput, VariantValue } from '../index';
 
 import SplitsterClient from '../index';
 
-declare export default class SplitsterServer extends SplitsterClient {
+declare class SplitsterServerClass extends SplitsterClient {
   options: OptionsConfig,
 
   user: string,
@@ -20,3 +20,7 @@ declare export default class SplitsterServer extends SplitsterClient {
 
   set(testId: string, variantId: string, cookie?: boolean): Client,
 }
+
+export type SplitsterServer = typeof SplitsterServerClass;
+
+declare export default SplitsterServer

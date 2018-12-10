@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-const REASONS = [
+export const REASONS = [
   'usage',
   'separate_test',
   'user_group',
@@ -24,7 +24,14 @@ const checkDisabled = override => {
     return {
       disabled: true,
       // TODO: temporary fix, remove 'null'
-      disabledReason: reason === 'null' ? 'config' : reason,
+      disabledReason: reason,
+    };
+  }
+  if (Boolean(disabled) && reason === 'null') {
+    return {
+      disabled: true,
+      // TODO: temporary fix, remove 'null'
+      disabledReason: 'config',
     };
   }
   return {

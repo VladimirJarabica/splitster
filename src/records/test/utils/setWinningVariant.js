@@ -4,7 +4,7 @@ import seedRandom from 'seedrandom';
 
 const getSeedNumber = key => seedRandom(key)();
 
-const getWinningVariant = (variants, defaultVariant, seedNumber) => {
+export const getWinningVariant = (variants, defaultVariant, seedNumber) => {
   const ratioSum = R.sum(
     R.map(([variantId, variant]) => variant.ratio, variants),
   );
@@ -16,15 +16,17 @@ const getWinningVariant = (variants, defaultVariant, seedNumber) => {
     floater -= variant.ratio;
     return floater <= 0;
   }, variants);
-  return winningVariant[0] || defaultVariant;
+  return winningVariant ? winningVariant[0] : defaultVariant;
 };
 
-const setWinningVariant = userId => ([testId, test]) => {
+const setWinningVariant = (userId, testSeed) => ([testId, test]) => {
   if (test.disabled) {
     return [testId, R.assoc('winningVariant', test.defaultVariant, test)];
   }
 
-  const seedNumber = getSeedNumber(`${testId}_${test.version}:${userId}`);
+  const seedNumber = R.isNil(testSeed)
+    ? getSeedNumber(`${testId}_${test.version}:${userId}`)
+    : testSeed;
   console.log('seedNumber', `${testId}_${test.version}:${userId}`, seedNumber);
 
   const winningVariant = getWinningVariant(

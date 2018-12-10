@@ -16,14 +16,14 @@ const disableByUserGroups = (user, override, exclude = false) => {
 
     if (
       test.disabled ||
-      testOverridePersistance(testId, test.version, override) ||
+      testOverridePersistance(testId, override) ||
       R.isEmpty(userGroup)
     ) {
       return [testId, test];
     }
 
     const disabledByUserGroups = checker(
-      passTestUserGroups(userGroup, user || {}),
+      passTestUserGroups(userGroup, user || {}, exclude),
     );
 
     return [

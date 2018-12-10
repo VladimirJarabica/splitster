@@ -6,7 +6,7 @@ import testOverridePersistance from './testOverridePersistance';
 const disableByUsage = (override, testRandom) => ([testId, test]) => {
   if (
     test.disabled ||
-    testOverridePersistance(testId, test.version, override) ||
+    testOverridePersistance(testId, override) ||
     R.isNil(test.usage)
   ) {
     return [testId, test];

@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import type { TestId, TestConfig } from '../config';
 
 export type DisabledReason =

@@ -1,5 +1,4 @@
-// @flow
-// import typeof SplitsterBrowserType from './clients/browser/SplitsterBrowser';
+// @flow strict
 import type { SplitsterBrowser as SplitsterBrowserType } from './clients/browser/SplitsterBrowser';
 import type { SplitsterServer as SplitsterServerType } from './clients/server/SplitsterServer';
 import type { parseCookies as ParseCookies } from './utils/cookies';

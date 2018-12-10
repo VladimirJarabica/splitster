@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import type { Config } from '../../records/config';
 import type { SplitsterResults } from '../index';
 import type { SplitsterServer } from './SplitsterServer';

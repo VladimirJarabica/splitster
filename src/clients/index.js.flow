@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import type { Tests } from '../records/test';
 import type { Config, OptionsConfig } from '../records/config';
 

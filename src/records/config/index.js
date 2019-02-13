@@ -30,6 +30,5 @@ export const mergeDefaultConfig = config => {
     c => R.assoc("tests", R.map(mergeTestConfig, config.tests), c),
     R.mergeDeepRight(defaultConfig)
   )(config);
-  console.log("mergeDefaultConfig", merged);
   return merged;
 };

@@ -21,12 +21,7 @@ class Root extends Component {
 
   render() {
     const { splitster } = this.props;
-    console.log(
-      "render",
-      splitster.getSaveResults(),
-      splitster.getAll(),
-      splitster
-    );
+    console.log("render", splitster.getSaveResults(), splitster);
     return (
       <div>
         <h1>server rendering</h1>

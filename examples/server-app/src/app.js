@@ -1,5 +1,5 @@
 import express from "express";
-import { server as splitsterInit } from "../../../src/main";
+import { initSplitsterServer } from "../../../src/index";
 
 import config from "./config";
 
@@ -19,9 +19,9 @@ app.get("/", (req, res) => {
   };
 
   // TODO: create config
-  const splitster = splitsterInit(config, user, def);
+  const splitster = initSplitsterServer(config, user, def);
 
-  splitster.runAll();
+  // splitster.runAll();
 
   res.json(splitster.getSaveResults());
 });

@@ -34,7 +34,6 @@ const setWinningVariant = (userId, testSeed) => ([testId, test]) => {
     test.defaultVariant,
     seedNumber
   );
-  console.log("winningVariant", winningVariant);
   return [testId, R.assoc("winningVariant", winningVariant, test)];
 };
 

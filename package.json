@@ -7,10 +7,6 @@
     "build": "babel src -d lib --ignore **/*.test.js",
     "build:watch": "babel src -d lib --ignore **/*.test.js --watch",
     "test": "ALL_TESTS=true jest",
-    "webpack-draft": "webpack --config webpack.draft.js",
-    "webpack-draft-w": "webpack --config webpack.draft.js --watch",
-    "build-draft": "babel draft/usage_server/server.js > draft/usage_server/server.b.js && node draft/usage_server/server.b.js",
-    "build-config-draft": "babel draft/usage_config/server.js > draft/usage_config/server.b.js && node draft/usage_config/server.b.js",
     "flow": "flow",
     "flow:start": "flow start",
     "flow:stop": "flow stop"

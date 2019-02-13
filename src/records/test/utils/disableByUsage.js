@@ -1,7 +1,7 @@
-import * as R from 'ramda';
-import Random from 'random-js';
+import * as R from "ramda";
+import Random from "random-js";
 
-import testOverridePersistance from './testOverridePersistance';
+import testOverridePersistance from "./testOverridePersistance";
 
 const disableByUsage = (override, testRandom) => ([testId, test]) => {
   if (
@@ -18,8 +18,8 @@ const disableByUsage = (override, testRandom) => ([testId, test]) => {
       testId,
       R.merge(test, {
         disabled: true,
-        disabledReason: 'usage',
-      }),
+        disabledReason: "usage"
+      })
     ];
   }
   return [testId, test];

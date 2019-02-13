@@ -1,5 +1,5 @@
 // @flow strict
-import type { DisabledReason } from '../test';
+import type { DisabledReason } from "../test";
 
 export type TestId = string;
 export type VariantId = string;
@@ -8,18 +8,18 @@ export type CookiesConfig = {|
   disabled?: boolean,
   name?: string, // default "splitster",
   cookiesOptions?: {
-    expires?: number,
-  },
+    expires?: number
+  }
 |};
 
 export type OptionsConfig = {|
   // separateTest?: boolean, // @deprecated
-  cookies?: CookiesConfig,
+  cookies?: CookiesConfig
 |};
 
 export type UserGroupSubConfig =
   | {
-      [string]: string | string[],
+      [string]: string | string[]
     }
   | (Object => boolean);
 export type UserGroupConfig = UserGroupSubConfig[] | UserGroupSubConfig;
@@ -28,7 +28,7 @@ export type UserGroupConfig = UserGroupSubConfig[] | UserGroupSubConfig;
 export type VariantConfig =
   | {|
       value: string,
-      ratio: number,
+      ratio: number
     |}
   // | string
   | number;
@@ -51,7 +51,7 @@ export type TestConfig = {|
   variants: VariantsConfig,
   disabled?: boolean,
   disabledReason?: ?DisabledReason,
-  version?: number,
+  version?: number
 |};
 
 export type TestsConfig = { [TestId]: TestConfig };
@@ -60,5 +60,5 @@ export type Config = {|
   tests: TestsConfig,
   // userGroups?: UserGroupsConfig, // @deprecated
   // tracks?: TracksConfig, // @deprecated
-  options?: OptionsConfig,
+  options?: OptionsConfig
 |};

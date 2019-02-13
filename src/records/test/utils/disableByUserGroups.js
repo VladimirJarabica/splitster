@@ -1,10 +1,10 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
-import testOverridePersistance from './testOverridePersistance';
-import passTestUserGroups from './passTestUserGroups';
+import testOverridePersistance from "./testOverridePersistance";
+import passTestUserGroups from "./passTestUserGroups";
 
 const getDisabledReason = exclude =>
-  exclude ? 'user_group_exclude' : 'user_group';
+  exclude ? "user_group_exclude" : "user_group";
 
 const disableByUserGroups = (user, override, exclude = false) => {
   if (!user) return R.identity;
@@ -23,18 +23,18 @@ const disableByUserGroups = (user, override, exclude = false) => {
     }
 
     const disabledByUserGroups = checker(
-      passTestUserGroups(userGroup, user || {}, exclude),
+      passTestUserGroups(userGroup, user || {}, exclude)
     );
 
     return [
       testId,
       R.compose(
         R.assoc(
-          'disabledReason',
-          disabledByUserGroups ? getDisabledReason(exclude) : null,
+          "disabledReason",
+          disabledByUserGroups ? getDisabledReason(exclude) : null
         ),
-        R.assoc('disabled', disabledByUserGroups),
-      )(test),
+        R.assoc("disabled", disabledByUserGroups)
+      )(test)
     ];
   };
 };

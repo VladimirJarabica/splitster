@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
 
-import splitsterReducer from 'splitster-redux'
+import splitsterReducer from "splitster-redux";
 
-import todos from './todosReducer'
+import todos from "./todosReducer";
 
 export default combineReducers({
   todos,
-  splitster: splitsterReducer,
-})
+  splitster: splitsterReducer
+});

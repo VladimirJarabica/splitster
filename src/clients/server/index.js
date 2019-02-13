@@ -1,6 +1,6 @@
-import SplitsterServer from './SplitsterServer';
+import SplitsterServer from "./SplitsterServer";
 
-import { mergeDefaultConfig } from '../../records/config';
+import { mergeDefaultConfig } from "../../records/config";
 
 const init = (config, user, userId, override) => {
   const validConfig = mergeDefaultConfig(config);

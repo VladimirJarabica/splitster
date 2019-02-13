@@ -1,12 +1,12 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
 export const REASONS = [
-  'usage',
-  'separate_test',
-  'user_group',
-  'user_group_exclude',
-  'deadline',
-  'dev',
+  "usage",
+  "separate_test",
+  "user_group",
+  "user_group_exclude",
+  "deadline",
+  "dev"
 ];
 
 const DISABLED_REGEX = /^(__disabled_)(\w+)$/;
@@ -15,7 +15,7 @@ const checkDisabled = override => {
   if (!override) {
     return {
       disabled: false,
-      disabledReason: null,
+      disabledReason: null
     };
   }
   const [_, disabled, reason] = R.match(DISABLED_REGEX, override);
@@ -24,19 +24,19 @@ const checkDisabled = override => {
     return {
       disabled: true,
       // TODO: temporary fix, remove 'null'
-      disabledReason: reason,
+      disabledReason: reason
     };
   }
-  if (Boolean(disabled) && reason === 'null') {
+  if (Boolean(disabled) && reason === "null") {
     return {
       disabled: true,
       // TODO: temporary fix, remove 'null'
-      disabledReason: 'config',
+      disabledReason: "config"
     };
   }
   return {
     disabled: false,
-    disabledReason: null,
+    disabledReason: null
   };
 };
 

@@ -1,31 +1,31 @@
-import express from 'express'
-import { server as splitsterInit } from '../../../src/main'
+import express from "express";
+import { server as splitsterInit } from "../../../src/main";
 
-import config from './config'
+import config from "./config";
 
-const app = express()
+const app = express();
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   const user = {
-    language: 'en',
-    os: 'windows',
-    device: 'chrome',
-    location: {},
-  }
+    language: "en",
+    os: "windows",
+    device: "chrome",
+    location: {}
+  };
 
   const def = {
     // KEK: '__disabled_user_group',
-    KEK: '__disabled_dev'
-  }
+    KEK: "__disabled_dev"
+  };
 
   // TODO: create config
-  const splitster = splitsterInit(config, user, def)
+  const splitster = splitsterInit(config, user, def);
 
-  splitster.runAll()
+  splitster.runAll();
 
-  res.json(splitster.getSaveResults())
-})
+  res.json(splitster.getSaveResults());
+});
 
 app.listen(3000, () => {
-  console.log('Server client app running on port 3000!')
-})
+  console.log("Server client app running on port 3000!");
+});

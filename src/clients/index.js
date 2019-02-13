@@ -1,6 +1,6 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
-import { getTestsFromConfig } from '../records/test';
+import { getTestsFromConfig } from "../records/test";
 
 /**
  * Splitster client class abstraction
@@ -12,13 +12,13 @@ class SplitsterClient {
   options = {};
 
   // Live data
-  user = '';
-  userId = '';
+  user = "";
+  userId = "";
 
   constructor({ config, user, userId, override = {} }, copy) {
     if (!config && !user && !userId && copy) {
       // Create new one from copy
-      console.log('copy', copy);
+      console.log("copy", copy);
       this.tests = copy.tests;
       this.options = copy.options;
       this.user = copy.user;
@@ -42,15 +42,15 @@ class SplitsterClient {
       R.fromPairs,
       R.map(([testId, test]) => [
         includeVersions ? `${testId}_${test.version}` : testId,
-        R.prop('winningVariant', test),
+        R.prop("winningVariant", test)
       ]),
-      R.toPairs,
+      R.toPairs
     )(this.tests);
 
   get = testId => {
     if (!R.has(testId, this.tests)) {
       console.warn(
-        `Splitster: Trying to access not existing test: ${testId}, your value will be null.`,
+        `Splitster: Trying to access not existing test: ${testId}, your value will be null.`
       );
       return { value: null };
     }
@@ -58,15 +58,15 @@ class SplitsterClient {
   };
 
   set = (testId, variantId) => {
-    console.log('parent set');
+    console.log("parent set");
     return new this.constructor(
       {},
       {
         tests: this.tests,
         options: this.options,
         user: this.user,
-        results: R.assocPath([testId, 'winningVariant'], variantId, this.tests),
-      },
+        results: R.assocPath([testId, "winningVariant"], variantId, this.tests)
+      }
     );
   };
 }

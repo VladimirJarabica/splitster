@@ -1,13 +1,13 @@
 // @flow strict
-import type { Config } from '../../records/config';
-import type { SplitsterResults } from '../index';
-import type { SplitsterBrowser } from './SplitsterBrowser';
+import type { Config } from "../../records/config";
+import type { SplitsterResults } from "../index";
+import type { SplitsterBrowser } from "./SplitsterBrowser";
 
 export type init = (
   config: Config,
   user: Object,
   userId: string,
-  override?: SplitsterResults,
+  override?: SplitsterResults
 ) => SplitsterBrowser;
 
-declare export default init
+declare export default init;

@@ -1,35 +1,35 @@
-import express from 'express'
-import path from 'path'
-import cookieParser from 'cookie-parser'
-import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import express from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
-import { server as splitsterInit, parseCookies } from '../../../lib/main'
-import config from './config'
+import { server as splitsterInit, parseCookies } from "../../../lib/main";
+import config from "./config";
 
-import App from './App'
+import App from "./App";
 
-const app = express()
+const app = express();
 
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'dist')))
+app.use(express.static(path.join(__dirname, "dist")));
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   const user = {
-    lang: "en",
-  }
-  const def = parseCookies(req.cookies)
-  const splitster = splitsterInit(config, user, def)
-  splitster.runAll()
+    lang: "en"
+  };
+  const def = parseCookies(req.cookies);
+  const splitster = splitsterInit(config, user, def);
+  splitster.runAll();
 
-  const html = renderToStaticMarkup(<App splitster={splitster} />)
+  const html = renderToStaticMarkup(<App splitster={splitster} />);
 
-  res.send(html)
-})
+  res.send(html);
+});
 
-const port = 3000
+const port = 3000;
 
 app.listen(port, () => {
-  console.log('App listen on port', port)
-})
+  console.log("App listen on port", port);
+});

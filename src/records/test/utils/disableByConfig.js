@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
 const disableByConfig = ([testId, test]) => {
   if (test.disabled && !test.disabledReason) {
@@ -6,8 +6,8 @@ const disableByConfig = ([testId, test]) => {
       testId,
       R.merge(test, {
         disabled: true,
-        disabledReason: 'config',
-      }),
+        disabledReason: "config"
+      })
     ];
   }
   return [testId, test];

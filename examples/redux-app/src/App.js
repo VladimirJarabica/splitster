@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-const App = ({ initialComponent, reduxState }) =>
+const App = ({ initialComponent, reduxState }) => (
   <html>
     <head>
       <title>server rendering</title>
@@ -9,11 +9,12 @@ const App = ({ initialComponent, reduxState }) =>
       <div
         id="app"
         dangerouslySetInnerHTML={{
-          __html: initialComponent,
+          __html: initialComponent
         }}
       />
       <script src="/bundle.js" />
     </body>
   </html>
+);
 
-export default App
+export default App;

@@ -1,6 +1,6 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
-import checkDisabled from './checkDisabled';
+import checkDisabled from "./checkDisabled";
 
 const disableByOverride = override => ([testId, test]) => {
   if (test.disabled) {

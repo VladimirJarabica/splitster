@@ -1,50 +1,50 @@
 // @flow
-import type { Config } from '../../src/index';
+import type { Config } from "../../src/index";
 
-export const BUTTON_COLOR = 'BUTTON_COLOR';
+export const BUTTON_COLOR = "BUTTON_COLOR";
 
-const CONSOLE = 'CONSOLE';
+const CONSOLE = "CONSOLE";
 
 const config: Config = {
   tests: {
     BUTTON_COLOR: {
-      defaultVariant: 'red',
+      defaultVariant: "red",
       variants: {
         red: {
-          value: 'RED',
-          ratio: 1,
+          value: "RED",
+          ratio: 1
         },
         blue: {
-          value: 'BLUE',
-          ratio: 1,
-        },
+          value: "BLUE",
+          ratio: 1
+        }
       },
-      usage: 100,
+      usage: 100
       // disabled: true,
     },
     SHOW_ADD: {
-      defaultVariant: 'show',
+      defaultVariant: "show",
       variants: {
         show: {
-          value: 'SHOW',
-          ratio: 1,
+          value: "SHOW",
+          ratio: 1
         },
         hide: {
-          value: 'HIDE',
-          ratio: 1,
-        },
+          value: "HIDE",
+          ratio: 1
+        }
       },
       userGroup: {
-        lang: ['en', 'de'],
+        lang: ["en", "de"]
       },
-      usage: 100,
-    },
+      usage: 100
+    }
   },
   options: {
     cookies: {
-      disabled: false,
-    },
-  },
+      disabled: false
+    }
+  }
 };
 
 export default config;

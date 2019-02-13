@@ -1,12 +1,12 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
-import seedRandom from 'seedrandom';
+import seedRandom from "seedrandom";
 
 const getSeedNumber = key => seedRandom(key)();
 
 export const getWinningVariant = (variants, defaultVariant, seedNumber) => {
   const ratioSum = R.sum(
-    R.map(([variantId, variant]) => variant.ratio, variants),
+    R.map(([variantId, variant]) => variant.ratio, variants)
   );
 
   // Seed number (from interval [0, 1]) is interpolated to interval [0-ratio sum]
@@ -21,21 +21,21 @@ export const getWinningVariant = (variants, defaultVariant, seedNumber) => {
 
 const setWinningVariant = (userId, testSeed) => ([testId, test]) => {
   if (test.disabled) {
-    return [testId, R.assoc('winningVariant', test.defaultVariant, test)];
+    return [testId, R.assoc("winningVariant", test.defaultVariant, test)];
   }
 
   const seedNumber = R.isNil(testSeed)
     ? getSeedNumber(`${testId}_${test.version}:${userId}`)
     : testSeed;
-  console.log('seedNumber', `${testId}_${test.version}:${userId}`, seedNumber);
+  console.log("seedNumber", `${testId}_${test.version}:${userId}`, seedNumber);
 
   const winningVariant = getWinningVariant(
     R.toPairs(test.variants),
     test.defaultVariant,
-    seedNumber,
+    seedNumber
   );
-  console.log('winningVariant', winningVariant);
-  return [testId, R.assoc('winningVariant', winningVariant, test)];
+  console.log("winningVariant", winningVariant);
+  return [testId, R.assoc("winningVariant", winningVariant, test)];
 };
 
 export default setWinningVariant;

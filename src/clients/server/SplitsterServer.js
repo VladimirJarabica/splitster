@@ -1,7 +1,7 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
-import SplitsterClient from '../index';
-import { getTestsFromConfig } from '../../records/test';
+import SplitsterClient from "../index";
+import { getTestsFromConfig } from "../../records/test";
 
 class SplitsterServer extends SplitsterClient {}
 

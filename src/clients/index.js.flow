@@ -1,9 +1,9 @@
 // @flow strict
-import type { Tests } from '../records/test';
-import type { Config, OptionsConfig } from '../records/config';
+import type { Tests } from "../records/test";
+import type { Config, OptionsConfig } from "../records/config";
 
 export type VariantValue = {|
-  value: string,
+  value: string
 |};
 
 export type SplitsterResults = { [string]: string };
@@ -12,22 +12,22 @@ export type ClientInput = {|
   config?: Config,
   user?: Object,
   userId?: string,
-  override?: SplitsterResults,
+  override?: SplitsterResults
 |};
 
 // export interface SplitsterClient {
 declare export default class SplitsterClient {
-  options: OptionsConfig,
+  options: OptionsConfig;
 
-  user: string,
+  user: string;
 
-  result: SplitsterResults,
+  result: SplitsterResults;
 
-  constructor(input: ClientInput, copy: ClientInput): SplitsterClient,
+  constructor(input: ClientInput, copy: ClientInput): SplitsterClient;
 
-  getSaveResults(): SplitsterResults,
+  getSaveResults(): SplitsterResults;
 
-  get(testId: string): VariantValue,
+  get(testId: string): VariantValue;
 
-  set(testId: string, variantId: string, cookie?: boolean): Client,
+  set(testId: string, variantId: string, cookie?: boolean): Client;
 }

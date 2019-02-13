@@ -1,11 +1,11 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
-import disableByDev from './utils/disableByDev';
-import disableByOverride from './utils/disableByOverride';
-import disableByConfig from './utils/disableByConfig';
-import disableByUserGroups from './utils/disableByUserGroups';
-import disableByUsage from './utils/disableByUsage';
-import setWinningVariant from './utils/setWinningVariant';
+import disableByDev from "./utils/disableByDev";
+import disableByOverride from "./utils/disableByOverride";
+import disableByConfig from "./utils/disableByConfig";
+import disableByUserGroups from "./utils/disableByUserGroups";
+import disableByUsage from "./utils/disableByUsage";
+import setWinningVariant from "./utils/setWinningVariant";
 
 // 1. disable by dev (developer specified it in override)
 // 2. disable by config (test configuration contains `disabled: true`)
@@ -23,8 +23,12 @@ export const getTestFromConfig = ({ override, user, userId }) =>
     // disableByDeadline,
     disableByConfig,
     disableByOverride(override),
-    disableByDev(override),
+    disableByDev(override)
   );
 
 export const getTestsFromConfig = (tests, opts) =>
-  R.compose(R.fromPairs, R.map(getTestFromConfig(opts)), R.toPairs)(tests);
+  R.compose(
+    R.fromPairs,
+    R.map(getTestFromConfig(opts)),
+    R.toPairs
+  )(tests);

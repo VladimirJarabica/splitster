@@ -1,6 +1,6 @@
-import SplitsterBrowser from './SplitsterBrowser';
+import SplitsterBrowser from "./SplitsterBrowser";
 
-import { mergeDefaultConfig } from '../../records/config';
+import { mergeDefaultConfig } from "../../records/config";
 
 const init = (config, user, userId, override) => {
   const validConfig = mergeDefaultConfig(config);

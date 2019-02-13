@@ -1,20 +1,20 @@
 // @flow strict
-import type { SplitsterBrowser as SplitsterBrowserType } from './clients/browser/SplitsterBrowser';
-import type { SplitsterServer as SplitsterServerType } from './clients/server/SplitsterServer';
-import type { parseCookies as ParseCookies } from './utils/cookies';
-import type { init as InitSplitsterBrowser } from './clients/browser';
-import type { init as InitSplitsterServer } from './clients/server';
+import type { SplitsterBrowser as SplitsterBrowserType } from "./clients/browser/SplitsterBrowser";
+import type { SplitsterServer as SplitsterServerType } from "./clients/server/SplitsterServer";
+import type { parseCookies as ParseCookies } from "./utils/cookies";
+import type { init as InitSplitsterBrowser } from "./clients/browser";
+import type { init as InitSplitsterServer } from "./clients/server";
 import type {
   Config as ConfigType,
   TestsConfig as TestsConfigType,
   TestConfig as TestConfigType,
-  OptionsConfig as OptionsConfigType,
-} from './records/config';
+  OptionsConfig as OptionsConfigType
+} from "./records/config";
 import type {
   Test as TestType,
   Tests as TestsType,
-  DisabledReason as DisabledReasonType,
-} from './records/test';
+  DisabledReason as DisabledReasonType
+} from "./records/test";
 
 // =======================
 // exports from index file

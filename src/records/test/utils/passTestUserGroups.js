@@ -1,11 +1,11 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
 export const getUserGroupRule = (userGroupSubConfig, exclude) => {
-  if (typeof userGroupSubConfig === 'function') return userGroupSubConfig;
+  if (typeof userGroupSubConfig === "function") return userGroupSubConfig;
   // { key: "string", key: ["string", "string"]}
   const rules = R.map(
     key => user => {
-      if (typeof userGroupSubConfig[key] === 'function')
+      if (typeof userGroupSubConfig[key] === "function")
         return userGroupSubConfig[key](user);
 
       const allowedValues = Array.isArray(userGroupSubConfig[key])
@@ -14,7 +14,7 @@ export const getUserGroupRule = (userGroupSubConfig, exclude) => {
 
       return R.contains(R.prop(key, user), allowedValues);
     },
-    R.keys(userGroupSubConfig),
+    R.keys(userGroupSubConfig)
   );
   // TODO: test anypass
   return exclude ? R.anyPass(rules) : R.allPass(rules);
@@ -43,8 +43,8 @@ const passTestUserGroups = (userGroup, user, exclude) => {
     return checker(
       R.map(
         _userGroup => R.partial(passTestUserGroups, [_userGroup]),
-        userGroup,
-      ),
+        userGroup
+      )
     )(user);
   }
 

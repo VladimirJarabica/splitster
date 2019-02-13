@@ -1,8 +1,0 @@
-.idea/
-examples/
-draft/
-webpack.draft.js
-.babelrc
-.flowconfig
-.npmignore
-**/*.test.js

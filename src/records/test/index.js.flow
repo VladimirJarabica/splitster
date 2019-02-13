@@ -1,14 +1,14 @@
 // @flow strict
-import type { TestId, TestConfig } from '../config';
+import type { TestId, TestConfig } from "../config";
 
 export type DisabledReason =
-  | 'usage'
-  | 'separate_test'
-  | 'user_group'
-  | 'user_group_exclude'
-  | 'config'
-  | 'deadline'
-  | 'dev';
+  | "usage"
+  | "separate_test"
+  | "user_group"
+  | "user_group_exclude"
+  | "config"
+  | "deadline"
+  | "dev";
 
 // export type TestOptions = {|
 //   winningVariant?: ?string,
@@ -17,7 +17,7 @@ export type DisabledReason =
 export type Variant = {|
   id: string,
   value: string,
-  ratio: number,
+  ratio: number
 |};
 
 export type Variants = { [string]: Variant };
@@ -36,7 +36,7 @@ export type Test = {|
   disabled: boolean,
   disabledReason: ?DisabledReason,
 
-  used: boolean, // TODO: why is this here?
+  used: boolean // TODO: why is this here?
 |};
 
 export type Tests = { [TestId]: Test };

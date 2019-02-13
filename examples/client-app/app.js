@@ -13,12 +13,9 @@ const user = {
 };
 const init = () => {
   const userId = document.getElementById("userid").value;
-  const splitster = splitsterInit(
-    config,
-    user,
-    userId,
-    parseCookies(Cookies.get())
-  );
+  const splitster = splitsterInit(config, user, userId, {
+    BUTTON_COLOR_1: "red"
+  });
   window.splitster = splitster;
   console.log("values:", splitster.getSaveResults());
 };

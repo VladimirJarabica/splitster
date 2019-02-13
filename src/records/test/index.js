@@ -16,7 +16,7 @@ import setWinningVariant from "./utils/setWinningVariant";
 // 7. set value if not disabled (if not disabled, based on user id set value)
 export const getTestFromConfig = ({ override, user, userId }) =>
   R.compose(
-    setWinningVariant(userId),
+    setWinningVariant(userId, { override }),
     disableByUsage(override),
     disableByUserGroups(user, override, true), // user group exclude
     disableByUserGroups(user, override),

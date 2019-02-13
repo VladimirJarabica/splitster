@@ -8,6 +8,7 @@ const CONSOLE = "CONSOLE";
 const config: Config = {
   tests: {
     BUTTON_COLOR: {
+      version: 1,
       defaultVariant: "red",
       variants: {
         red: {

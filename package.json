@@ -2,7 +2,7 @@
   "name": "splitster",
   "version": "0.0.44",
   "description": "Javascript AB testing tool",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib --ignore **/*.test.js",
     "build:watch": "babel src -d lib --ignore **/*.test.js --watch",

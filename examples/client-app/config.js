@@ -18,9 +18,7 @@ const config: Config = {
           value: "BLUE",
           ratio: 1
         }
-      },
-      usage: 100
-      // disabled: true,
+      }
     },
     SHOW_ADD: {
       defaultVariant: "show",
@@ -36,8 +34,7 @@ const config: Config = {
       },
       userGroup: {
         lang: ["en", "de"]
-      },
-      usage: 100
+      }
     }
   },
   options: {

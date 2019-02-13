@@ -9,7 +9,7 @@ import {
 import config, { BUTTON_COLOR } from "./config";
 
 const user = {
-  language: "de"
+  lang: "de"
 };
 const init = () => {
   const userId = document.getElementById("userid").value;

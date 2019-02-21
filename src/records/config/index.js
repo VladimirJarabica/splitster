@@ -23,7 +23,20 @@ const defaultTestConfig = {
   version: 0
 };
 
-export const mergeTestConfig = R.mergeDeepRight(defaultTestConfig);
+export const mapVariants = R.mapObjIndexed((variant, key) => {
+  if (R.is(Number, variant)) {
+    return {
+      value: key,
+      ratio: variant
+    };
+  }
+  return variant;
+});
+
+export const mergeTestConfig = R.compose(
+  test => R.assoc("variants", mapVariants(test.variants), test),
+  R.mergeDeepRight(defaultTestConfig)
+);
 
 export const mergeDefaultConfig = config => {
   const merged = R.compose(

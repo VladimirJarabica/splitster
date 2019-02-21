@@ -11,14 +11,8 @@ const config: Config = {
       version: 1,
       defaultVariant: "red",
       variants: {
-        red: {
-          value: "RED",
-          ratio: 1
-        },
-        blue: {
-          value: "BLUE",
-          ratio: 1
-        }
+        red: 1,
+        blue: 1
       }
     },
     SHOW_ADD: {

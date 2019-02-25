@@ -14,14 +14,14 @@ class SplitsterBrowser extends SplitsterClient {
     }
   }
 
-  set(testId, variantId, cookie = true) {
+  set(testId, variantId, cookie) {
     console.log("here", testId, variantId, cookie, super.set);
     const result = super.set(testId, variantId, cookie);
     if (cookie) {
       // Dev only for replacing also cookie.
       // You need to handle parsing by yourself in `override` object
       const cookieKey = `splitster_${testId}`;
-      jsCookies(cookieKey, variantId);
+      jsCookies.set(cookieKey, variantId);
     }
 
     return result;

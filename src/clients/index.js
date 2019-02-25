@@ -21,8 +21,8 @@ class SplitsterClient {
       console.log("copy", copy);
       this.tests = copy.tests;
       this.options = copy.options;
-      this.user = copy.user;
-      this.results = copy.results;
+			this.user = copy.user;
+			this.userId = copy.userId;
       return;
     }
 
@@ -62,10 +62,10 @@ class SplitsterClient {
     return new this.constructor(
       {},
       {
-        tests: this.tests,
         options: this.options,
-        user: this.user,
-        results: R.assocPath([testId, "winningVariant"], variantId, this.tests)
+				user: this.user,
+				userId: this.userId,
+        tests: R.assocPath([testId, "winningVariant"], variantId, this.tests)
       }
     );
   };

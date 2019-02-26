@@ -23,14 +23,23 @@ const setWinningVariant = (userId, { override = {}, testSeed }) => ([
   testId,
   test
 ]) => {
-  if (test.disabled) {
-    return [testId, R.assoc("winningVariant", test.defaultVariant, test)];
-  }
-
   const key = `${testId}_${test.version}`;
   if (override[key] && test.variants[override[key]]) {
     const variant = override[key];
+    return [
+      testId,
+      {
+        ...test,
+        disabled: false,
+        disabledReason: null,
+        winningVariant: variant
+      }
+    ];
     return [testId, R.assoc("winningVariant", variant, test)];
+  }
+
+  if (test.disabled) {
+    return [testId, R.assoc("winningVariant", test.defaultVariant, test)];
   }
 
   const seedNumber = R.isNil(testSeed)

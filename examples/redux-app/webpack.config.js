@@ -1,16 +1,16 @@
 module.exports = {
-  entry: './src/client.js',
+  entry: "./src/client.js",
   output: {
-    filename: 'bundle.js',
-    path: 'dist',
+    filename: "bundle.js",
+    path: "dist"
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-      },
-    ],
-  },
-}
+        loader: "babel-loader"
+      }
+    ]
+  }
+};

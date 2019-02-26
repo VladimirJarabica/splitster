@@ -1,0 +1,64 @@
+// @flow strict
+import type { DisabledReason } from "../test";
+
+export type TestId = string;
+export type VariantId = string;
+
+export type CookiesConfig = {|
+  disabled?: boolean,
+  name?: string, // default "splitster",
+  cookiesOptions?: {
+    expires?: number
+  }
+|};
+
+export type OptionsConfig = {|
+  // separateTest?: boolean, // @deprecated
+  cookies?: CookiesConfig
+|};
+
+export type UserGroupSubConfig =
+  | {
+      [string]: string | string[]
+    }
+  | (Object => boolean);
+export type UserGroupConfig = UserGroupSubConfig[] | UserGroupSubConfig;
+// export type UserGroupsConfig = { [GroupId]: UserGroupConfig } // @deprecated
+
+export type VariantConfig =
+  | {|
+      value: string,
+      ratio: number
+    |}
+  // | string
+  | number;
+export type VariantsConfig = { [VariantId]: VariantConfig };
+
+export type TestUserGroupConfig =
+  //   | GroupId
+  UserGroupConfig | Array<UserGroupConfig>;
+
+export type TestConfig = {|
+  description?: string,
+  userGroup?: TestUserGroupConfig,
+  userGroupExclude?: TestUserGroupConfig,
+  usage?: number,
+  // deadline?: string | Date,
+  //   runTrack?: TestTracksConfig, // @deprecated
+  //   useTrack?: TestTracksConfig, // @deprecated
+  //   endTrack?: TestTracksConfig, // @deprecated
+  defaultVariant: string,
+  variants: VariantsConfig,
+  disabled?: boolean,
+  disabledReason?: ?DisabledReason,
+  version?: number
+|};
+
+export type TestsConfig = { [TestId]: TestConfig };
+
+export type Config = {|
+  tests: TestsConfig,
+  // userGroups?: UserGroupsConfig, // @deprecated
+  // tracks?: TracksConfig, // @deprecated
+  options?: OptionsConfig
+|};

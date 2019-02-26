@@ -9,9 +9,12 @@
   "dependencies": {
     "babel-register": "^6.26.0",
     "concurrently": "^3.5.0",
+    "http-server": "^0.11.1",
     "js-cookie": "^2.1.4",
     "ramda": "^0.24.1",
     "splitster": "^0.0.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "flow-bin": "^0.87.0"
+  }
 }

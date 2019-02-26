@@ -2,18 +2,15 @@
   "name": "splitster",
   "version": "0.0.44",
   "description": "Javascript AB testing tool",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib --ignore **/*.test.js",
     "build:watch": "babel src -d lib --ignore **/*.test.js --watch",
     "test": "ALL_TESTS=true jest",
-    "webpack-draft": "webpack --config webpack.draft.js",
-    "webpack-draft-w": "webpack --config webpack.draft.js --watch",
-    "build-draft": "babel draft/usage_server/server.js > draft/usage_server/server.b.js && node draft/usage_server/server.b.js",
-    "build-config-draft": "babel draft/usage_config/server.js > draft/usage_config/server.b.js && node draft/usage_config/server.b.js",
     "flow": "flow",
     "flow:start": "flow start",
-    "flow:stop": "flow stop"
+    "flow:stop": "flow stop",
+    "localsync": "rimraf lib && yarn build && yalc push"
   },
   "repository": "git+https://github.com/VladimirJarabica/splitster.git",
   "author": "Vladimír Jarabica",
@@ -23,10 +20,12 @@
   },
   "homepage": "https://github.com/VladimirJarabica/splitster#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
     "babel-loader": "^6.4.1",
+    "babel-plugin-ramda": "^2.0.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.23.0",
@@ -40,15 +39,16 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-prettier": "^2.1.2",
     "express": "^4.15.2",
-    "flow-bin": "^0.54.0",
+    "flow-bin": "^0.87.0",
     "immutable-devtools": "0.0.7",
-    "prettier": "^1.6.1",
+    "jest": "^23.6.0",
+    "rimraf": "^2.6.3",
     "webpack": "^3.0.0"
   },
   "dependencies": {
-    "babel-plugin-ramda": "^1.4.3",
     "js-cookie": "^2.1.4",
     "ramda": "^0.24.1",
-    "random-js": "^1.0.8"
+    "random-js": "^1.0.8",
+    "seedrandom": "^2.4.4"
   }
 }

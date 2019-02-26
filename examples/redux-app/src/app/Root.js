@@ -1,12 +1,13 @@
-import React from 'react'
+import React from "react";
 
-import TodoList from './TodoList'
-import AddTodo from './AddTodo'
+import TodoList from "./TodoList";
+import AddTodo from "./AddTodo";
 
-const Root = () =>
+const Root = () => (
   <div>
     <TodoList />
     <AddTodo />
   </div>
+);
 
-export default Root
+export default Root;

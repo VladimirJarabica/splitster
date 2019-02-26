@@ -1,90 +1,84 @@
 // @flow
-import type { Config } from '../../../src/types/index'
+import type { Config } from "../../../src/index";
 
-export const BUTTON_COLOR = 'BUTTON_COLOR'
+export const BUTTON_COLOR = "BUTTON_COLOR";
 
-const CONSOLE = 'CONSOLE'
+const CONSOLE = "CONSOLE";
 
 const config: Config = {
   tests: {
     BUTTON_COLOR: {
-      defaultVariant: 'red',
+      defaultVariant: "red",
       variants: {
         red: {
-          value: 'RED',
-          ratio: 1,
+          value: "RED",
+          ratio: 1
         },
         blue: {
-          value: 'BLUE',
-          ratio: 1,
-        },
+          value: "BLUE",
+          ratio: 1
+        }
       },
-      runTrack: CONSOLE,
-      useTrack: [CONSOLE],
-      endTrack: [CONSOLE, console.warn],
-      version: 7,
+      version: 7
     },
     SHOW_ADD: {
-      defaultVariant: 'show',
+      defaultVariant: "show",
       disabled: false,
       version: 7,
       usage: 100,
       variants: {
         show: {
-          value: 'SHOW',
-          ratio: 1,
+          value: "SHOW",
+          ratio: 1
         },
         hide: {
-          value: 'HIDE',
-          ratio: 1,
-        },
-      },
+          value: "HIDE",
+          ratio: 1
+        }
+      }
     },
     MODAL: {
-      defaultVariant: 'hello',
+      defaultVariant: "hello",
       variants: {
         hello: 1,
-        world: 1,
-      },
+        world: 1
+      }
     },
     // __disabled_usage
     UNIVERSE_QUESTION: {
-      defaultVariant: 'wise',
+      defaultVariant: "wise",
       usage: 0,
       variants: {
         wise: 1,
-        dumb: 1,
-      },
+        dumb: 1
+      }
     },
     // __disable_user_group
     KEK: {
-      defaultVariant: 'lol',
+      defaultVariant: "lol",
       variants: {
         lol: 1,
-        bur: 1,
+        bur: 1
       },
-      userGroup: { lang: ['de', 'us'] },
+      userGroup: { lang: ["de", "us"] }
     },
     BUR: {
-      defaultVariant: 'lol',
+      defaultVariant: "lol",
       variants: {
         lol: 1,
-        kek: 1,
+        kek: 1
       },
-      userGroupExclude: { lang: ['en'] },
-    },
+      userGroupExclude: { lang: ["en"] }
+    }
   },
   options: {
     cookies: {
       disabled: false,
       cookiesOptions: {
-        expires: 30,
-      },
-    },
-  },
-  tracks: {
-    CONSOLE: console.log,
-  },
-}
+        expires: 30
+      }
+    }
+  }
+};
 
-export default config
+export default config;

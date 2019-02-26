@@ -1,0 +1,31 @@
+// @flow strict
+import type { parseCookies as ParseCookies } from "./utils/cookies";
+import type { init as Init } from "./clients/index";
+import type {
+  Config as ConfigType,
+  TestsConfig as TestsConfigType,
+  TestConfig as TestConfigType,
+  OptionsConfig as OptionsConfigType
+} from "./records/config";
+import type {
+  Test as TestType,
+  Tests as TestsType,
+  DisabledReason as DisabledReasonType
+} from "./records/test";
+
+// =======================
+// exports from index file
+declare export var init: Init;
+
+// ============
+// export types
+
+export type parseCookies = ParseCookies;
+export type Config = ConfigType;
+export type TestsConfig = TestsConfigType;
+export type TestConfig = TestConfigType;
+export type OptionsConfig = OptionsConfigType;
+
+export type Test = TestType;
+export type Tests = TestsType;
+export type DisabledReason = DisabledReasonType;

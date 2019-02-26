@@ -1,26 +1,26 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { addTodo } from '../store/todosReducer'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addTodo } from "../store/todosReducer";
 
 class AddTodo extends Component {
   state = {
-    todo: '',
-  }
+    todo: ""
+  };
 
   add = () => {
-    const todo = this.state.todo
-    this.setState({ todo: '' }, () => {
-      this.props.dispatch(addTodo(todo))
-    })
-  }
+    const todo = this.state.todo;
+    this.setState({ todo: "" }, () => {
+      this.props.dispatch(addTodo(todo));
+    });
+  };
 
   handleChange = e => {
-    this.setState({ todo: e.target.value })
-  }
+    this.setState({ todo: e.target.value });
+  };
 
   renderButton = () => {
-    const { splitster } = this.props
-    const colorVariant = splitster.get('BUTTON_COLOR')
+    const { splitster } = this.props;
+    const colorVariant = splitster.get("BUTTON_COLOR");
     return (
       <button
         onClick={this.add}
@@ -28,8 +28,8 @@ class AddTodo extends Component {
       >
         Add
       </button>
-    )
-  }
+    );
+  };
 
   render() {
     return (
@@ -41,10 +41,10 @@ class AddTodo extends Component {
         />
         {this.renderButton()}
       </div>
-    )
+    );
   }
 }
 
 export default connect(({ splitster }) => ({
-  splitster,
-}))(AddTodo)
+  splitster
+}))(AddTodo);

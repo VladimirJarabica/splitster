@@ -1,6 +1,6 @@
 {
   "name": "splitster",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "Javascript AB testing tool",
   "main": "lib/index.js",
   "scripts": {

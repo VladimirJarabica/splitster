@@ -1,9 +1,6 @@
 // @flow strict
-import type { SplitsterBrowser as SplitsterBrowserType } from "./clients/browser/SplitsterBrowser";
-import type { SplitsterServer as SplitsterServerType } from "./clients/server/SplitsterServer";
 import type { parseCookies as ParseCookies } from "./utils/cookies";
-import type { init as InitSplitsterBrowser } from "./clients/browser";
-import type { init as InitSplitsterServer } from "./clients/server";
+import type { init as Init } from "./clients/index";
 import type {
   Config as ConfigType,
   TestsConfig as TestsConfigType,
@@ -18,13 +15,10 @@ import type {
 
 // =======================
 // exports from index file
-declare export var initSplitsterBrowser: InitSplitsterBrowser;
-declare export var initSplitsterServer: InitSplitsterServer;
+declare export var init: Init;
 
 // ============
 // export types
-export type SplitsterBrowser = SplitsterBrowserType;
-export type SplitsterServer = SplitsterBrowserType;
 
 export type parseCookies = ParseCookies;
 export type Config = ConfigType;

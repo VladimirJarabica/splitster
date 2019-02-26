@@ -1,12 +1,13 @@
 import * as R from "ramda";
 
 import { getTestsFromConfig } from "../records/test";
+import { mergeDefaultConfig } from "../records/config";
 
 /**
  * Splitster client class abstraction
  * containing all the common methods
  */
-class SplitsterClient {
+export class SplitsterClient {
   // Config
   tests = {};
   options = {};
@@ -25,6 +26,16 @@ class SplitsterClient {
       this.results = copy.results;
       return;
     }
+
+    try {
+      if (
+        !this.options.cookies.disabled &&
+        !jsCookies.get("user_id_splitster")
+      ) {
+        // Save user_id to cookies
+        jsCookies.set("user_id_splitster", this.userId);
+      }
+    } catch (err) {}
 
     // Initialize splitster
 
@@ -57,18 +68,34 @@ class SplitsterClient {
     return { value: this.tests[testId].winningVariant };
   };
 
-  set = (testId, variantId) => {
+  set = (testId, variantId, cookies = false) => {
     console.log("parent set");
-    return new this.constructor(
+
+    try {
+      if (cookie) {
+        // Dev only for replacing also cookie.
+        // You need to handle parsing by yourself in `override` object
+        const cookieKey = `splitster_${testId}`;
+        jsCookies.set(cookieKey, variantId);
+      }
+    } catch (err) {}
+
+    return new SplitsterClient(
       {},
       {
-        tests: this.tests,
         options: this.options,
         user: this.user,
-        results: R.assocPath([testId, "winningVariant"], variantId, this.tests)
+        tests: R.assocPath([testId, "winningVariant"], variantId, this.tests)
       }
     );
   };
 }
 
-export default SplitsterClient;
+const init = (config, user, userId, override) => {
+  const validConfig = mergeDefaultConfig(config);
+  // TODO: in createValidConfig each test must me merged with test default config
+  // also options should be merged
+  return new SplitsterClient({ config: validConfig, user, userId, override });
+};
+
+export default init;

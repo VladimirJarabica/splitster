@@ -16,7 +16,7 @@ export type ClientInput = {|
 |};
 
 // export interface SplitsterClient {
-declare export default class SplitsterClient {
+declare export class SplitsterClient {
   options: OptionsConfig;
 
   user: string;
@@ -31,3 +31,12 @@ declare export default class SplitsterClient {
 
   set(testId: string, variantId: string, cookie?: boolean): Client;
 }
+
+export type init = (
+  config: Config,
+  user: Object,
+  userId: string,
+  override?: SplitsterResults
+) => SplitsterClient;
+
+declare export default init;

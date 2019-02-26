@@ -68,14 +68,14 @@ export class SplitsterClient {
     return { value: this.tests[testId].winningVariant };
   };
 
-  set = (testId, variantId, cookies = false) => {
-    console.log("parent set");
+  set = (testId, variantId, cookie = false) => {
+    console.log("parent set", cookie);
 
     try {
       if (cookie) {
         // Dev only for replacing also cookie.
         // You need to handle parsing by yourself in `override` object
-        const cookieKey = `splitster_${testId}`;
+        const cookieKey = `splitster_${testId}_${this.tests[testId].version}`;
         jsCookies.set(cookieKey, variantId);
       }
     } catch (err) {}

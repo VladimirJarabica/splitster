@@ -2,3 +2,5 @@
 node_modules/
 draft/
 npm-debug.log
+.yalc
+yalc.lock

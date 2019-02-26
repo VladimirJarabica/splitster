@@ -9,7 +9,8 @@
     "test": "ALL_TESTS=true jest",
     "flow": "flow",
     "flow:start": "flow start",
-    "flow:stop": "flow stop"
+    "flow:stop": "flow stop",
+    "localsync": "rimraf lib && yarn build && yalc push"
   },
   "repository": "git+https://github.com/VladimirJarabica/splitster.git",
   "author": "Vladimír Jarabica",
@@ -41,6 +42,7 @@
     "flow-bin": "^0.87.0",
     "immutable-devtools": "0.0.7",
     "jest": "^23.6.0",
+    "rimraf": "^2.6.3",
     "webpack": "^3.0.0"
   },
   "dependencies": {

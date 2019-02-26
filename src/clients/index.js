@@ -2,6 +2,7 @@ import * as R from "ramda";
 
 import { getTestsFromConfig } from "../records/test";
 import { mergeDefaultConfig } from "../records/config";
+import jsCookies from "js-cookie"
 
 /**
  * Splitster client class abstraction

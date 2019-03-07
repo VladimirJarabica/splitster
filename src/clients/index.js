@@ -2,7 +2,7 @@ import * as R from "ramda";
 
 import { getTestsFromConfig } from "../records/test";
 import { mergeDefaultConfig } from "../records/config";
-import jsCookies from "js-cookie"
+import jsCookies from "js-cookie";
 
 /**
  * Splitster client class abstraction
@@ -52,10 +52,15 @@ export class SplitsterClient {
   getSaveResults = (includeVersions? = false) =>
     R.compose(
       R.fromPairs,
-      R.map(([testId, test]) => [
-        includeVersions ? `${testId}_${test.version}` : testId,
-        R.prop("winningVariant", test)
-      ]),
+      R.map(([testId, test]) => {
+        const winning = test.disabled
+          ? `__disabled_${test.disabledReason}`
+          : test.winningVariant;
+        return [
+          includeVersions ? `${testId}_${test.version}` : testId,
+          winning
+        ];
+      }),
       R.toPairs
     )(this.tests);
 
@@ -70,8 +75,6 @@ export class SplitsterClient {
   };
 
   set = (testId, variantId, cookie = false) => {
-    console.log("parent set", cookie);
-
     try {
       if (cookie) {
         // Dev only for replacing also cookie.

@@ -45,7 +45,6 @@ const setWinningVariant = (userId, { override = {}, testSeed }) => ([
   const seedNumber = R.isNil(testSeed)
     ? getSeedNumber(`${testId}_${test.version}:${userId}`)
     : testSeed;
-  console.log("seedNumber", `${testId}_${test.version}:${userId}`, seedNumber);
 
   const winningVariant = getWinningVariant(
     R.toPairs(test.variants),

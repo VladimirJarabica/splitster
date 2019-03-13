@@ -1,6 +1,9 @@
 // @flow strict
 import type { parseCookies as ParseCookies } from "./utils/cookies";
-import type { init as Init } from "./clients/index";
+import type {
+  init as Init,
+  SplitsterClient as SplitsterClientType
+} from "./clients/index";
 import type {
   Config as ConfigType,
   TestsConfig as TestsConfigType,
@@ -29,3 +32,4 @@ export type OptionsConfig = OptionsConfigType;
 export type Test = TestType;
 export type Tests = TestsType;
 export type DisabledReason = DisabledReasonType;
+export type SplitsterClient = SplitsterClientType;

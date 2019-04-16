@@ -20,7 +20,6 @@ export class SplitsterClient {
   constructor({ config, user, userId, override = {} }, copy) {
     if (!config && !user && !userId && copy) {
       // Create new one from copy
-      console.log("copy", copy);
       this.tests = copy.tests;
       this.options = copy.options;
       this.user = copy.user;

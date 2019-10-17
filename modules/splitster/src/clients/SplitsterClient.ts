@@ -1,3 +1,5 @@
+import * as R from "ramda";
+
 import { InputConfig, Config, getConfig } from "../records/Config";
 import { getTestsResults, TestsResults } from "../utils/getTestsResults";
 import { TestResult } from "../utils/getTestResult";
@@ -30,7 +32,7 @@ export class SplitsterClient {
       this.user = user;
       this.userId = userId;
     }
-    this.results = getTestsResults(realConfig, userId);
+    this.results = getTestsResults(realConfig, user, userId);
   }
 
   get(testId: string): TestResult {
@@ -47,5 +49,18 @@ export class SplitsterClient {
     if (this.results[testId]) {
       this.results[testId].value = variant;
     }
+  }
+
+  getSaveResults(): { [id: string]: string } {
+    const resultsEntries = Object.entries(this.results);
+    const mapped: [string, string][] = resultsEntries.map(
+      ([id, resultEntry]) => [
+        id,
+        resultEntry.disabled
+          ? `__disabled_${resultEntry.disabledReason}`
+          : resultEntry.value
+      ]
+    );
+    return R.fromPairs(mapped);
   }
 }

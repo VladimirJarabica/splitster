@@ -4,6 +4,10 @@ import { integer as randomInteger, nativeMath } from "random-js";
 import { getWinningVariant } from "./getWinningVariant";
 
 import { TestConfig } from "../records/TestConfig";
+import {
+  isNotUserInAllUserGroups,
+  isUserInAnyUserGroups
+} from "./userInUserGroups";
 
 export const getSeedNumber = (key: string): number => seedRandom(key)();
 
@@ -16,6 +20,7 @@ export interface TestResult {
 interface Input {
   testConfig: TestConfig;
   userId: string;
+  user?: any;
   override?: { [testAndVersion: string]: string };
 }
 
@@ -38,6 +43,7 @@ const DISABLED_REGEX = /^(__disabled_)(\w+)$/;
 export const getTestResult = ({
   testConfig,
   userId,
+  user = {},
   override = {}
 }: Input): TestResult => {
   const overrideValue = getOverride(testConfig, override);
@@ -61,6 +67,21 @@ export const getTestResult = ({
   }
 
   // TODO: user groups
+  if (isNotUserInAllUserGroups(testConfig.userGroup, user)) {
+    return {
+      disabled: true,
+      disabledReason: "userGroup",
+      value: testConfig.defaultVariant
+    };
+  }
+
+  if (isUserInAnyUserGroups(testConfig.userGroupExclude, user)) {
+    return {
+      disabled: true,
+      disabledReason: "userGroupExclude",
+      value: testConfig.defaultVariant
+    };
+  }
 
   if (testConfig.usage !== null) {
     const rand = randomInteger(0, 99)(nativeMath);

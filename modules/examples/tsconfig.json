@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "rootDir": ".",
+        "outDir": ".",
+        "declaration": true,
+        "lib": ["esnext", "dom"]
+    },
+    "files": ["index.ts"],
+    "exclude": ["node_modules"]
+}
+  

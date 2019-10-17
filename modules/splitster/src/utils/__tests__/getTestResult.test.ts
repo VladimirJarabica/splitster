@@ -15,6 +15,8 @@ const test: TestConfig = {
   description: "",
   usage: null,
   disabled: false,
+  userGroup: {},
+  userGroupExclude: {},
   variants: {
     A: 1,
     B: 1,

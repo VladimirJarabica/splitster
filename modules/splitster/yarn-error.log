@@ -1,0 +1,31 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js add ramda random-js seedrandom
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/vladimirjarabica/Library/Android/sdk/emulator:/Users/vladimirjarabica/Library/Android/sdk/tools:/Users/vladimirjarabica/Library/Android/sdk/tools/bin:/Users/vladimirjarabica/Library/Android/sdk/platform-tools:/Users/vladimirjarabica/Library/Android/sdk/emulator:/Users/vladimirjarabica/Library/Android/sdk/tools:/Users/vladimirjarabica/Library/Android/sdk/tools/bin:/Users/vladimirjarabica/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  10.15.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/vladimirjarabica/Documents/projects/splitster/modules/splitster/package.json: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:304:30)
+      at /usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:315:13
+
+npm manifest: 
+  
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

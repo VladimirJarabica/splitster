@@ -1,0 +1,23 @@
+{
+  "name": "@splitster/splitster",
+  "version": "0.0.1",
+  "author": "Vladimír Jarabica",
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "dependencies": {
+    "ramda": "^0.26.1",
+    "random-js": "^2.1.0",
+    "seedrandom": "^3.0.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.19",
+    "@types/ramda": "^0.26.33",
+    "@types/random-js": "^1.0.31",
+    "@types/seedrandom": "^2.4.28",
+    "jest": "^24.9.0",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.4"
+  }
+}

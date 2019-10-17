@@ -66,7 +66,6 @@ export const getTestResult = ({
     };
   }
 
-  // TODO: user groups
   if (isNotUserInAllUserGroups(testConfig.userGroup, user)) {
     return {
       disabled: true,

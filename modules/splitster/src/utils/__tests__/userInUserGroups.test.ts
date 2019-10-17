@@ -26,13 +26,13 @@ describe("user in user groups", () => {
       expect(isUserInUserGroup("age", [13, 29], user)).toBeFalsy();
     });
   });
+
   const userGroups = {
     lang: "en",
     browser: ["chrome", "safari"],
     age: 25,
     iq: [100, 110]
   };
-
   describe("get number of user groups where user is", () => {
     it("should return correct number", () => {
       expect(getNumberOfUserGroupsWhereUserIs(userGroups, {})).toBe(0);

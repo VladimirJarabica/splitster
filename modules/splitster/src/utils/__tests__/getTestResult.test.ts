@@ -33,7 +33,7 @@ describe("get test config", () => {
           testConfig: test,
           userId: "",
           override: { [test.id]: "B" }
-        })
+        }).value
       ).toBe("B");
     });
     it("should return by override with version", () => {
@@ -42,7 +42,7 @@ describe("get test config", () => {
           testConfig: test,
           userId: "",
           override: { [`${test.id}_${test.version}`]: "B" }
-        })
+        }).value
       ).toBe("B");
     });
     it("should return by override with version prio to without version", () => {
@@ -51,34 +51,85 @@ describe("get test config", () => {
           testConfig: test,
           userId: "",
           override: { [`${test.id}_${test.version}`]: "B", [test.id]: "C" }
-        })
+        }).value
       ).toBe("B");
     });
   });
   describe("set by disabled", () => {
     const testDisabled = { ...test, disabled: true };
     it("should return disabled by dev", () => {
-      expect(getTestResult({ testConfig: testDisabled, userId: "" })).toBe(
-        "__disabled_dev"
-      );
+      expect(getTestResult({ testConfig: testDisabled, userId: "" })).toEqual({
+        value: test.defaultVariant,
+        disabled: true,
+        disabledReason: "dev"
+      });
     });
   });
   describe("set by usage", () => {
     it("should not satisfy the usage", () => {
       expect(
         getTestResult({ testConfig: { ...test, usage: 0 }, userId: "" })
-      ).toBe("__disabled_usage");
+      ).toEqual({
+        value: test.defaultVariant,
+        disabled: true,
+        disabledReason: "usage"
+      });
       expect(
         getTestResult({ testConfig: { ...test, usage: 50 }, userId: "" })
-      ).toBe("__disabled_usage");
+      ).toEqual({
+        value: test.defaultVariant,
+        disabled: true,
+        disabledReason: "usage"
+      });
     });
     it("should satisfy the usage", () => {
       expect(
         getTestResult({ testConfig: { ...test, usage: 51 }, userId: "" })
-      ).not.toBe("__disabled_usage");
+      ).not.toEqual({
+        value: test.defaultVariant,
+        disabled: true,
+        disabledReason: "usage"
+      });
       expect(
         getTestResult({ testConfig: { ...test, usage: 100 }, userId: "" })
-      ).not.toBe("__disabled_usage");
+      ).not.toEqual({
+        value: test.defaultVariant,
+        disabled: true,
+        disabledReason: "usage"
+      });
+    });
+  });
+
+  const userGroups = {
+    lang: "en",
+    browser: ["chrome", "safari"],
+    age: 25,
+    iq: [100, 110]
+  };
+  describe("set by user groups", () => {
+    it("should correctly set disabled by user group", () => {
+      expect(
+        getTestResult({
+          testConfig: { ...test, userGroup: userGroups },
+          userId: "",
+          user: { lang: "en", browser: "chrome", age: 25, iq: 110 }
+        })
+      ).not.toEqual({
+        value: test.defaultVariant,
+        disabled: true,
+        disabledReason: "userGroup"
+      });
+      expect(
+        getTestResult({
+          testConfig: { ...test, userGroup: userGroups },
+          userId: "",
+          user: { lang: "cz" }
+        })
+      ).toEqual({
+        value: test.defaultVariant,
+        disabled: true,
+        disabledReason: "userGroup"
+      });
     });
   });
 });

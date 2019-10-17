@@ -25,8 +25,12 @@ export const getNumberOfUserGroupsWhereUserIs = (
 };
 
 export const isNotUserInAllUserGroups = (userGroups: UserGroups, user: any) => {
+  const numOfAllUserGroups = Object.values(userGroups).length;
+  if (numOfAllUserGroups === 0) {
+    return false;
+  }
   const numOfUserGroups = getNumberOfUserGroupsWhereUserIs(userGroups, user);
-  return numOfUserGroups !== Object.values(userGroups).length;
+  return numOfUserGroups !== numOfAllUserGroups;
 };
 
 export const isUserInAnyUserGroups = (userGroups: UserGroups, user: any) => {

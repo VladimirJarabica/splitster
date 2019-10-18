@@ -1,4 +1,4 @@
-import { SplitsterClient } from "@splitster/splitster";
+import { SplitsterClient } from "../core/dist";
 
 const s = new SplitsterClient({
   config: {

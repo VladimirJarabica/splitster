@@ -1,5 +1,5 @@
 {
-  "name": "@splitster/splitster",
+  "name": "@splitster/core",
   "version": "0.0.1",
   "author": "Vladimír Jarabica",
   "main": "dist/index.js",

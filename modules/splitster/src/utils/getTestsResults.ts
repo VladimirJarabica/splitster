@@ -6,10 +6,18 @@ import { getTestResult, TestResult } from "./getTestResult";
 export interface TestsResults {
   [id: string]: TestResult;
 }
-export const getTestsResults = (config: Config, user: any, userId: string) => {
+export const getTestsResults = (
+  config: Config,
+  user: any,
+  userId: string,
+  override: { [testId: string]: string } = {}
+) => {
   const entries = Object.entries(config.tests);
   const resultsEntries: [string, TestResult][] = entries.map(
-    ([id, testConfig]) => [id, getTestResult({ testConfig, user, userId })]
+    ([id, testConfig]) => [
+      id,
+      getTestResult({ testConfig, user, userId, override })
+    ]
   );
 
   return R.fromPairs<TestResult>(resultsEntries);

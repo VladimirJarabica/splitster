@@ -9,6 +9,7 @@ export interface ConstructorInput {
   config: InputConfig;
   user?: any;
   userId: string;
+  override?: { [testId: string]: string };
 }
 
 export class SplitsterClient {
@@ -24,7 +25,8 @@ export class SplitsterClient {
     isSimple = true,
     config,
     user = {},
-    userId
+    userId,
+    override = {}
   }: ConstructorInput) {
     const realConfig = getConfig(config);
     if (!isSimple) {
@@ -32,7 +34,7 @@ export class SplitsterClient {
       this.user = user;
       this.userId = userId;
     }
-    this.results = getTestsResults(realConfig, user, userId);
+    this.results = getTestsResults(realConfig, user, userId, override);
   }
 
   get(testId: string): TestResult {
@@ -62,5 +64,14 @@ export class SplitsterClient {
       ]
     );
     return R.fromPairs(mapped);
+  }
+
+  clone(): SplitsterClient {
+    const copy = Object.create(Object.getPrototypeOf(this));
+    copy.results = R.clone(this.results);
+    copy.config = R.clone(this.config);
+    copy.user = R.clone(this.user);
+    copy.userId = this.userId;
+    return copy;
   }
 }

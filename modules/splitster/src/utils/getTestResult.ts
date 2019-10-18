@@ -21,7 +21,7 @@ interface Input {
   testConfig: TestConfig;
   userId: string;
   user?: any;
-  override?: { [testAndVersion: string]: string };
+  override?: { [testId: string]: string };
 }
 
 const getOverride = (
@@ -54,6 +54,13 @@ export const getTestResult = ({
         disabled: true,
         disabledReason: regexResult[2],
         value: testConfig.defaultVariant
+      };
+    }
+    if (Object.keys(testConfig.variants).includes(overrideValue)) {
+      return {
+        disabled: false,
+        disabledReason: null,
+        value: overrideValue
       };
     }
   }

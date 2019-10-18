@@ -1,4 +1,4 @@
 // @flow strict
-export interface Variants {
-  [id: string]: number;
-}
+export type Variants = {
+  [id: string]: number
+};

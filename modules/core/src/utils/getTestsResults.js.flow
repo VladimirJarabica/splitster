@@ -2,9 +2,9 @@
 import type { TestResult } from "./getTestResult";
 import type { Config } from "../records/Config";
 
-export interface TestsResults {
-  [id: string]: TestResult;
-}
+export type TestsResults = {
+  [id: string]: TestResult
+};
 
 declare export function getTestsResults(
   config: Config,

@@ -3,13 +3,13 @@ import type { InputConfig, Config } from "../records/Config";
 import type { TestsResults } from "../utils/getTestsResults";
 import type { TestResult } from "../utils/getTestResult";
 
-export interface ConstructorInput {
-  isSimple?: boolean;
-  config: InputConfig;
-  user?: any;
-  userId: string;
-  override?: { [testId: string]: string };
-}
+export type ConstructorInput = {
+  isSimple?: boolean,
+  config: InputConfig,
+  user?: any,
+  userId: string,
+  override?: { [testId: string]: string }
+};
 
 declare export class SplitsterClient {
   results: TestsResults;

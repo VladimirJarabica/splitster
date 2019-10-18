@@ -15,7 +15,6 @@ export type ClientInput = {|
   override?: SplitsterResults
 |};
 
-// export interface SplitsterClient {
 declare export class SplitsterClient {
   options: OptionsConfig;
 

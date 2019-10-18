@@ -1,7 +1,8 @@
 {
   "name": "@splitster/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Vladimír Jarabica",
+  "private": false,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -25,5 +26,7 @@
     "rimraf": "^3.0.0",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
-  }
+  },
+  "license": "ISC",
+  "description": ""
 }

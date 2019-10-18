@@ -1,18 +1,18 @@
 // @flow strict
 import type { TestConfig } from "../records/TestConfig";
 
-export interface TestResult {
-  disabled: boolean;
-  disabledReason: string | null;
-  value: string;
-}
+export type TestResult = {
+  disabled: boolean,
+  disabledReason: string | null,
+  value: string
+};
 
-interface Input {
-  testConfig: TestConfig;
-  userId: string;
-  user?: any;
-  override?: { [testId: string]: string };
-}
+type Input = {
+  testConfig: TestConfig,
+  userId: string,
+  user?: any,
+  override?: { [testId: string]: string }
+};
 
 declare export function getSeedNumber(key: string): number;
 

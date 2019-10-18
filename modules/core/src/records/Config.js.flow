@@ -1,13 +1,13 @@
 // @flow strict
 import type { TestConfig, InputTestConfig } from "./TestConfig";
 
-export interface InputConfig {
-  tests: { [id: string]: InputTestConfig };
-}
+export type InputConfig = {
+  tests: { [id: string]: InputTestConfig }
+};
 
-export interface Config {
-  tests: { [id: string]: TestConfig };
-}
+export type Config = {
+  tests: { [id: string]: TestConfig }
+};
 
 declare export function getTestsConfig(configTests: {
   [id: string]: InputTestConfig

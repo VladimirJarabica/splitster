@@ -9,8 +9,6 @@ import {
   isUserInAnyUserGroups
 } from "./userInUserGroups";
 
-export const getSeedNumber = (key: string): number => seedRandom(key)();
-
 export interface TestResult {
   disabled: boolean;
   disabledReason: string | null;
@@ -23,6 +21,8 @@ interface Input {
   user?: any;
   override?: { [testId: string]: string };
 }
+
+export const getSeedNumber = (key: string): number => seedRandom(key)();
 
 const getOverride = (
   testConfig: TestConfig,

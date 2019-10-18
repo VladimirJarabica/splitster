@@ -1,0 +1,8 @@
+// @flow strict
+import type { TestConfig } from "../records/TestConfig";
+import type { Variants } from "../records/Variants";
+
+declare export function getWinningVariant(
+  testConfig: $Shape<TestConfig>,
+  seedNumber: number
+): string;

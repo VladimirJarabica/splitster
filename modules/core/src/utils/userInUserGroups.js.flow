@@ -1,0 +1,23 @@
+// @flow strict
+import type { UserGroups, UserGroup } from "../records/TestConfig";
+
+declare export function isUserInUserGroup(
+  property: string,
+  userGroup: UserGroup,
+  user: any
+): boolean;
+
+declare export function getNumberOfUserGroupsWhereUserIs(
+  userGroups: UserGroups,
+  user: any
+): number;
+
+declare export function isNotUserInAllUserGroups(
+  userGroups: UserGroups,
+  user: any
+): boolean;
+
+declare export function isUserInAnyUserGroups(
+  userGroups: UserGroups,
+  user: any
+): boolean;

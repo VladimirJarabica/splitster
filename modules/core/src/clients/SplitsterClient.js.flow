@@ -1,0 +1,32 @@
+// @flow strict
+import type { InputConfig, Config } from "../records/Config";
+import type { TestsResults } from "../utils/getTestsResults";
+import type { TestResult } from "../utils/getTestResult";
+
+export interface ConstructorInput {
+  isSimple?: boolean;
+  config: InputConfig;
+  user?: any;
+  userId: string;
+  override?: { [testId: string]: string };
+}
+
+declare export class SplitsterClient {
+  results: TestsResults;
+
+  config: Config | null;
+
+  user: any | null;
+
+  userId: string | null;
+
+  constructor(input: ConstructorInput): void;
+
+  get(testId: string): TestResult;
+
+  set(testId: string, variant: string): void;
+
+  getSaveResults(): { [id: string]: string };
+
+  clone(): SplitsterClient;
+}

@@ -1,0 +1,14 @@
+// @flow strict
+import type { TestResult } from "./getTestResult";
+import type { Config } from "../records/Config";
+
+export interface TestsResults {
+  [id: string]: TestResult;
+}
+
+declare export function getTestsResults(
+  config: Config,
+  user: any,
+  userId: string,
+  override: { [testId: string]: string }
+): TestsResults;

@@ -4,12 +4,16 @@ import { InputConfig, Config, getConfig } from "../records/Config";
 import { getTestsResults, TestsResults } from "../utils/getTestsResults";
 import { TestResult } from "../utils/getTestResult";
 
+export type Override = {
+  [testId: string]: string;
+};
+
 export interface ConstructorInput {
   isSimple?: boolean;
   config: InputConfig;
   user?: any;
   userId: string;
-  override?: { [testId: string]: string };
+  override?: Override;
 }
 
 export class SplitsterClient {

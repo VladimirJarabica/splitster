@@ -1,5 +1,5 @@
 {
-  "name": "@splitster/core",
+  "name": "@splitster/redux",
   "version": "0.0.4",
   "author": "Vladimír Jarabica",
   "private": false,
@@ -11,20 +11,12 @@
     "postbuild": "npm run copy-files"
   },
   "dependencies": {
-    "ramda": "^0.26.1",
-    "random-js": "^2.1.0",
-    "seedrandom": "^3.0.5"
+    "@splitster/core": "0.0.4"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.19",
-    "@types/ramda": "^0.26.33",
-    "@types/random-js": "^1.0.31",
-    "@types/seedrandom": "^2.4.28",
     "copyfiles": "^2.1.1",
     "flow-bin": "^0.109.0",
-    "jest": "^24.9.0",
     "rimraf": "^3.0.0",
-    "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   },
   "license": "ISC",

@@ -1,0 +1,9 @@
+// @flow strict
+import type { SplitsterClient, Override } from "@splitster/core";
+
+import type { Action } from "./actions";
+
+declare export function splitsterReducer(
+  state: SplitsterClient | Override,
+  action: Action
+): SplitsterClient | Override;

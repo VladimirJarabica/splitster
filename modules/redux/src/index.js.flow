@@ -1,0 +1,4 @@
+// @flow strict
+declare export { splitsterReducer } from "./reducer";
+declare export { init, toSaveResults, set } from "./actions";
+declare export { Action } from "./actions";

@@ -1,2 +1,3 @@
 // @flow strict
-declare export { SplitsterClient } from "./clients/SplitsterClient";
+declare export { SplitsterClient, Override } from "./clients/SplitsterClient";
+declare export { Config, InputConfig } from "./records/Config";

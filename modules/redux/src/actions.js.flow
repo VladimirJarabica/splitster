@@ -1,0 +1,36 @@
+// @flow strict
+import type { Config, Override } from "@splitster/core";
+
+type Init = {
+  type: "@splitster/INIT",
+  payload: {
+    config: Config,
+    user?: any,
+    userId: string,
+    override?: Override
+  }
+};
+type ToSaveResults = {
+  type: "@splitster/TO_SAVE_RESULTS"
+};
+
+type Set = {
+  type: "@splitster/SET",
+  payload: {
+    testId: string,
+    variantId: string
+  }
+};
+
+export type Action = Init | ToSaveResults | Set;
+
+declare export function init(input: {
+  config: Config,
+  user?: any,
+  userId: string,
+  override?: { [testId: string]: string }
+}): Init;
+
+declare export function toSaveResults(): ToSaveResults;
+
+declare export function set(testId: string, variantId: string): Set;

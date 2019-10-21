@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "rootDir": "src",
+        "outDir": "dist",
+        "declaration": true,
+        "lib": ["es2019", "dom"]
+    },
+    "exclude": ["node_modules", "**/__tests__/**"],
+    "types": ["node"],
+}
+  

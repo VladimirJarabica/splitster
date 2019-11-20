@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "js-cookie": "^2.1.4",
-    "ramda": "^0.24.1",
+    "ramda": "*",
     "random-js": "^1.0.8",
     "seedrandom": "^2.4.4"
   }

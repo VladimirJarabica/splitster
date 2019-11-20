@@ -23,7 +23,10 @@ describe("setWinningVariant", () => {
   describe("setWinningVariant", () => {
     it("should set default if test is disabled", () => {
       expect(
-        setWinningVariant("")(["x", { defaultVariant: "x", disabled: true }])
+        setWinningVariant(
+          "",
+          {}
+        )(["x", { defaultVariant: "x", disabled: true }])
       ).toEqual([
         "x",
         { defaultVariant: "x", winningVariant: "x", disabled: true }
@@ -38,29 +41,29 @@ describe("setWinningVariant", () => {
       defaultVariant: "x"
     };
     it("should set correct winning variant", () => {
-      expect(setWinningVariant("", 0)(["x", test])).toEqual([
+      expect(setWinningVariant("", { testSeed: 0 })(["x", test])).toEqual([
         "x",
         { ...test, winningVariant: "x" }
       ]);
-      expect(setWinningVariant("", 0.1)(["x", test])).toEqual([
+      expect(setWinningVariant("", { testSeed: 0.1 })(["x", test])).toEqual([
         "x",
         { ...test, winningVariant: "x" }
       ]);
-      expect(setWinningVariant("", 0.2)(["x", test])).toEqual([
+      expect(setWinningVariant("", { testSeed: 0.2 })(["x", test])).toEqual([
         "x",
         { ...test, winningVariant: "y" }
       ]);
-      expect(setWinningVariant("", 0.3)(["x", test])).toEqual([
+      expect(setWinningVariant("", { testSeed: 0.3 })(["x", test])).toEqual([
         "x",
         { ...test, winningVariant: "y" }
       ]);
-      expect(setWinningVariant("", 0.5)(["x", test])).toEqual([
+      expect(setWinningVariant("", { testSeed: 0.5 })(["x", test])).toEqual([
         "x",
         { ...test, winningVariant: "z" }
       ]);
     });
     it("should set default winning variant", () => {
-      expect(setWinningVariant("", 1.1)(["x", test])).toEqual([
+      expect(setWinningVariant("", { testSeed: 1.1 })(["x", test])).toEqual([
         "x",
         { ...test, winningVariant: "x" }
       ]);

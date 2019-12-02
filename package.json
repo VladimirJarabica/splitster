@@ -19,6 +19,9 @@
     "url": "https://github.com/kiwicom/splitster/issues"
   },
   "homepage": "https://github.com/kiwicom/splitster#readme",
+  "files": [
+    "lib/**"
+  ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.24.0",

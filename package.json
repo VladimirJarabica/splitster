@@ -1,8 +1,9 @@
 {
   "name": "@kiwicom/splitster",
-  "version": "0.0.52",
+  "version": "0.0.54",
   "description": "Javascript AB testing tool",
   "main": "lib/index.js",
+  "sideEffects": false,
   "scripts": {
     "build": "babel src -d lib --ignore **/*.test.js",
     "build:watch": "babel src -d lib --ignore **/*.test.js --watch",
@@ -20,7 +21,9 @@
   },
   "homepage": "https://github.com/kiwicom/splitster#readme",
   "files": [
-    "lib/**"
+    "lib/**",
+    "src/**/*.js.flow",
+    ".flowconfig"
   ],
   "devDependencies": {
     "babel-cli": "^6.26.0",

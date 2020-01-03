@@ -1,6 +1,15 @@
-.idea
 node_modules/
+
+# generated files
 draft/
+lib/
+
+# IDE metafiles
+.idea
+
+# npm logs
 npm-debug.log
+
+# yalc
 .yalc
 yalc.lock

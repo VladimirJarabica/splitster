@@ -1,6 +1,6 @@
 {
   "name": "@kiwicom/splitster",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "Javascript AB testing tool",
   "main": "lib/index.js",
   "sideEffects": false,
@@ -48,12 +48,14 @@
     "immutable-devtools": "0.0.7",
     "jest": "^23.6.0",
     "rimraf": "^2.6.3",
-    "webpack": "^3.0.0",
-    "random-js": "^1.0.8",
-    "seedrandom": "^2.4.4"
+    "webpack": "^3.0.0"
   },
   "peerDependencies": {
     "js-cookie": ">= 2.1.4",
     "ramda": ">= 0.26.1"
+  },
+  "dependencies": {
+    "random-js": "^1.0.8",
+    "seedrandom": "^2.4.4"
   }
 }

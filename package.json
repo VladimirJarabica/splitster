@@ -1,6 +1,6 @@
 {
   "name": "@kiwicom/splitster",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "description": "Javascript AB testing tool",
   "main": "lib/index.js",
   "sideEffects": false,

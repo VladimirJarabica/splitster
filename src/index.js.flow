@@ -14,7 +14,7 @@ import type {
   Test as TestType,
   Tests as TestsType,
   DisabledReason as DisabledReasonType
-} from "./records/test";
+} from "./records/abTest";
 
 // =======================
 // exports from index file

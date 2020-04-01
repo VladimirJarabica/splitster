@@ -1,5 +1,5 @@
 // @flow strict
-import type { Tests } from "../records/test";
+import type { Tests } from "../records/abTest";
 import type { Config, OptionsConfig } from "../records/config";
 
 export type VariantValue = {|

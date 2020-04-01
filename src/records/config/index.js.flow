@@ -1,5 +1,5 @@
 // @flow strict
-import type { DisabledReason } from "../test";
+import type { DisabledReason } from "../abTest";
 
 export type TestId = string;
 export type VariantId = string;

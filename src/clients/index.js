@@ -1,6 +1,6 @@
 import * as R from "ramda"
 
-import { getTestsFromConfig } from "../records/test"
+import { getTestsFromConfig } from "../records/abTest"
 import { mergeDefaultConfig } from "../records/config"
 import jsCookies from "js-cookie"
 

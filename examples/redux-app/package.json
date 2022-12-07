@@ -10,7 +10,7 @@
     "babel-register": "^6.24.1",
     "concurrently": "^3.5.0",
     "cookie-parser": "^1.4.3",
-    "express": "^4.15.4",
+    "express": "^4.17.3",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
